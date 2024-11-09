@@ -4,10 +4,16 @@ import styled from "styled-components";
 export const Container = styled.div`
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
 	min-height: 100vh;
-	background-color: ${colors.gray};
+	background-color: ${colors.mainBackground};
+
+	.title {
+		color: ${colors.mainFont};
+		font-size: 50px;
+    font-weight: 700;
+		margin-bottom: 24px;
+	}
 `;
 
 export const MatchContainer = styled.div`

@@ -1,9 +1,9 @@
 import { PlayerCard } from "@/components/PlayerCard";
 import { Container, MatchContainer } from "./index.styled";
-import { SearchTextField } from "@/components/Search/styled";
-import { Typography } from "@/components/Typography";
 import { api } from "@/config/axios";
 import { ChangeEvent, useState } from "react";
+import { SearchBox } from "@/components/SearchBox";
+import { Typography } from "@/components/Typography";
 
 const TestPage = () => {
 	const [searchInput, setSearchInput] = useState("");
@@ -15,16 +15,15 @@ const TestPage = () => {
 
 	const onSubmit = async () => {
 		const [userID, userFlag] = searchInput.split('#')
+		console.log(userID, userFlag)
 		const {data: match} = await api.get(`/matches?region=${region}&user_id=${userID}&user_flag=${userFlag}`)
 		setMatch(match)
 	};
 
 	return (
 		<Container>
-			<div>
-				<SearchTextField onChange={onChange} />
-				<button onClick={onSubmit}>submit</button>
-			</div>
+			<Typography className="title">WORK HARD GG</Typography>
+			<SearchBox onChange={onChange} onSubmit={onSubmit}/>
 			<MatchContainer>
 				{match.info && match.info.participants.map((player: Record<string, any>) => 
 					<PlayerCard
