@@ -17,7 +17,7 @@ const TOPidealVisionScorePerMinute = 0.85; // Pontuação de visão por minuto (
 // teamDamagePercentage (is in the challenges object inside participants)
 // visionScorePerMinute (is in the challenges object inside participants)
 
-const TOP_STATS = (
+type TopProps = {
 	gameDuration: number, 
 	goldPerMinute: number, 
 	totalMinionsKilled: number, 
@@ -25,8 +25,24 @@ const TOP_STATS = (
 	killParticipation: number, 
 	totalDamageDealtToChampions: number, 
 	teamDamagePercentage: number,
-	visionScorePerMinute: number,
-) => {
+	visionScorePerMinute: number
+}
+
+export const TOP_STATS = (info: any, player: any) => {
+	const { 
+		challenges: {
+			goldPerMinute, 
+			kda, 
+			killParticipation, 
+			teamDamagePercentage, 
+			visionScorePerMinute
+		}, 
+		totalDamageDealtToChampions, 
+		totalMinionsKilled 
+	} = player
+
+	const { gameDuration } = info;
+		
 	const gameMinutes = Math.floor(gameDuration / 60)
 	const minionsPerMinute = totalMinionsKilled / gameMinutes
 	const damagePerMinute = totalDamageDealtToChampions / gameMinutes
@@ -34,8 +50,20 @@ const TOP_STATS = (
 	const visionScorePerMinutePercentageStats = visionScorePerMinute * 100 / TOPidealVisionScorePerMinute
 	const goldPercentageStats = goldPerMinute * 100 / TOPidealGold
 	const farmPercentageStats = (minionsPerMinute / gameDuration)* 100 / TOPidealFarmPerMinute
-	const KDAPercentageStats = KDA * 100 / TOPidealKDA
+	const KDAPercentageStats = kda * 100 / TOPidealKDA
 	const killParticipationPercentageStats = killParticipation * 100 / TOPidealKillParticipationPercentage
 	const damagePerMinutePercentageStats = damagePerMinute * 100 / TOPidealDamagePerMinute
 	const teamDamagePercentageStats = teamDamagePercentage * 100 / TOPidealTeamDamagePercentage
+
+	const proplayerStats = (
+		visionScorePerMinutePercentageStats + 
+		goldPercentageStats + 
+		farmPercentageStats + 
+		KDAPercentageStats + 
+		killParticipationPercentageStats + 
+		damagePerMinutePercentageStats + 
+		teamDamagePercentageStats
+	) / 7
+
+	return proplayerStats
 }

@@ -10,7 +10,7 @@ export type SearchProps = {
 
 export const SearchBox = ({ onChange, onSubmit }: CommonProps<SearchProps>) => (
 	<SearchTextFieldContainer>
-		<SearchTextField onChange={onChange} placeholder="invocador#region"/>
+		<SearchTextField onChange={onChange} placeholder="summoner#tag"/>
 		<SearchButton onClick={onSubmit}>.GG</SearchButton>
 	</SearchTextFieldContainer>
 );

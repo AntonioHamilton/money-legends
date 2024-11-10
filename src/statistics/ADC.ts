@@ -15,7 +15,7 @@ const ADCidealTeamDamagePercentage = 0.3 //(in percentage)
 // totalDamageDealtToChampions (is in the participant object)
 // teamDamagePercentage (is in the challenges object inside participants)
 
-const ADC_STATS = (
+export const ADC_STATS = (
 	gameDuration: number, 
 	goldPerMinute: number, 
 	totalMinionsKilled: number, 

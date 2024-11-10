@@ -17,7 +17,7 @@ const MIDidealVisionScorePerMinute = 0.8; // Pontuação de visão por minuto (V
 // teamDamagePercentage (is in the challenges object inside participants)
 // visionScorePerMinute (is in the challenges object inside participants)
 
-const MID_STATS = (
+export const MID_STATS = (
 	gameDuration: number, 
 	goldPerMinute: number, 
 	totalMinionsKilled: number, 

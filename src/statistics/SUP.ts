@@ -14,7 +14,7 @@ const SUPidealVisionScorePerMinute = 2
 // assists (in the participant object)
 // visionScorePerMinute (is in the challenges object inside participants)
 
-const SUP_STATS = (
+export const SUP_STATS = (
 	gameDuration: number, 
 	goldPerMinute: number, 
 	KDA: number,

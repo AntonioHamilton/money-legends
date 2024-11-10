@@ -23,7 +23,7 @@ const JGidealVoidGrubsKilled = 0.5 // Vastilarvas mortas, em porcentagem, idealm
 // teamDamagePercentage (is in the challenges object inside participants)
 // visionScorePerMinute (is in the challenges object inside participants)
 
-const JG_STATS = (
+export const JG_STATS = (
 	gameDuration: number, 
 	goldPerMinute: number, 
 	totalMinionsKilled: number, 
