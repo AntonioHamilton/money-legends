@@ -14,23 +14,35 @@ const SUPidealVisionScorePerMinute = 2
 // assists (in the participant object)
 // visionScorePerMinute (is in the challenges object inside participants)
 
-export const SUP_STATS = (
-	gameDuration: number, 
-	goldPerMinute: number, 
-	KDA: number,
-	assists: number,
-	kills: number,
-	killParticipation: number, 
-	teamDamagePercentage: number,
-	visionScorePerMinute: number,
-) => {
+export const SUP_STATS = (info: any, player: any) => {
 
-	const gameMinutes = Math.floor(gameDuration / 60)
+	const { 
+		challenges: {
+			goldPerMinute, 
+			kda,
+			killParticipation, 
+			teamDamagePercentage, 
+			visionScorePerMinute
+		}, 
+		kills, 
+		assists,
+	} = player
 
-	const haveMoreAssistsThenKills = assists > kills; // boolean
+	const haveMoreAssistsThenKills = assists > kills ? 100 : 0;
 	const visionScorePerMinutePercentageStats = visionScorePerMinute * 100 / SUPidealVisionScorePerMinute
 	const goldPercentageStats = goldPerMinute * 100 / SUPidealGold
-	const KDAPercentageStats = KDA * 100 / SUPidealKDA
+	const KDAPercentageStats = kda * 100 / SUPidealKDA
 	const killParticipationPercentageStats = killParticipation * 100 / SUPidealKillParticipationPercentage
 	const teamDamagePercentageStats = teamDamagePercentage * 100 / SUPidealTeamDamagePercentage
+
+	const proplayerStats = (
+		haveMoreAssistsThenKills +
+		visionScorePerMinutePercentageStats +
+		goldPercentageStats +
+		KDAPercentageStats +
+		killParticipationPercentageStats +
+		teamDamagePercentageStats
+	) / 6
+
+	return proplayerStats
 }

@@ -1,10 +1,15 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+		margin-bottom: 24px;
+`
+
+export const LaneContainer = styled.div`
 	display: flex;
 	gap: 32px;
 	height: 100px;
-	margin-bottom: 24px;
+	margin-bottom: 8px;
+
 
 	div:nth-child(odd) {
 		align-self: flex-start;
@@ -44,6 +49,6 @@ export const Button = styled.button`
 	}
 
 	img {
-		height: 40px;
+		height: 50px;
 	}
 `

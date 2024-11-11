@@ -6,6 +6,17 @@ import { SearchBox } from "@/components/SearchBox";
 import { Typography } from "@/components/Typography";
 import { PlayerSelector } from "@/components/PlayerSelector";
 import { ADC_STATS, JG_STATS, MID_STATS, SUP_STATS, TOP_STATS } from "@/statistics";
+import { Button, Selector } from "@/components/PlayerSelector/styled";
+
+const ANY_STATS = (info: any, player: any) => {
+	return ((
+		TOP_STATS(info, player) + 
+		JG_STATS(info, player) + 
+		MID_STATS(info, player) + 
+		ADC_STATS(info, player) + 
+		SUP_STATS(info, player)
+	) / 5)
+}
 
 type PlayerProps = {
 	summonerName: string, 
@@ -17,7 +28,8 @@ type TeamProps = {
 	"JUNGLE"?: PlayerProps,
 	"MID"?: PlayerProps,
 	"BOTTOM"?: PlayerProps,
-	"SUPPORT"?: PlayerProps
+	"UTILITY"?: PlayerProps,
+	"ANY"?: PlayerProps
 }
 
 const roleFunctions: Record<string, Function> = {
@@ -25,7 +37,8 @@ const roleFunctions: Record<string, Function> = {
 	"JUNGLE": JG_STATS,
 	"MID": MID_STATS,
 	"BOTTOM": ADC_STATS,
-	"SUPPORT": SUP_STATS
+	"UTILITY": SUP_STATS,
+	"ANY": ANY_STATS
 }
 
 const initialPlayerState: PlayerProps = {
@@ -35,7 +48,7 @@ const initialPlayerState: PlayerProps = {
 
 const TestPage = () => {
 	const [searchInput, setSearchInput] = useState("");
-	const [role, setRole] = useState<string>("TOP")
+	const [role, setRole] = useState<string>("ANY")
 	const [region, setRegion] = useState("AMERICAS");
 	const [match, setMatch] = useState<any>({})
 	const [team, setTeam] = useState<TeamProps>({
@@ -43,43 +56,61 @@ const TestPage = () => {
 		"JUNGLE": initialPlayerState,
 		"MID": initialPlayerState,
 		"BOTTOM": initialPlayerState,
-		"SUPPORT": initialPlayerState
+		"UTILITY": initialPlayerState,
+		"ANY": initialPlayerState,
 	})
+
 	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setSearchInput(e.target.value);
 	};
 
+	const changeRole = (role: string) => {
+		setRole(role);
+	};
+
+	const roleAnalysis = (item: any, match: any, userID: string, userFlag: string) => {
+		return item.riotIdGameName.toLowerCase() === userID.toLowerCase() && 
+		item.riotIdTagline.toLowerCase() === userFlag.toLowerCase() &&
+		item.individualPosition === role &&
+		match.info.gameMode === "CLASSIC"
+	}
+
 	const onSubmit = async () => {
 		const [userID, userFlag] = searchInput.split('#')
-		const {data: match} = await api.get(`/matches?region=${region}&user_id=${userID}&user_flag=${userFlag}`)
-		const player = match.info.participants.filter((item: any) => {
-			if (
-				item.riotIdGameName.toLowerCase() === userID.toLowerCase() && 
-				item.riotIdTagline.toLowerCase() === userFlag.toLowerCase()
-			) {
-				return item
-			}
+		const {data} = await api.get(`/matches?region=${region}&user_id=${userID}&user_flag=${userFlag}`)
+
+		const matchs = [data]
+
+		const proplayerResults = matchs.map((match) => {
+			const player = match.info.participants.filter((item: any) => {
+				if (
+					roleAnalysis(item, match, userID, userFlag) || 
+					(
+						role === "ANY" && 
+						item.riotIdGameName.toLowerCase() === userID.toLowerCase() && 
+						item.riotIdTagline.toLowerCase() === userFlag.toLowerCase()
+					)
+				) {
+					return item
+				}
+			})
+
+			return player[0] ? roleFunctions[role](match.info, player[0]) : null
 		})
-		const proplayerPercentage = roleFunctions[role](match.info, player[0])
+	
 		const newTeam = team
 		newTeam[role as keyof TeamProps] = {
 			summonerName: userID,
-			proplayerPercentage
+			proplayerPercentage: proplayerResults.reduce((value, current) => value + current) / proplayerResults.length
 		}
 		setTeam(newTeam as TeamProps)
 	};
-
-	const changeRole = (role: string) => {
-		console.log(role)
-		setRole("TOP");
-	}
 
 	return (
 		<Container>
 			<Typography className="title">WORK HARD GG</Typography>
 			<PlayerSelector changeRole={changeRole}/>
 			<SearchBox onChange={onChange} onSubmit={onSubmit}/>
-			<button onClick={() => console.log(team)}>show team</button>
 		</Container>
 	);
 };

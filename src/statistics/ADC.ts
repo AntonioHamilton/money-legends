@@ -15,23 +15,39 @@ const ADCidealTeamDamagePercentage = 0.3 //(in percentage)
 // totalDamageDealtToChampions (is in the participant object)
 // teamDamagePercentage (is in the challenges object inside participants)
 
-export const ADC_STATS = (
-	gameDuration: number, 
-	goldPerMinute: number, 
-	totalMinionsKilled: number, 
-	KDA: number, 
-	killParticipation: number, 
-	totalDamageDealtToChampions: number, 
-	teamDamagePercentage: number
-) => {
+export const ADC_STATS = (info: any, player: any) => {
+	const { 
+		challenges: {
+			goldPerMinute, 
+			kda, 
+			killParticipation, 
+			teamDamagePercentage, 
+		}, 
+		totalDamageDealtToChampions, 
+		totalMinionsKilled 
+	} = player
+
+	const { gameDuration } = info
+
 	const gameMinutes = Math.floor(gameDuration / 60)
 	const minionsPerMinute = totalMinionsKilled / gameMinutes
 	const damagePerMinute = totalDamageDealtToChampions / gameMinutes
 
 	const goldPercentageStats = goldPerMinute * 100 / ADCidealGold
 	const farmPercentageStats = (minionsPerMinute / gameDuration)* 100 / ADCidealFarmPerMinute
-	const KDAPercentageStats = KDA * 100 / ADCidealKDA
+	const KDAPercentageStats = kda * 100 / ADCidealKDA
 	const killParticipationPercentageStats = killParticipation * 100 / ADCidealKillParticipationPercentage
 	const damagePerMinutePercentageStats = damagePerMinute * 100 / ADCidealDamagePerMinute
 	const teamDamagePercentageStats = teamDamagePercentage * 100 / ADCidealTeamDamagePercentage
+
+	const proplayerStats = (
+		goldPercentageStats +
+		farmPercentageStats +
+		KDAPercentageStats +
+		killParticipationPercentageStats +
+		damagePerMinutePercentageStats +
+		teamDamagePercentageStats
+	) / 6
+
+	return proplayerStats
 }

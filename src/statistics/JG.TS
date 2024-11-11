@@ -10,8 +10,22 @@ const JGidealDragonKilled = 0.5 // Dragons mortos,  em porcentagem, idealmente 5
 const JGidealBaronKilled = 0.5 // Barons mortos,  em porcentagem, idealmente 50%
 const JGidealVoidGrubsKilled = 0.5 // Vastilarvas mortas, em porcentagem, idealmente 50%
 
+const initialStateTeam = {
+	objectives: {
+		horde: {
+			kills: 0
+		},
+		dragon: {
+			kills: 0
+		},
+		baron: {
+			kills: 0
+		}
+	}
+}
+
 // voidGrubs (is in the match object, inside the teams, is named horde)
-// dragons (is in the match object, inside the teams, is named horde)
+// dragonsKilled (is in the match object, inside the teams, is named dragons)
 // voidGrubs (is in the match object, inside the teams, is named horde)
 // gameDuration (is in the match object)
 // goldPerMinute (inside challenges)
@@ -24,21 +38,46 @@ const JGidealVoidGrubsKilled = 0.5 // Vastilarvas mortas, em porcentagem, idealm
 // visionScorePerMinute (is in the challenges object inside participants)
 
 export const JG_STATS = (
-	gameDuration: number, 
-	goldPerMinute: number, 
-	totalMinionsKilled: number, 
-	KDA: number, 
-	killParticipation: number, 
-	totalDamageDealtToChampions: number, 
-	teamDamagePercentage: number,
-	visionScorePerMinute: number,
-	totalVoidGrubsKilled: number,
-	teamVoidGrubsKilled: number,
-	totalDragonsKilled: number,
-	teamDragonsKilled: number,
-	totalBaronsKilled: number,
-	teamBaronsKilled: number
+	info: any, player: any
 ) => {
+
+
+	const { 
+		challenges: {
+			goldPerMinute, 
+			kda, 
+			killParticipation,
+			teamDamagePercentage,
+			visionScorePerMinute
+		}, 
+		totalDamageDealtToChampions, 
+		totalMinionsKilled,
+		teamId
+	} = player
+
+	const { gameDuration, teams } = info;
+
+	let playerTeam = initialStateTeam
+	let enemyTeam = initialStateTeam
+
+	teams.forEach((team: any) => {
+		if (team.teamId === teamId) {
+			playerTeam = team
+		}
+		else {
+			enemyTeam = team
+		}
+	})
+
+	const teamVoidGrubsKilled = playerTeam.objectives.horde.kills
+	const totalVoidGrubsKilled = teamVoidGrubsKilled + enemyTeam.objectives.horde.kills
+
+	const teamDragonsKilled = playerTeam.objectives.dragon.kills
+	const totalDragonsKilled = teamDragonsKilled + enemyTeam.objectives.dragon.kills
+
+	const teamBaronsKilled = playerTeam.objectives.baron.kills
+	const totalBaronsKilled = teamBaronsKilled + enemyTeam.objectives.baron.kills
+
 	const gameMinutes = Math.floor(gameDuration / 60)
 	const minionsPerMinute = totalMinionsKilled / gameMinutes
 	const damagePerMinute = totalDamageDealtToChampions / gameMinutes
@@ -46,13 +85,28 @@ export const JG_STATS = (
 	const visionScorePerMinutePercentageStats = visionScorePerMinute * 100 / JGidealVisionScorePerMinute
 	const goldPercentageStats = goldPerMinute * 100 / JGidealGold
 	const farmPercentageStats = (minionsPerMinute / gameDuration)* 100 / JGidealFarmPerMinute
-	const KDAPercentageStats = KDA * 100 / JGidealKDA
+	const KDAPercentageStats = kda * 100 / JGidealKDA
 	const killParticipationPercentageStats = killParticipation * 100 / JGidealKillParticipationPercentage
 	const damagePerMinutePercentageStats = damagePerMinute * 100 / JGidealDamagePerMinute
 	const teamDamagePercentageStats = teamDamagePercentage * 100 / JGidealTeamDamagePercentage
 
 	// Stats that only junglers have
-	const voidGrubsPercentage = (teamVoidGrubsKilled / totalVoidGrubsKilled)
-	const dragonsPercentage = (teamDragonsKilled / totalDragonsKilled)
-	const baronsPercentage = (teamBaronsKilled / totalBaronsKilled)
+	const voidGrubsPercentage = totalVoidGrubsKilled ? (teamVoidGrubsKilled / totalVoidGrubsKilled) : 100
+	const dragonsPercentage = totalDragonsKilled ? (teamDragonsKilled / totalDragonsKilled) : 100
+	const baronsPercentage = totalBaronsKilled ? (teamBaronsKilled / totalBaronsKilled) : 100
+
+	const proplayerStats = (
+		visionScorePerMinutePercentageStats + 
+		goldPercentageStats + 
+		farmPercentageStats + 
+		KDAPercentageStats + 
+		killParticipationPercentageStats + 
+		damagePerMinutePercentageStats + 
+		teamDamagePercentageStats +
+		voidGrubsPercentage +
+		dragonsPercentage +
+		baronsPercentage
+	) / 10
+
+	return proplayerStats
 }

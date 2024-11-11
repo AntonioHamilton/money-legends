@@ -12,7 +12,7 @@ const getMatchID = (url: string, puuid: string) => {
 	.catch(error => {throw error})
 }
 
-export const getMatches = async (url: string, user_id: string, user_flag: string) => {
+export const getMatches = async (url: string, user_id: string, user_flag: string, lane: string) => {
 	const puuid = await getPUUID(url, user_id, user_flag);
 	const matchIDS = await getMatchID(url, puuid);
 

@@ -17,16 +17,21 @@ const MIDidealVisionScorePerMinute = 0.8; // Pontuação de visão por minuto (V
 // teamDamagePercentage (is in the challenges object inside participants)
 // visionScorePerMinute (is in the challenges object inside participants)
 
-export const MID_STATS = (
-	gameDuration: number, 
-	goldPerMinute: number, 
-	totalMinionsKilled: number, 
-	KDA: number, 
-	killParticipation: number, 
-	totalDamageDealtToChampions: number, 
-	teamDamagePercentage: number,
-	visionScorePerMinute: number,
-) => {
+export const MID_STATS = (info: any, player: any) => {
+	const { 
+		challenges: {
+			goldPerMinute, 
+			kda, 
+			killParticipation, 
+			teamDamagePercentage, 
+			visionScorePerMinute
+		}, 
+		totalDamageDealtToChampions, 
+		totalMinionsKilled 
+	} = player
+
+	const { gameDuration } = info
+
 	const gameMinutes = Math.floor(gameDuration / 60)
 	const minionsPerMinute = totalMinionsKilled / gameMinutes
 	const damagePerMinute = totalDamageDealtToChampions / gameMinutes
@@ -34,8 +39,20 @@ export const MID_STATS = (
 	const visionScorePerMinutePercentageStats = visionScorePerMinute * 100 / MIDidealVisionScorePerMinute
 	const goldPercentageStats = goldPerMinute * 100 / MIDidealGold
 	const farmPercentageStats = (minionsPerMinute / gameDuration)* 100 / MIDidealFarmPerMinute
-	const KDAPercentageStats = KDA * 100 / MIDidealKDA
+	const KDAPercentageStats = kda * 100 / MIDidealKDA
 	const killParticipationPercentageStats = killParticipation * 100 / MIDidealKillParticipationPercentage
 	const damagePerMinutePercentageStats = damagePerMinute * 100 / MIDidealDamagePerMinute
 	const teamDamagePercentageStats = teamDamagePercentage * 100 / MIDidealTeamDamagePercentage
+
+	const proplayerStats = (
+		visionScorePerMinutePercentageStats + 
+		goldPercentageStats + 
+		farmPercentageStats + 
+		KDAPercentageStats + 
+		killParticipationPercentageStats + 
+		damagePerMinutePercentageStats + 
+		teamDamagePercentageStats
+	) / 7
+
+	return proplayerStats
 }
