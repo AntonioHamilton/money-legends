@@ -91,9 +91,9 @@ export const JG_STATS = (
 	const teamDamagePercentageStats = teamDamagePercentage * 100 / JGidealTeamDamagePercentage
 
 	// Stats that only junglers have
-	const voidGrubsPercentage = totalVoidGrubsKilled ? (teamVoidGrubsKilled / totalVoidGrubsKilled) : 100
-	const dragonsPercentage = totalDragonsKilled ? (teamDragonsKilled / totalDragonsKilled) : 100
-	const baronsPercentage = totalBaronsKilled ? (teamBaronsKilled / totalBaronsKilled) : 100
+	const voidGrubsPercentage = totalVoidGrubsKilled > 0 ? (teamVoidGrubsKilled / totalVoidGrubsKilled) * 100 : 100
+	const dragonsPercentage = totalDragonsKilled > 0 ? (teamDragonsKilled / totalDragonsKilled) * 100 : 100
+	const baronsPercentage = totalBaronsKilled > 0 ? (teamBaronsKilled / totalBaronsKilled) * 100 : 100
 
 	const proplayerStats = (
 		visionScorePerMinutePercentageStats + 

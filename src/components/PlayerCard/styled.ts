@@ -25,6 +25,9 @@ export const TitleContainer = styled.div`
 
 export const InfoContainer = styled.div`
 	padding: 8px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
 	span {
 		color: ${colors.white};
@@ -36,4 +39,36 @@ export const StatsContainer = styled.div`
 	padding: 4px 16px;
 	font-size: 12px;
 	border-radius: 50px;
+	margin: 4px 0px;
+	width: fit-content;
+	
+	.status-name {
+		margin-right: 8px;
+		font-weight: 700;
+	};
+
+	.player-percentage {
+		margin-right: 8px;
+		font-weight: 600;
+	};
+
+	.player-difference {
+		font-weight: 600;
+		&.positive {
+			color: ${colors.green500}
+		}
+
+		&.negative {
+			color: ${colors.red700}
+		}
+	};
+`
+
+export const Button = styled.button`
+	padding: 8px;
+	border-radius: 4px;
+	background: ${colors.blue500};
+	margin: 16px 16px 12px 16px;
+	border: none;
+	cursor: pointer;
 `

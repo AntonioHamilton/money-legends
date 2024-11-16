@@ -1,12 +1,11 @@
 import { PlayerCard } from "@/components/PlayerCard";
-import { Container, MatchContainer } from "./index.styled";
+import { Container } from "./styled";
 import { api } from "@/config/axios";
 import { ChangeEvent, useState } from "react";
 import { SearchBox } from "@/components/SearchBox";
 import { Typography } from "@/components/Typography";
 import { PlayerSelector } from "@/components/PlayerSelector";
 import { ADC_STATS, JG_STATS, MID_STATS, SUP_STATS, TOP_STATS } from "@/statistics";
-import { Button, Selector } from "@/components/PlayerSelector/styled";
 
 const ANY_STATS = (info: any, player: any) => {
 	return ({
@@ -52,8 +51,9 @@ const initialPlayerState: PlayerProps = {
 const TestPage = () => {
 	const [searchInput, setSearchInput] = useState("");
 	const [role, setRole] = useState<keyof TeamProps>("ANY")
+	const [error, setError] = useState<string>("")
 	const [region, setRegion] = useState("AMERICAS");
-	const [match, setMatch] = useState<any>({})
+	const [player, setPlayer] = useState<any>()
 	const [team, setTeam] = useState<TeamProps>({
 		"TOP": initialPlayerState,
 		"JUNGLE": initialPlayerState,
@@ -78,14 +78,14 @@ const TestPage = () => {
 		match.info.gameMode === "CLASSIC"
 	}
 
-	const teamSetter = (proplayerResults: any, userID: any) => {
-		const statsKeys = Object.keys(proplayerResults[0].stats)
+	const playerSetter = (proPlayerResultsFiltered: any, userID: any) => {
+		const statsKeys = Object.keys(proPlayerResultsFiltered[0].stats)
 
 		if(statsKeys.length <= 0) return
 
 		let statsObject: Record<string, any> = {}
 
-		proplayerResults.forEach((value: any) => {
+		proPlayerResultsFiltered.forEach((value: any) => {
 			statsKeys.forEach((item: any) => {
 				statsObject[item] = ((statsObject[item] || 0) + (value.stats[item] || 0))
 			})
@@ -94,29 +94,48 @@ const TestPage = () => {
 		let finalStats: Record<string, any> = {}
 
 		statsKeys.forEach((item: any) => {
-			finalStats[item] = statsObject[item] / proplayerResults.length
+			finalStats[item] = statsObject[item] / proPlayerResultsFiltered.length
 		})
 
-		const newTeam = team
-		newTeam[role as keyof TeamProps] = {
+		let proPlayerPercentage = 0;
+
+		proPlayerResultsFiltered.forEach((value: any) => {
+			proPlayerPercentage = proPlayerPercentage || 0 + value.percentage || 0
+		})
+
+		const playerStats = {
 			summonerName: userID,
 			stats: finalStats,
-			proplayerPercentage: proplayerResults.reduce((value: any, current: any) => value.percentage + current.percentage) / proplayerResults.length
+			proPlayerPercentage: proPlayerPercentage / proPlayerResultsFiltered.length
 		}
 
+		setPlayer(playerStats)
+	}
+
+	const addToTeam = () => {
+		const newTeam = team
+		newTeam[role as keyof TeamProps] = player
 		setTeam(newTeam as TeamProps)
 	}
 
 	const onSubmit = async () => {
-		if (searchInput.length === 0 || !searchInput.includes("#")) return;
+		setPlayer(null)
+		setError('')
+		if (searchInput.length === 0 || !searchInput.includes("#")) return setError("Choose a valid nickname or flag");
 
-		const [userID, userFlag] = searchInput.split('#')
-		const { data } = await api.get(`/matches?region=${region}&user_id=${userID}&user_flag=${userFlag}`)
+		let [userID, userFlag] = searchInput.trim().split('#')
 
-		const matchs = [data, data]
+		userID = userID.trim().toLowerCase()
+		userFlag = userFlag.trim().toLowerCase()
+
+		const { data: matchs } = await api.get(`/matches?region=${region}&user_id=${userID}&user_flag=${userFlag}`)
+
+		if (matchs.lenght < 1) {
+			return setError("The player doesn't have any matchs")
+		}
 
 		const proplayerResults = matchs.map((match: any) => {
-			const player = match.info.participants.filter((item: any) => {
+			const playerInMatch = match.info.participants.filter((item: any) => {
 				if (
 					roleAnalysis(item, match, userID, userFlag) || 
 					(
@@ -129,22 +148,26 @@ const TestPage = () => {
 				}
 			})
 
-			return player[0] ? roleFunctions[role](match.info, player[0]) : null
+			return playerInMatch[0] ? roleFunctions[role](match.info, playerInMatch[0]) : null
 		})
 
-		if (proplayerResults) {
-			teamSetter(proplayerResults, userID)
+		const proPlayerResultsFiltered = proplayerResults.filter((match: any) => !!match)
+
+		if (proPlayerResultsFiltered.length > 0) {
+			playerSetter(proPlayerResultsFiltered, searchInput.trim())
+		} else {
+			return setError("The player doesn't have any matchs in this role")
 		}
 	};
 
 	return (
 		<Container>
 			<Typography className="title">WORK HARD GG</Typography>
-			<PlayerSelector changeRole={changeRole}/>
+			<PlayerSelector changeRole={changeRole} selectedRole={role}/>
 			<SearchBox onChange={onChange} onSubmit={onSubmit}/>
 			<button style={{margin: "10px"}} onClick={() => console.log(team)}>Olhar o time</button>
-			{<PlayerCard name={team[role as keyof TeamProps].summonerName}/>}
-			
+			{player && <PlayerCard player={player} addToTeam={addToTeam}/>}
+			{error}
 		</Container>
 	);
 };

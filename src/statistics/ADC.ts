@@ -27,6 +27,8 @@ export const ADC_STATS = (info: any, player: any) => {
 		totalMinionsKilled 
 	} = player
 
+	console.log({info, player})
+
 	const { gameDuration } = info
 
 	const gameMinutes = Math.floor(gameDuration / 60)
@@ -41,12 +43,12 @@ export const ADC_STATS = (info: any, player: any) => {
 	const teamDamagePercentageStats = teamDamagePercentage * 100 / ADCidealTeamDamagePercentage
 
 	const proplayerStats = (
-		goldPercentageStats +
-		farmPercentageStats +
-		KDAPercentageStats +
-		killParticipationPercentageStats +
-		damagePerMinutePercentageStats +
-		teamDamagePercentageStats
+		goldPercentageStats || 0 +
+		farmPercentageStats || 0 +
+		KDAPercentageStats || 0 +
+		killParticipationPercentageStats || 0 +
+		damagePerMinutePercentageStats || 0 +
+		teamDamagePercentageStats || 0
 	) / 6
 
 	return {

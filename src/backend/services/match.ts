@@ -16,15 +16,17 @@ export const getMatches = async (url: string, user_id: string, user_flag: string
 	const puuid = await getPUUID(url, user_id, user_flag);
 	const matchIDS = await getMatchID(url, puuid);
 
-	// const matchesPromises = matchIDS.map((matchID: string) => 
-	// 	axios.get(`${url}/lol/match/v5/matches/${matchID}?api_key=${process.env.API_KEY}`)
-	// )
+	const matchs = matchIDS.slice(0, 10)
 
-	// return Promise.all(matchesPromises)
-  // .then(responses => responses.map(response => response.data))
-  // .catch(error => { throw error });
+	const matchesPromises = matchs.map((matchID: string) => 
+		axios.get(`${url}/lol/match/v5/matches/${matchID}?api_key=${process.env.API_KEY}`)
+	)
 
-	return axios.get(`${url}/lol/match/v5/matches/${matchIDS[0]}?api_key=${process.env.API_KEY}`)
-	.then(response => response.data)
+	return Promise.all(matchesPromises)
+  .then(responses => responses.map(response => response.data))
   .catch(error => { throw error });
+
+	// return axios.get(`${url}/lol/match/v5/matches/${matchIDS[0]}?api_key=${process.env.API_KEY}`)
+	// .then(response => response.data)
+  // .catch(error => { throw error });
 }

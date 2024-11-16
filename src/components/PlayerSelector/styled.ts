@@ -1,3 +1,4 @@
+import { colors } from "@/styles/globalVariables";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -35,7 +36,7 @@ export const Selector = styled.div`
 `
 
 export const Button = styled.button`
-	border: 1px solid white;
+	border: 3px solid white;
 	outline: none;
 	background: none;
 	height: 50px;
@@ -44,11 +45,11 @@ export const Button = styled.button`
   border-radius: 100px;
 	overflow: hidden;
 
-	&:focus {
-		border: 1px solid green;
+	&.selected {
+		border: 3px solid ${colors.green500};
 	}
 
 	img {
-		height: 50px;
+		height: 45px;
 	}
 `

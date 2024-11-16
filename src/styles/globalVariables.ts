@@ -7,5 +7,17 @@ export const colors = {
 	textFields: "#31313c",
 	card: "#282830",
 	mainFont: "#5383e8",
-	badge: "#57646F"
+	badge: "#57646F",
+	red400: "#D31A45",
+	red500: "#E84057",
+	red100: "#59343B", 
+  red200: "#703C47", 
+  red300: "#703C47", 
+  red600: "#E84057", 
+	red700: "#E84057", 
+	red800: "#FF6C81", 
+	red900: "#FF6C81",
+	blue500: "#0093FF", 
+	green400: "#139020",
+  green500: "#00AE0A",
 };
