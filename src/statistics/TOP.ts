@@ -2,9 +2,9 @@
 const TOPidealGold = 395; // Ouro por minuto (GPM), idealmente acima de 450
 const TOPidealFarmPerMinute = 7; // Farm por minuto (CS), idealmente entre 8 e 10
 const TOPidealKDA = 3.25; // KDA (Kill/Death/Assist ratio), idealmente acima de 4.0
-const TOPidealKillParticipationPercentage = 50; // Participação em abates (%), idealmente entre 65% e 75%
+const TOPidealKillParticipationPercentage = 0.5; // Participação em abates (%), idealmente entre 65% e 75%
 const TOPidealDamagePerMinute = 525; // Dano por minuto (DPM), idealmente acima de 600
-const TOPidealTeamDamagePercentage = 22.5; // Porcentagem de dano da equipe (%), idealmente entre 25% e 35%
+const TOPidealTeamDamagePercentage = 0.225; // Porcentagem de dano da equipe (%), idealmente entre 25% e 35%
 const TOPidealVisionScorePerMinute = 0.85; // Pontuação de visão por minuto (VSPM), idealmente entre 0.8 e 1.0
 
 // gameDuration (is in the match object)
@@ -49,7 +49,7 @@ export const TOP_STATS = (info: any, player: any) => {
 
 	const visionScorePerMinutePercentageStats = visionScorePerMinute * 100 / TOPidealVisionScorePerMinute
 	const goldPercentageStats = goldPerMinute * 100 / TOPidealGold
-	const farmPercentageStats = (minionsPerMinute / gameDuration)* 100 / TOPidealFarmPerMinute
+	const farmPercentageStats = minionsPerMinute * 100 / TOPidealFarmPerMinute
 	const KDAPercentageStats = kda * 100 / TOPidealKDA
 	const killParticipationPercentageStats = killParticipation * 100 / TOPidealKillParticipationPercentage
 	const damagePerMinutePercentageStats = damagePerMinute * 100 / TOPidealDamagePerMinute
@@ -65,5 +65,8 @@ export const TOP_STATS = (info: any, player: any) => {
 		teamDamagePercentageStats
 	) / 7
 
-	return proplayerStats
+	return {
+		stats: {visionScorePerMinutePercentageStats, goldPercentageStats, farmPercentageStats, KDAPercentageStats, killParticipationPercentageStats, damagePerMinutePercentageStats, teamDamagePercentageStats},
+		percentage: proplayerStats
+	}
 }

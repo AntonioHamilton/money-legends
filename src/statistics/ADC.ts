@@ -34,7 +34,7 @@ export const ADC_STATS = (info: any, player: any) => {
 	const damagePerMinute = totalDamageDealtToChampions / gameMinutes
 
 	const goldPercentageStats = goldPerMinute * 100 / ADCidealGold
-	const farmPercentageStats = (minionsPerMinute / gameDuration)* 100 / ADCidealFarmPerMinute
+	const farmPercentageStats = minionsPerMinute * 100 / ADCidealFarmPerMinute
 	const KDAPercentageStats = kda * 100 / ADCidealKDA
 	const killParticipationPercentageStats = killParticipation * 100 / ADCidealKillParticipationPercentage
 	const damagePerMinutePercentageStats = damagePerMinute * 100 / ADCidealDamagePerMinute
@@ -49,5 +49,8 @@ export const ADC_STATS = (info: any, player: any) => {
 		teamDamagePercentageStats
 	) / 6
 
-	return proplayerStats
+	return {
+		stats: {goldPercentageStats, farmPercentageStats, KDAPercentageStats, killParticipationPercentageStats, damagePerMinutePercentageStats, teamDamagePercentageStats},
+		percentage: proplayerStats
+	}
 }

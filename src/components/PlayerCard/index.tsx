@@ -1,42 +1,22 @@
 import { Card } from "../Card";
 import { Typography } from "../Typography";
-import { InfoContainer, PlayerCardContainer } from "./styled";
+import { InfoContainer, PlayerCardContainer, StatsContainer, TitleContainer } from "./styled";
 
 type PlayerCardProps = {
 	name: string
-	kills: number
-	assists: number
-	deaths: number
-	kda: number
 }
 
-export const PlayerCard = ({name, kills, assists, deaths, kda}: PlayerCardProps) => (
-	<Card>
+export const PlayerCard = ({name}: PlayerCardProps) => (
 		<PlayerCardContainer>
-			<InfoContainer>
-				<Typography>Nickname</Typography>
+			<TitleContainer>
 				<Typography>{name}</Typography>
-			</InfoContainer>
-
+			</TitleContainer>
 			<InfoContainer>
-				<Typography>Kills</Typography>
-				<Typography>{kills}</Typography>
-			</InfoContainer>
-	
-			<InfoContainer>
-				<Typography>Deaths</Typography>
-				<Typography>{deaths}</Typography>
-			</InfoContainer>
-
-			<InfoContainer>
-				<Typography>Assists</Typography>
-				<Typography>{assists}</Typography>
-			</InfoContainer>
-
-			<InfoContainer>
-				<Typography>KDA</Typography>
-				<Typography>{Math.ceil(kda * 100) / 100}</Typography>
+				<StatsContainer>
+					<Typography>STATUS 1</Typography>
+					<Typography>100 {'>'}</Typography>
+					<Typography>{200}</Typography>
+				</StatsContainer>
 			</InfoContainer>
 		</PlayerCardContainer>
-	</Card>
 )

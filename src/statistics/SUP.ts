@@ -44,5 +44,8 @@ export const SUP_STATS = (info: any, player: any) => {
 		teamDamagePercentageStats
 	) / 6
 
-	return proplayerStats
+	return {
+		stats: {haveMoreAssistsThenKills, visionScorePerMinutePercentageStats, goldPercentageStats, KDAPercentageStats, killParticipationPercentageStats, teamDamagePercentageStats},
+		percentage: proplayerStats
+	}
 }

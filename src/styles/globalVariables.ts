@@ -5,5 +5,7 @@ export const colors = {
 	black: "#101010",
 	mainBackground: "#1c1c1f",
 	textFields: "#31313c",
-	mainFont: "#5383e8"
+	card: "#282830",
+	mainFont: "#5383e8",
+	badge: "#57646F"
 };

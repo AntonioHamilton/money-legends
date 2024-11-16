@@ -2,9 +2,9 @@
 const JGidealGold = 400; // Ouro por minuto (GPM), idealmente acima de 450
 const JGidealFarmPerMinute = 5.5; // Farm por minuto (CS), idealmente entre 8 e 10
 const JGidealKDA = 4; // KDA (Kill/Death/Assist ratio), idealmente acima de 4.0
-const JGidealKillParticipationPercentage = 72.5; // Participação em abates (%), idealmente entre 65% e 75%
+const JGidealKillParticipationPercentage = 0.725; // Participação em abates (%), idealmente entre 65% e 75%
 const JGidealDamagePerMinute = 275; // Dano por minuto (DPM), idealmente acima de 600
-const JGidealTeamDamagePercentage = 17.5; // Porcentagem de dano da equipe (%), idealmente entre 25% e 35%
+const JGidealTeamDamagePercentage = 0.175; // Porcentagem de dano da equipe (%), idealmente entre 25% e 35%
 const JGidealVisionScorePerMinute = 1.35; // Pontuação de visão por minuto (VSPM), idealmente entre 0.8 e 1.0
 const JGidealDragonKilled = 0.5 // Dragons mortos,  em porcentagem, idealmente 50%
 const JGidealBaronKilled = 0.5 // Barons mortos,  em porcentagem, idealmente 50%
@@ -84,7 +84,7 @@ export const JG_STATS = (
 
 	const visionScorePerMinutePercentageStats = visionScorePerMinute * 100 / JGidealVisionScorePerMinute
 	const goldPercentageStats = goldPerMinute * 100 / JGidealGold
-	const farmPercentageStats = (minionsPerMinute / gameDuration)* 100 / JGidealFarmPerMinute
+	const farmPercentageStats = minionsPerMinute * 100 / JGidealFarmPerMinute
 	const KDAPercentageStats = kda * 100 / JGidealKDA
 	const killParticipationPercentageStats = killParticipation * 100 / JGidealKillParticipationPercentage
 	const damagePerMinutePercentageStats = damagePerMinute * 100 / JGidealDamagePerMinute
@@ -108,5 +108,9 @@ export const JG_STATS = (
 		baronsPercentage
 	) / 10
 
-	return proplayerStats
+	return {
+		stats: {visionScorePerMinutePercentageStats, goldPercentageStats, farmPercentageStats, KDAPercentageStats, killParticipationPercentageStats, damagePerMinutePercentageStats, teamDamagePercentageStats, voidGrubsPercentage,
+		dragonsPercentage, baronsPercentage},
+		percentage: proplayerStats
+	}
 }
