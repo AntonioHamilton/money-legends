@@ -1,7 +1,10 @@
 import { ChangeEvent } from "react";
-import { Card } from "../Card";
 import { CommonProps } from "../CommonProps";
-import { SearchButton, SearchTextField, SearchTextFieldContainer } from "./styled";
+import {
+	SearchButton,
+	SearchTextField,
+	SearchTextFieldContainer,
+} from "./styled";
 
 export type SearchProps = {
 	onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -10,7 +13,7 @@ export type SearchProps = {
 
 export const SearchBox = ({ onChange, onSubmit }: CommonProps<SearchProps>) => (
 	<SearchTextFieldContainer>
-		<SearchTextField onChange={onChange} placeholder="summoner#tag"/>
+		<SearchTextField onChange={onChange} placeholder="summoner#tag" />
 		<SearchButton onClick={onSubmit}>.GG</SearchButton>
 	</SearchTextFieldContainer>
 );

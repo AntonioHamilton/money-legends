@@ -12,7 +12,7 @@ export const Container = styled.div`
 	.title {
 		color: ${colors.mainFont};
 		font-size: 50px;
-    font-weight: 700;
+		font-weight: 700;
 		margin-bottom: 24px;
 	}
 `;
@@ -22,4 +22,4 @@ export const MatchContainer = styled.div`
 	flex-direction: column;
 	gap: 8px;
 	margin-top: 16px;
-`
+`;

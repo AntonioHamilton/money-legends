@@ -1,3 +1,5 @@
+import { MatchInfo, PlayerInfo, StatisticsInfo } from "@/types/global";
+
 //Median ChatGPT info for Pro Players in LCK / LEC / LCS / Worlds (best leagues / competitions)
 const TOPidealGold = 395; // Ouro por minuto (GPM), idealmente acima de 450
 const TOPidealFarmPerMinute = 7; // Farm por minuto (CS), idealmente entre 8 e 10
@@ -18,55 +20,70 @@ const TOPidealVisionScorePerMinute = 0.85; // Pontuação de visão por minuto (
 // visionScorePerMinute (is in the challenges object inside participants)
 
 type TopProps = {
-	gameDuration: number, 
-	goldPerMinute: number, 
-	totalMinionsKilled: number, 
-	KDA: number, 
-	killParticipation: number, 
-	totalDamageDealtToChampions: number, 
-	teamDamagePercentage: number,
-	visionScorePerMinute: number
-}
+	gameDuration: number;
+	goldPerMinute: number;
+	totalMinionsKilled: number;
+	KDA: number;
+	killParticipation: number;
+	totalDamageDealtToChampions: number;
+	teamDamagePercentage: number;
+	visionScorePerMinute: number;
+};
 
-export const TOP_STATS = (info: any, player: any) => {
-	const { 
+export const TOP_STATS = (
+	info: MatchInfo,
+	player: PlayerInfo
+): StatisticsInfo => {
+	const {
 		challenges: {
-			goldPerMinute, 
-			kda, 
-			killParticipation, 
-			teamDamagePercentage, 
-			visionScorePerMinute
-		}, 
-		totalDamageDealtToChampions, 
-		totalMinionsKilled 
-	} = player
+			goldPerMinute,
+			kda,
+			killParticipation,
+			teamDamagePercentage,
+			visionScorePerMinute,
+		},
+		totalDamageDealtToChampions,
+		totalMinionsKilled,
+	} = player;
 
 	const { gameDuration } = info;
-		
-	const gameMinutes = Math.floor(gameDuration / 60)
-	const minionsPerMinute = totalMinionsKilled / gameMinutes
-	const damagePerMinute = totalDamageDealtToChampions / gameMinutes
 
-	const visionScorePerMinutePercentageStats = visionScorePerMinute * 100 / TOPidealVisionScorePerMinute
-	const goldPercentageStats = goldPerMinute * 100 / TOPidealGold
-	const farmPercentageStats = minionsPerMinute * 100 / TOPidealFarmPerMinute
-	const KDAPercentageStats = kda * 100 / TOPidealKDA
-	const killParticipationPercentageStats = killParticipation * 100 / TOPidealKillParticipationPercentage
-	const damagePerMinutePercentageStats = damagePerMinute * 100 / TOPidealDamagePerMinute
-	const teamDamagePercentageStats = teamDamagePercentage * 100 / TOPidealTeamDamagePercentage
+	const gameMinutes = Math.floor(gameDuration / 60);
+	const minionsPerMinute = totalMinionsKilled / gameMinutes;
+	const damagePerMinute = totalDamageDealtToChampions / gameMinutes;
 
-	const proplayerStats = (
-		visionScorePerMinutePercentageStats + 
-		goldPercentageStats + 
-		farmPercentageStats + 
-		KDAPercentageStats + 
-		killParticipationPercentageStats + 
-		damagePerMinutePercentageStats + 
-		teamDamagePercentageStats
-	) / 7
+	const visionScorePerMinutePercentageStats =
+		(visionScorePerMinute * 100) / TOPidealVisionScorePerMinute;
+	const goldPercentageStats = (goldPerMinute * 100) / TOPidealGold;
+	const farmPercentageStats = (minionsPerMinute * 100) / TOPidealFarmPerMinute;
+	const KDAPercentageStats = (kda * 100) / TOPidealKDA;
+	const killParticipationPercentageStats =
+		(killParticipation * 100) / TOPidealKillParticipationPercentage;
+	const damagePerMinutePercentageStats =
+		(damagePerMinute * 100) / TOPidealDamagePerMinute;
+	const teamDamagePercentageStats =
+		(teamDamagePercentage * 100) / TOPidealTeamDamagePercentage;
+
+	const proplayerStats =
+		(visionScorePerMinutePercentageStats +
+			goldPercentageStats +
+			farmPercentageStats +
+			KDAPercentageStats +
+			killParticipationPercentageStats +
+			damagePerMinutePercentageStats +
+			teamDamagePercentageStats) /
+		7;
 
 	return {
-		stats: {visionScorePerMinutePercentageStats, goldPercentageStats, farmPercentageStats, KDAPercentageStats, killParticipationPercentageStats, damagePerMinutePercentageStats, teamDamagePercentageStats},
-		percentage: proplayerStats
-	}
-}
+		stats: {
+			visionScorePerMinutePercentageStats,
+			goldPercentageStats,
+			farmPercentageStats,
+			KDAPercentageStats,
+			killParticipationPercentageStats,
+			damagePerMinutePercentageStats,
+			teamDamagePercentageStats,
+		},
+		percentage: proplayerStats,
+	};
+};

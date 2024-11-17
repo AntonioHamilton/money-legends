@@ -8,7 +8,7 @@ export const PlayerCardContainer = styled.div`
 	flex-direction: column;
 	align-items: center;
 	border-radius: 8px;
-`
+`;
 
 export const TitleContainer = styled.div`
 	padding: 8px;
@@ -21,7 +21,7 @@ export const TitleContainer = styled.div`
 	span {
 		color: ${colors.white};
 	}
-`
+`;
 
 export const InfoContainer = styled.div`
 	padding: 8px;
@@ -32,7 +32,7 @@ export const InfoContainer = styled.div`
 	span {
 		color: ${colors.white};
 	}
-`
+`;
 
 export const StatsContainer = styled.div`
 	background: ${colors.badge};
@@ -41,28 +41,28 @@ export const StatsContainer = styled.div`
 	border-radius: 50px;
 	margin: 4px 0px;
 	width: fit-content;
-	
+
 	.status-name {
 		margin-right: 8px;
 		font-weight: 700;
-	};
+	}
 
 	.player-percentage {
 		margin-right: 8px;
 		font-weight: 600;
-	};
+	}
 
 	.player-difference {
 		font-weight: 600;
 		&.positive {
-			color: ${colors.green500}
+			color: ${colors.green500};
 		}
 
 		&.negative {
-			color: ${colors.red700}
+			color: ${colors.red700};
 		}
-	};
-`
+	}
+`;
 
 export const Button = styled.button`
 	padding: 8px;
@@ -71,4 +71,4 @@ export const Button = styled.button`
 	margin: 16px 16px 12px 16px;
 	border: none;
 	cursor: pointer;
-`
+`;

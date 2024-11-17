@@ -1,10 +1,11 @@
-//Median ChatGPT info for Pro Players in LCK / LEC / LCS / Worlds (best leagues / competitions)
-const SUPidealGold = 250
-const SUPidealKDA = 4.75
-const SUPidealKillParticipationPercentage = 0.7 //(in percentage)
-const SUPidealTeamDamagePercentage = 0.075 //(in percentage)
-const SUPidealVisionScorePerMinute = 2
+import { MatchInfo, PlayerInfo, StatisticsInfo } from "@/types/global";
 
+//Median ChatGPT info for Pro Players in LCK / LEC / LCS / Worlds (best leagues / competitions)
+const SUPidealGold = 250;
+const SUPidealKDA = 4.75;
+const SUPidealKillParticipationPercentage = 0.7; //(in percentage)
+const SUPidealTeamDamagePercentage = 0.075; //(in percentage)
+const SUPidealVisionScorePerMinute = 2;
 
 // gameDuration (is in the match object)
 // goldPerMinute (inside challenges)
@@ -14,38 +15,50 @@ const SUPidealVisionScorePerMinute = 2
 // assists (in the participant object)
 // visionScorePerMinute (is in the challenges object inside participants)
 
-export const SUP_STATS = (info: any, player: any) => {
-
-	const { 
+export const SUP_STATS = (
+	info: MatchInfo,
+	player: PlayerInfo
+): StatisticsInfo => {
+	const {
 		challenges: {
-			goldPerMinute, 
+			goldPerMinute,
 			kda,
-			killParticipation, 
-			teamDamagePercentage, 
-			visionScorePerMinute
-		}, 
-		kills, 
+			killParticipation,
+			teamDamagePercentage,
+			visionScorePerMinute,
+		},
+		kills,
 		assists,
-	} = player
+	} = player;
 
 	const haveMoreAssistsThenKills = assists > kills ? 100 : 0;
-	const visionScorePerMinutePercentageStats = visionScorePerMinute * 100 / SUPidealVisionScorePerMinute
-	const goldPercentageStats = goldPerMinute * 100 / SUPidealGold
-	const KDAPercentageStats = kda * 100 / SUPidealKDA
-	const killParticipationPercentageStats = killParticipation * 100 / SUPidealKillParticipationPercentage
-	const teamDamagePercentageStats = teamDamagePercentage * 100 / SUPidealTeamDamagePercentage
+	const visionScorePerMinutePercentageStats =
+		(visionScorePerMinute * 100) / SUPidealVisionScorePerMinute;
+	const goldPercentageStats = (goldPerMinute * 100) / SUPidealGold;
+	const KDAPercentageStats = (kda * 100) / SUPidealKDA;
+	const killParticipationPercentageStats =
+		(killParticipation * 100) / SUPidealKillParticipationPercentage;
+	const teamDamagePercentageStats =
+		(teamDamagePercentage * 100) / SUPidealTeamDamagePercentage;
 
-	const proplayerStats = (
-		haveMoreAssistsThenKills +
-		visionScorePerMinutePercentageStats +
-		goldPercentageStats +
-		KDAPercentageStats +
-		killParticipationPercentageStats +
-		teamDamagePercentageStats
-	) / 6
+	const proplayerStats =
+		(haveMoreAssistsThenKills +
+			visionScorePerMinutePercentageStats +
+			goldPercentageStats +
+			KDAPercentageStats +
+			killParticipationPercentageStats +
+			teamDamagePercentageStats) /
+		6;
 
 	return {
-		stats: {haveMoreAssistsThenKills, visionScorePerMinutePercentageStats, goldPercentageStats, KDAPercentageStats, killParticipationPercentageStats, teamDamagePercentageStats},
-		percentage: proplayerStats
-	}
-}
+		stats: {
+			haveMoreAssistsThenKills,
+			visionScorePerMinutePercentageStats,
+			goldPercentageStats,
+			KDAPercentageStats,
+			killParticipationPercentageStats,
+			teamDamagePercentageStats,
+		},
+		percentage: proplayerStats,
+	};
+};
