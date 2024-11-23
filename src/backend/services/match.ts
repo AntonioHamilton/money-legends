@@ -27,8 +27,17 @@ export const getMatches = async (
 	user_id: string,
 	user_flag: string
 ) => {
-	const puuid = await getPUUID(url, user_id, user_flag);
-	const matchIDS = await getMatchID(url, puuid);
+	const puuid = await getPUUID(url, user_id, user_flag)
+		.then((puuid) => puuid)
+		.catch((err) => {
+			throw err;
+		});
+
+	const matchIDS = await getMatchID(url, puuid)
+		.then((matchIDS) => matchIDS)
+		.catch((err) => {
+			throw err;
+		});
 
 	const matchs = matchIDS.slice(0, 10);
 
@@ -43,8 +52,4 @@ export const getMatches = async (
 		.catch((error) => {
 			throw error;
 		});
-
-	// return axios.get(`${url}/lol/match/v5/matches/${matchIDS[0]}?api_key=${process.env.API_KEY}`)
-	// .then(response => response.data)
-	// .catch(error => { throw error });
 };

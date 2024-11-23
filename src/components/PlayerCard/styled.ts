@@ -2,6 +2,7 @@ import { colors } from "@/styles/globalVariables";
 import styled from "styled-components";
 
 export const PlayerCardContainer = styled.div`
+	margin-top: 16px;
 	display: flex;
 	width: 60%;
 	background: ${colors.card};

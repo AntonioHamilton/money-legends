@@ -8,7 +8,7 @@ export type TypographyProps = {
 export const Typography = ({
 	children,
 	className,
-	color
+	color,
 }: CommonProps<TypographyProps>) => (
 	<Text className={className} color={color}>
 		{children}

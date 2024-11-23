@@ -2,13 +2,13 @@ import { colors } from "@/styles/globalVariables";
 import styled from "styled-components";
 
 export const SearchTextFieldContainer = styled.div`
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 	width: 90%;
 	background-color: #31313c;
 	padding: 8px 16px;
 	border-radius: 30px;
-`
+`;
 
 export const SearchTextField = styled.input`
 	width: 94%;
@@ -27,4 +27,4 @@ export const SearchButton = styled.button`
 	color: ${colors.mainFont};
 	border: none;
 	background: none;
-`
+`;

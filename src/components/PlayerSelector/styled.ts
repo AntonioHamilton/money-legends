@@ -2,15 +2,14 @@ import { colors } from "@/styles/globalVariables";
 import styled from "styled-components";
 
 export const Container = styled.div`
-		margin-bottom: 24px;
-`
+	margin-bottom: 24px;
+`;
 
 export const LaneContainer = styled.div`
 	display: flex;
 	gap: 32px;
-	height: 100px;
+	height: 120px;
 	margin-bottom: 8px;
-
 
 	div:nth-child(odd) {
 		align-self: flex-start;
@@ -19,7 +18,7 @@ export const LaneContainer = styled.div`
 	div:nth-child(even) {
 		align-self: flex-end;
 	}
-`
+`;
 
 export const Selector = styled.div`
 	display: flex;
@@ -27,13 +26,19 @@ export const Selector = styled.div`
 	justify-content: center;
 	align-items: center;
 
+	.summoner-name {
+		color: white;
+		padding: 5px;
+		font-size: 12px;
+	}
+
 	.lane {
 		color: white;
-    font-weight: 600;
-    padding: 5px;
-    font-size: 12px;
+		font-weight: 600;
+		padding: 5px;
+		font-size: 12px;
 	}
-`
+`;
 
 export const Button = styled.button`
 	border: 3px solid white;
@@ -42,7 +47,7 @@ export const Button = styled.button`
 	height: 50px;
 	width: 50px;
 	cursor: pointer;
-  border-radius: 100px;
+	border-radius: 100px;
 	overflow: hidden;
 
 	&.selected {
@@ -52,4 +57,4 @@ export const Button = styled.button`
 	img {
 		height: 45px;
 	}
-`
+`;
