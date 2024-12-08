@@ -1,6 +1,5 @@
 import { getMatches } from "@/backend/services/match";
 import { API_URLS } from "@/config/url";
-import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const basicStats = async (req: NextApiRequest, res: NextApiResponse) => {
