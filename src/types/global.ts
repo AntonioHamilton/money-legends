@@ -53,6 +53,19 @@ export type StatisticsInfo = {
 	percentage: number;
 };
 
+export type PlayerStatistcsRiot = {
+	goldPerMinute: number;
+	kda: number;
+	killParticipation: number;
+	teamDamagePercentage: number;
+	visionScorePerMinute: number;
+	damagePerMinute: number;
+	minionsPerMinute: number;
+	voidGrubsPercentage: number;
+	dragonsPercentage: number;
+	baronsPercentage: number;
+};
+
 export type MatchsServiceProps = {
 	info: {
 		gameMode: string;

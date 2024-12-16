@@ -12,6 +12,8 @@ import {
 	StatisticsInfo,
 } from "@/types/global";
 import { api } from "@config/axios";
+import { roleAnalysis } from "@/helpers/playerAnalysis";
+import { playerStatsAverageClient } from "../helpers/playerAnalysis";
 
 const ANY_STATS = (info: MatchInfo, player: PlayerInfo): StatisticsInfo => {
 	const TOP = TOP_STATS(info, player);
@@ -123,60 +125,6 @@ export const useHome = () => {
 		setRole(role);
 	};
 
-	const roleAnalysis = (
-		item: FIXME,
-		match: MatchsServiceProps,
-		userID: string,
-		userFlag: string
-	) => {
-		return (
-			item.riotIdGameName.toLowerCase() === userID.toLowerCase() &&
-			item.riotIdTagline.toLowerCase() === userFlag.toLowerCase() &&
-			item.individualPosition === role &&
-			match.info.gameMode === "CLASSIC"
-		);
-	};
-
-	const playerSetter = (
-		proPlayerResultsFiltered: StatisticsInfo[],
-		userID: string
-	) => {
-		const statsKeys = Object.keys(proPlayerResultsFiltered[0].stats);
-
-		if (statsKeys.length <= 0) return;
-
-		const statsObject: Record<string, FIXME> = {};
-
-		proPlayerResultsFiltered.forEach((value) => {
-			statsKeys.forEach((item) => {
-				statsObject[item] =
-					(statsObject[item] || 0) +
-					(value.stats[item as keyof StatisticsInfo["stats"]] || 0);
-			});
-		});
-
-		const finalStats: Record<string, FIXME> = {};
-
-		statsKeys.forEach((item) => {
-			finalStats[item] = statsObject[item] / proPlayerResultsFiltered.length;
-		});
-
-		const percentages = proPlayerResultsFiltered.map(
-			(value) => value.percentage
-		);
-
-		const playerStats = {
-			summonerName: userID,
-			stats: finalStats,
-			proPlayerPercentage:
-				percentages.reduce(
-					(value: number, current: number) => value + current
-				) / proPlayerResultsFiltered.length,
-		};
-
-		setPlayer(playerStats);
-	};
-
 	const addToTeam = () => {
 		const newTeam = { ...team };
 		newTeam[role as keyof TeamProps] = player;
@@ -220,7 +168,7 @@ export const useHome = () => {
 		const proplayerResults = matchs.map((match) => {
 			const playerInMatch = match.info.participants.filter((item) => {
 				if (
-					roleAnalysis(item, match, userID, userFlag) ||
+					roleAnalysis(item, match, userID, userFlag, role) ||
 					(role === "ANY" &&
 						item.riotIdGameName.toLowerCase() === userID.toLowerCase() &&
 						item.riotIdTagline.toLowerCase() === userFlag.toLowerCase())
@@ -240,7 +188,9 @@ export const useHome = () => {
 		);
 
 		if (proPlayerResultsFiltered.length > 0) {
-			playerSetter(proPlayerResultsFiltered, searchInput.trim());
+			setPlayer(
+				playerStatsAverageClient(proPlayerResultsFiltered, searchInput.trim())
+			);
 		} else {
 			return setError("The player doesn't have any matchs in this role");
 		}

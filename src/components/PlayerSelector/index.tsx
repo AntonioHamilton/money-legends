@@ -1,4 +1,4 @@
-import { TeamProps } from "@/pages/home/useHome";
+import { TeamProps } from "@/hooks/useHome";
 import { CommonProps } from "../CommonProps";
 import { Typography } from "../Typography";
 import { Button, Container, LaneContainer, Selector } from "./styled";

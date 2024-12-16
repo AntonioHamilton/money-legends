@@ -1,11 +1,11 @@
 import { PlayerCard } from "@components/PlayerCard";
-import { Container } from "./styled";
+import * as SC from "./styled";
 import { SearchBox } from "@components/SearchBox";
 import { Typography } from "@components/Typography";
 import { PlayerSelector } from "@components/PlayerSelector";
 
 import { MessageModal } from "@components/ErrorModal";
-import { useHome } from "./useHome";
+import { useHome } from "../../hooks/useHome";
 
 const TestPage = () => {
 	const {
@@ -21,13 +21,13 @@ const TestPage = () => {
 	} = useHome();
 
 	return (
-		<Container>
+		<SC.Container>
 			<Typography className="title">WORK HARD GG</Typography>
 			<PlayerSelector team={team} changeRole={changeRole} selectedRole={role} />
 			<SearchBox onChange={onChange} onSubmit={onSubmit} />
 			{player && <PlayerCard player={player} addToTeam={addToTeam} />}
 			<MessageModal errorMessage={error} type="negative" />
-		</Container>
+		</SC.Container>
 	);
 };
 

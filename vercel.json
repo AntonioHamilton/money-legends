@@ -1,24 +1,8 @@
 {
 	"crons": [
 		{
-			"path": "/api/stats/top",
+			"path": "/api/stats",
 			"schedule": "0 2 * * *"
-		},
-		{
-			"path": "/api/stats/jg",
-			"schedule": "5 2 * * *"
-		},
-		{
-			"path": "/api/stats/mid",
-			"schedule": "10 2 * * *"
-		},
-		{
-			"path": "/api/stats/adc",
-			"schedule": "15 2 * * *"
-		},
-		{
-			"path": "/api/stats/sup",
-			"schedule": "20 2 * * *"
 		}
 	]
 }

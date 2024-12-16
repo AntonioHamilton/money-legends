@@ -53,3 +53,25 @@ export const getMatches = async (
 			throw error;
 		});
 };
+
+export const getMatchWithPuuid = async (url: string, puuid: string) => {
+	const matchIDS = await getMatchID(url, puuid)
+		.then((matchIDS) => matchIDS)
+		.catch((err) => {
+			throw err;
+		});
+
+	const matchs = matchIDS.slice(0, 10);
+
+	const matchesPromises = matchs.map((matchID: string) =>
+		axios.get(
+			`${url}/lol/match/v5/matches/${matchID}?api_key=${process.env.API_KEY}`
+		)
+	);
+
+	return Promise.all(matchesPromises)
+		.then((responses) => responses.map((response) => response.data))
+		.catch((error) => {
+			throw error;
+		});
+};
