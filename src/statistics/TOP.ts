@@ -19,17 +19,6 @@ const TOPidealVisionScorePerMinute = 0.85; // Pontuação de visão por minuto (
 // teamDamagePercentage (is in the challenges object inside participants)
 // visionScorePerMinute (is in the challenges object inside participants)
 
-type TopProps = {
-	gameDuration: number;
-	goldPerMinute: number;
-	totalMinionsKilled: number;
-	KDA: number;
-	killParticipation: number;
-	totalDamageDealtToChampions: number;
-	teamDamagePercentage: number;
-	visionScorePerMinute: number;
-};
-
 export const TOP_STATS = (
 	info: MatchInfo,
 	player: PlayerInfo

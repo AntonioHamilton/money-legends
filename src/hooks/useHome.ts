@@ -1,9 +1,11 @@
 import { ChangeEvent, useState } from "react";
-import { TOP_STATS } from "@statistics/TOP";
-import { JG_STATS } from "@statistics/JG";
-import { MID_STATS } from "@statistics/MID";
-import { ADC_STATS } from "@statistics/ADC";
-import { SUP_STATS } from "@statistics/SUP";
+import {
+	TOP_STATS,
+	JG_STATS,
+	ADC_STATS,
+	MID_STATS,
+	SUP_STATS,
+} from "@statistics/index";
 import {
 	FIXME,
 	MatchInfo,
