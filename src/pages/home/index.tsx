@@ -1,5 +1,5 @@
 import { PlayerCard } from "@components/PlayerCard";
-import * as SC from "./styled";
+import * as SC from "../../views/home/styled";
 import { SearchBox } from "@components/SearchBox";
 import { Typography } from "@components/Typography";
 import { PlayerSelector } from "@components/PlayerSelector";
