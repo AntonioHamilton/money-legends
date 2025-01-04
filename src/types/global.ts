@@ -1,5 +1,23 @@
 export type FIXME = any;
 
+export type IdealData = {
+	success: boolean;
+	info: {
+		lane: string;
+		playerReference: string;
+		idealGold: number;
+		idealKDA: number;
+		idealFarmPerMinute: number;
+		idealKillParticipationPercentage: number;
+		idealDamagePerMinute: number;
+		idealTeamDamagePercentage: number;
+		idealVisionScorePerMinute: number;
+		idealDragonKilled: number;
+		idealBaronKilled: number;
+		idealVoidGrubsKilled: number;
+	};
+};
+
 export type PlayerInfo = {
 	challenges: {
 		goldPerMinute: number;

@@ -1,4 +1,9 @@
-import { MatchInfo, PlayerInfo, StatisticsInfo } from "@/types/global";
+import {
+	IdealData,
+	MatchInfo,
+	PlayerInfo,
+	StatisticsInfo,
+} from "@/types/global";
 
 //Median ChatGPT info for Pro Players in LCK / LEC / LCS / Worlds (best leagues / competitions)
 const SUPidealGold = 250;
@@ -17,7 +22,8 @@ const SUPidealVisionScorePerMinute = 2;
 
 export const SUP_STATS = (
 	info: MatchInfo,
-	player: PlayerInfo
+	player: PlayerInfo,
+	idealData: IdealData
 ): StatisticsInfo => {
 	const {
 		challenges: {
@@ -30,6 +36,17 @@ export const SUP_STATS = (
 		kills,
 		assists,
 	} = player;
+
+	const idealStats = idealData.info;
+
+	const SUPidealGold = idealStats.idealGold || 250;
+	const SUPidealKDA = idealStats.idealKDA || 4.75;
+	const SUPidealKillParticipationPercentage =
+		idealStats.idealKillParticipationPercentage || 0.7;
+	const SUPidealTeamDamagePercentage =
+		idealStats.idealTeamDamagePercentage || 0.075;
+	const SUPidealVisionScorePerMinute =
+		idealStats.idealVisionScorePerMinute || 2;
 
 	const haveMoreAssistsThenKills = assists > kills ? 100 : 0;
 	const visionScorePerMinutePercentageStats =

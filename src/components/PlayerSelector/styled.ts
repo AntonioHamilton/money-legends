@@ -55,6 +55,7 @@ export const Button = styled.button`
 	}
 
 	img {
-		height: 45px;
+		height: 46px;
+		width: 46px;
 	}
 `;

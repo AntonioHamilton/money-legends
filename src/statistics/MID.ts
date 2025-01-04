@@ -1,13 +1,9 @@
-import { MatchInfo, PlayerInfo, StatisticsInfo } from "@/types/global";
-
-//Median ChatGPT info for Pro Players in LCK / LEC / LCS / Worlds (best leagues / competitions)
-const MIDidealGold = 450; // Ouro por minuto (GPM), idealmente acima de 450
-const MIDidealFarmPerMinute = 8; // Farm por minuto (CS), idealmente entre 8 e 10
-const MIDidealKDA = 4.0; // KDA (Kill/Death/Assist ratio), idealmente acima de 4.0
-const MIDidealKillParticipationPercentage = 0.65; // Participação em abates (%), idealmente entre 65% e 75%
-const MIDidealDamagePerMinute = 600; // Dano por minuto (DPM), idealmente acima de 600
-const MIDidealTeamDamagePercentage = 0.3; // Porcentagem de dano da equipe (%), idealmente entre 25% e 35%
-const MIDidealVisionScorePerMinute = 0.8; // Pontuação de visão por minuto (VSPM), idealmente entre 0.8 e 1.0
+import {
+	IdealData,
+	MatchInfo,
+	PlayerInfo,
+	StatisticsInfo,
+} from "@/types/global";
 
 // gameDuration (is in the match object)
 // goldPerMinute (inside challenges)
@@ -21,7 +17,8 @@ const MIDidealVisionScorePerMinute = 0.8; // Pontuação de visão por minuto (V
 
 export const MID_STATS = (
 	info: MatchInfo,
-	player: PlayerInfo
+	player: PlayerInfo,
+	idealData: IdealData
 ): StatisticsInfo => {
 	const {
 		challenges: {
@@ -36,6 +33,17 @@ export const MID_STATS = (
 	} = player;
 
 	const { gameDuration } = info;
+	const idealStats = idealData.info;
+
+	const MIDidealGold = idealStats.idealGold || 450;
+	const MIDidealFarmPerMinute = idealStats.idealFarmPerMinute || 8;
+	const MIDidealKDA = idealStats.idealKDA || 4.0;
+	const MIDidealKillParticipationPercentage =
+		idealStats.idealKillParticipationPercentage || 0.65;
+	const MIDidealDamagePerMinute = idealStats.idealDamagePerMinute || 600;
+	const MIDidealTeamDamagePercentage =
+		idealStats.idealTeamDamagePercentage || 0.3;
+	const MIDidealVisionScorePerMinute = idealStats.idealDamagePerMinute || 0.8;
 
 	const gameMinutes = Math.floor(gameDuration / 60);
 	const minionsPerMinute = totalMinionsKilled / gameMinutes;

@@ -8,6 +8,7 @@ import {
 } from "@statistics/index";
 import {
 	FIXME,
+	IdealData,
 	MatchInfo,
 	MatchsServiceProps,
 	PlayerInfo,
@@ -16,13 +17,18 @@ import {
 import { api } from "@config/axios";
 import { roleAnalysis } from "@/helpers/playerAnalysis";
 import { playerStatsAverageClient } from "../helpers/playerAnalysis";
+import { HomeProps } from "@/pages";
 
-const ANY_STATS = (info: MatchInfo, player: PlayerInfo): StatisticsInfo => {
-	const TOP = TOP_STATS(info, player);
-	const JG = JG_STATS(info, player);
-	const MID = MID_STATS(info, player);
-	const ADC = ADC_STATS(info, player);
-	const SUP = SUP_STATS(info, player);
+const ANY_STATS = (
+	info: MatchInfo,
+	player: PlayerInfo,
+	idealData: IdealData
+): StatisticsInfo => {
+	const TOP = TOP_STATS(info, player, idealData);
+	const JG = JG_STATS(info, player, idealData);
+	const MID = MID_STATS(info, player, idealData);
+	const ADC = ADC_STATS(info, player, idealData);
+	const SUP = SUP_STATS(info, player, idealData);
 
 	const percentageSUM =
 		TOP.percentage +
@@ -87,7 +93,7 @@ export type TeamProps = {
 
 const roleFunctions: Record<
 	string,
-	(info: MatchInfo, player: PlayerInfo) => StatisticsInfo
+	(info: MatchInfo, player: PlayerInfo, idealData: IdealData) => StatisticsInfo
 > = {
 	TOP: TOP_STATS,
 	JUNGLE: JG_STATS,
@@ -103,7 +109,7 @@ const initialPlayerState: PlayerProps = {
 	proPlayerPercentage: 0,
 };
 
-export const useHome = () => {
+export const useHome = (idealData: HomeProps) => {
 	const [loading, setLoading] = useState(false);
 	const [searchInput, setSearchInput] = useState("");
 	const [role, setRole] = useState<keyof TeamProps>("ANY");
@@ -181,7 +187,11 @@ export const useHome = () => {
 			});
 
 			return playerInMatch[0]
-				? roleFunctions[role](match.info, playerInMatch[0])
+				? roleFunctions[role](
+						match.info,
+						playerInMatch[0],
+						idealData[role as keyof HomeProps]
+					)
 				: null;
 		});
 

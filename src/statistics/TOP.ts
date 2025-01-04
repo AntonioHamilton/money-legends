@@ -1,13 +1,9 @@
-import { MatchInfo, PlayerInfo, StatisticsInfo } from "@/types/global";
-
-//Median ChatGPT info for Pro Players in LCK / LEC / LCS / Worlds (best leagues / competitions)
-const TOPidealGold = 395; // Ouro por minuto (GPM), idealmente acima de 450
-const TOPidealFarmPerMinute = 7; // Farm por minuto (CS), idealmente entre 8 e 10
-const TOPidealKDA = 3.25; // KDA (Kill/Death/Assist ratio), idealmente acima de 4.0
-const TOPidealKillParticipationPercentage = 0.5; // Participação em abates (%), idealmente entre 65% e 75%
-const TOPidealDamagePerMinute = 525; // Dano por minuto (DPM), idealmente acima de 600
-const TOPidealTeamDamagePercentage = 0.225; // Porcentagem de dano da equipe (%), idealmente entre 25% e 35%
-const TOPidealVisionScorePerMinute = 0.85; // Pontuação de visão por minuto (VSPM), idealmente entre 0.8 e 1.0
+import {
+	IdealData,
+	MatchInfo,
+	PlayerInfo,
+	StatisticsInfo,
+} from "@/types/global";
 
 // gameDuration (is in the match object)
 // goldPerMinute (inside challenges)
@@ -21,7 +17,8 @@ const TOPidealVisionScorePerMinute = 0.85; // Pontuação de visão por minuto (
 
 export const TOP_STATS = (
 	info: MatchInfo,
-	player: PlayerInfo
+	player: PlayerInfo,
+	idealData: IdealData
 ): StatisticsInfo => {
 	const {
 		challenges: {
@@ -36,6 +33,18 @@ export const TOP_STATS = (
 	} = player;
 
 	const { gameDuration } = info;
+	const idealStats = idealData.info;
+
+	const TOPidealGold = idealStats.idealGold || 395;
+	const TOPidealFarmPerMinute = idealStats.idealFarmPerMinute || 7;
+	const TOPidealKDA = idealStats.idealKDA || 3.25;
+	const TOPidealKillParticipationPercentage =
+		idealStats.idealKillParticipationPercentage || 0.5;
+	const TOPidealDamagePerMinute = idealStats.idealDamagePerMinute || 525;
+	const TOPidealTeamDamagePercentage =
+		idealStats.idealTeamDamagePercentage || 0.225;
+	const TOPidealVisionScorePerMinute =
+		idealStats.idealVisionScorePerMinute || 0.85;
 
 	const gameMinutes = Math.floor(gameDuration / 60);
 	const minionsPerMinute = totalMinionsKilled / gameMinutes;

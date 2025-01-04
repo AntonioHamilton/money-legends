@@ -1,4 +1,9 @@
-import { MatchInfo, PlayerInfo, StatisticsInfo } from "@/types/global";
+import {
+	IdealData,
+	MatchInfo,
+	PlayerInfo,
+	StatisticsInfo,
+} from "@/types/global";
 
 //Median ChatGPT info for Pro Players in LCK / LEC / LCS / Worlds (best leagues / competitions)
 const JGidealGold = 400; // Ouro por minuto (GPM), idealmente acima de 450
@@ -41,7 +46,8 @@ const initialStateTeam = {
 
 export const JG_STATS = (
 	info: MatchInfo,
-	player: PlayerInfo
+	player: PlayerInfo,
+	idealData: IdealData
 ): StatisticsInfo => {
 	const {
 		challenges: {
@@ -57,6 +63,18 @@ export const JG_STATS = (
 	} = player;
 
 	const { gameDuration, teams } = info;
+	const idealStats = idealData.info;
+
+	const JGidealGold = idealStats.idealGold || 400;
+	const JGidealFarmPerMinute = idealStats.idealFarmPerMinute || 5.5;
+	const JGidealKDA = idealStats.idealKDA || 4;
+	const JGidealKillParticipationPercentage =
+		idealStats.idealKillParticipationPercentage || 0.725;
+	const JGidealDamagePerMinute = idealStats.idealDamagePerMinute || 275;
+	const JGidealTeamDamagePercentage =
+		idealStats.idealTeamDamagePercentage || 0.175;
+	const JGidealVisionScorePerMinute =
+		idealStats.idealVisionScorePerMinute || 1.35;
 
 	let playerTeam = initialStateTeam;
 	let enemyTeam = initialStateTeam;
