@@ -26,6 +26,12 @@
 		"sourceType": "module"
 	},
 	"rules": {
+		"prettier/prettier": [
+			"error",
+			{
+				"endOfLine": "auto"
+			}
+		],
 		"unused-imports/no-unused-imports": "warn",
 		"consistent-return": "warn",
 		"no-console": "warn",
