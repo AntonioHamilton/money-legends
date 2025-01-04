@@ -22,13 +22,14 @@ import { HomeProps } from "@/pages";
 const ANY_STATS = (
 	info: MatchInfo,
 	player: PlayerInfo,
-	idealData: IdealData
+	idealData: IdealData,
+	data: HomeProps
 ): StatisticsInfo => {
-	const TOP = TOP_STATS(info, player, idealData);
-	const JG = JG_STATS(info, player, idealData);
-	const MID = MID_STATS(info, player, idealData);
-	const ADC = ADC_STATS(info, player, idealData);
-	const SUP = SUP_STATS(info, player, idealData);
+	const TOP = TOP_STATS(info, player, data.TOP);
+	const JG = JG_STATS(info, player, data.JUNGLE);
+	const MID = MID_STATS(info, player, data.MIDDLE);
+	const ADC = ADC_STATS(info, player, data.BOTTOM);
+	const SUP = SUP_STATS(info, player, data.UTILITY);
 
 	const percentageSUM =
 		TOP.percentage +
@@ -93,7 +94,12 @@ export type TeamProps = {
 
 const roleFunctions: Record<
 	string,
-	(info: MatchInfo, player: PlayerInfo, idealData: IdealData) => StatisticsInfo
+	(
+		info: MatchInfo,
+		player: PlayerInfo,
+		idealData: IdealData,
+		data: HomeProps
+	) => StatisticsInfo
 > = {
 	TOP: TOP_STATS,
 	JUNGLE: JG_STATS,
@@ -187,11 +193,15 @@ export const useHome = (idealData: HomeProps) => {
 			});
 
 			return playerInMatch[0]
-				? roleFunctions[role](
-						match.info,
-						playerInMatch[0],
-						idealData[role as keyof HomeProps]
-					)
+				? {
+						percentages: roleFunctions[role](
+							match.info,
+							playerInMatch[0],
+							idealData[role as keyof HomeProps],
+							idealData
+						),
+						matchInfo: playerInMatch[0],
+					}
 				: null;
 		});
 

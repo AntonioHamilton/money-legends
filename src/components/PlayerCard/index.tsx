@@ -7,11 +7,13 @@ import {
 	StatsContainer,
 	TitleContainer,
 } from "./styled";
+import Image from "next/image";
 
 type PlayerCardProps = {
 	player: {
 		summonerName: string;
 		stats: StatisticsInfo["stats"];
+		matchInfo: FIXME[];
 	};
 	addToTeam: () => void;
 };
@@ -41,6 +43,18 @@ export const PlayerCard = ({ player, addToTeam }: PlayerCardProps) => (
 		<TitleContainer>
 			<Typography>{player.summonerName}</Typography>
 		</TitleContainer>
+		{player.matchInfo.map((match) => (
+			<p key={match.championName}>
+				{match.championName}
+				<Image
+					src={`/assets/champions/${match.championName}.png`}
+					overrideSrc={`/assets/champions/Invoker.png`}
+					alt={match.championName}
+					width={45}
+					height={45}
+				/>
+			</p>
+		))}
 		<InfoContainer>
 			{Object.keys(player.stats).map((stat, index) => {
 				const playerPercentage = Math.round(

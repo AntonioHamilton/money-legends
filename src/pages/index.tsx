@@ -57,11 +57,11 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 		player,
 		error,
 	} = useHome({
-		TOP: TOP,
-		JUNGLE: JUNGLE,
-		MIDDLE: MIDDLE,
-		BOTTOM: BOTTOM,
-		UTILITY: UTILITY,
+		TOP,
+		JUNGLE,
+		MIDDLE,
+		BOTTOM,
+		UTILITY,
 	});
 
 	return (

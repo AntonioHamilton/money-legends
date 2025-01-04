@@ -117,20 +117,25 @@ export const getStats = (info: MatchInfo, player: PlayerInfo) => {
 };
 
 export const playerStatsAverageClient = (
-	proPlayerResultsFiltered: StatisticsInfo[],
+	proPlayerResultsFiltered: {
+		percentages: StatisticsInfo;
+		matchInfo: FIXME;
+	}[],
 	userID: string
 ) => {
-	const statsKeys = Object.keys(proPlayerResultsFiltered[0].stats);
+	const statsKeys = Object.keys(proPlayerResultsFiltered[0].percentages.stats);
+	const matchInfo: FIXME = [];
 
 	if (statsKeys.length <= 0) return;
 
 	const statsObject: Record<string, FIXME> = {};
 
 	proPlayerResultsFiltered.forEach((value) => {
+		matchInfo.push(value.matchInfo);
 		statsKeys.forEach((item) => {
 			statsObject[item] =
 				(statsObject[item] || 0) +
-				(value.stats[item as keyof StatisticsInfo["stats"]] || 0);
+				(value.percentages.stats[item as keyof StatisticsInfo["stats"]] || 0);
 		});
 	});
 
@@ -140,11 +145,14 @@ export const playerStatsAverageClient = (
 		finalStats[item] = statsObject[item] / proPlayerResultsFiltered.length;
 	});
 
-	const percentages = proPlayerResultsFiltered.map((value) => value.percentage);
+	const percentages = proPlayerResultsFiltered.map(
+		(value) => value.percentages.percentage
+	);
 
 	const playerStats = {
 		summonerName: userID,
 		stats: finalStats,
+		matchInfo,
 		proPlayerPercentage:
 			percentages.reduce((value: number, current: number) => value + current) /
 			proPlayerResultsFiltered.length,
