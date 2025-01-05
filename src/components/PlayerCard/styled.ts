@@ -11,6 +11,12 @@ export const PlayerCardContainer = styled.div`
 	border-radius: 8px;
 `;
 
+export const ChampionsContainer = styled.div`
+	margin-top: 10px;
+	display: flex;
+	gap: 4px;
+`;
+
 export const TitleContainer = styled.div`
 	padding: 8px;
 	width: 100%;

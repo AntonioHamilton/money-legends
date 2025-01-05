@@ -126,7 +126,7 @@ export const playerStatsAverageClient = (
 	const statsKeys = Object.keys(proPlayerResultsFiltered[0].percentages.stats);
 	const matchInfo: FIXME = [];
 
-	if (statsKeys.length <= 0) return;
+	if (statsKeys.length <= 0) return {};
 
 	const statsObject: Record<string, FIXME> = {};
 

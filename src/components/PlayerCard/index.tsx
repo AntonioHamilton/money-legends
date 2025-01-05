@@ -2,6 +2,7 @@ import { FIXME, StatisticsInfo } from "@/types/global";
 import { Typography } from "../Typography";
 import {
 	Button,
+	ChampionsContainer,
 	InfoContainer,
 	PlayerCardContainer,
 	StatsContainer,
@@ -43,18 +44,20 @@ export const PlayerCard = ({ player, addToTeam }: PlayerCardProps) => (
 		<TitleContainer>
 			<Typography>{player.summonerName}</Typography>
 		</TitleContainer>
-		{player.matchInfo.map((match) => (
-			<p key={match.championName}>
-				{match.championName}
+		<ChampionsContainer>
+			{player.matchInfo.map((match) => (
 				<Image
+					key={match.championName}
+					title={match.championName}
 					src={`/assets/champions/${match.championName}.png`}
 					overrideSrc={`/assets/champions/Invoker.png`}
 					alt={match.championName}
 					width={45}
 					height={45}
+					aria-label={match.championName}
 				/>
-			</p>
-		))}
+			))}
+		</ChampionsContainer>
 		<InfoContainer>
 			{Object.keys(player.stats).map((stat, index) => {
 				const playerPercentage = Math.round(
