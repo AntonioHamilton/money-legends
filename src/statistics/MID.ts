@@ -27,12 +27,12 @@ export const MID_STATS = (
 			killParticipation,
 			teamDamagePercentage,
 			visionScorePerMinute,
+			gameLength,
+			damagePerMinute,
 		},
-		totalDamageDealtToChampions,
 		totalMinionsKilled,
 	} = player;
 
-	const { gameDuration } = info;
 	const idealStats = idealData.info;
 
 	const MIDidealGold = idealStats.idealGold || 450;
@@ -45,9 +45,8 @@ export const MID_STATS = (
 		idealStats.idealTeamDamagePercentage || 0.3;
 	const MIDidealVisionScorePerMinute = idealStats.idealDamagePerMinute || 0.8;
 
-	const gameMinutes = Math.floor(gameDuration / 60);
+	const gameMinutes = Math.floor(gameLength / 60);
 	const minionsPerMinute = totalMinionsKilled / gameMinutes;
-	const damagePerMinute = totalDamageDealtToChampions / gameMinutes;
 
 	const visionScorePerMinutePercentageStats =
 		(visionScorePerMinute * 100) / MIDidealVisionScorePerMinute;

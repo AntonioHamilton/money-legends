@@ -1,22 +1,23 @@
-import { FIXME, StatisticsInfo } from "@/types/global";
+import { FIXME, PlayerInfo, StatisticsInfo } from "@/types/global";
 import { Typography } from "../Typography";
-import {
-	Button,
-	ChampionsContainer,
-	InfoContainer,
-	PlayerCardContainer,
-	StatsContainer,
-	TitleContainer,
-} from "./styled";
+import * as SC from "./styled";
 import Image from "next/image";
+import { HomeProps } from "@/pages";
 
 type PlayerCardProps = {
+	proStats: HomeProps;
 	player: {
 		summonerName: string;
 		stats: StatisticsInfo["stats"];
-		matchInfo: FIXME[];
+		matchInfo: PlayerInfo[];
+		averageStats: FIXME;
 	};
 	addToTeam: () => void;
+};
+
+const translations = {
+	stats_difference: "Stats difference compared to a pro player",
+	percentages_compared: "Percentages compared to a pro player",
 };
 
 const keyTranslation: Record<string, string> = {
@@ -39,12 +40,16 @@ const chooseStatusName = (player: FIXME, index: number) => {
 	return keyTranslation[stats[index]];
 };
 
-export const PlayerCard = ({ player, addToTeam }: PlayerCardProps) => (
-	<PlayerCardContainer>
-		<TitleContainer>
+export const PlayerCard = ({
+	proStats,
+	player,
+	addToTeam,
+}: PlayerCardProps) => (
+	<SC.PlayerCardContainer>
+		<SC.TitleContainer>
 			<Typography>{player.summonerName}</Typography>
-		</TitleContainer>
-		<ChampionsContainer>
+		</SC.TitleContainer>
+		<SC.ChampionsContainer>
 			{player.matchInfo.map((match) => (
 				<Image
 					key={match.championName}
@@ -57,8 +62,26 @@ export const PlayerCard = ({ player, addToTeam }: PlayerCardProps) => (
 					aria-label={match.championName}
 				/>
 			))}
-		</ChampionsContainer>
-		<InfoContainer>
+		</SC.ChampionsContainer>
+		<SC.InfoContainer>
+			<Typography className="stats-title">
+				{translations.stats_difference}
+			</Typography>
+			{Object.keys(player.averageStats).map((stat, index) => {
+				const statValue = player.averageStats[stat];
+				return (
+					<SC.StatsPercentageContainer key={index}>
+						<Typography className="status-name">{stat}:</Typography>
+						<Typography className="player-percentage">
+							{statValue.toFixed(2)}
+						</Typography>
+					</SC.StatsPercentageContainer>
+				);
+			})}
+
+			<Typography className="stats-title">
+				{translations.percentages_compared}
+			</Typography>
 			{Object.keys(player.stats).map((stat, index) => {
 				const playerPercentage = Math.round(
 					player.stats[stat as keyof StatisticsInfo["stats"]] || 0
@@ -66,7 +89,7 @@ export const PlayerCard = ({ player, addToTeam }: PlayerCardProps) => (
 				const playerDiff = playerPercentage - 100;
 
 				return (
-					<StatsContainer key={index}>
+					<SC.StatsPercentageContainer key={index}>
 						<Typography className="status-name">
 							{chooseStatusName(player, index)}
 						</Typography>
@@ -80,11 +103,11 @@ export const PlayerCard = ({ player, addToTeam }: PlayerCardProps) => (
 						>
 							{playerDiff}%
 						</Typography>
-					</StatsContainer>
+					</SC.StatsPercentageContainer>
 				);
 			})}
 
-			<Button onClick={() => addToTeam()}>Add to team</Button>
-		</InfoContainer>
-	</PlayerCardContainer>
+			<SC.Button onClick={() => addToTeam()}>Add to team</SC.Button>
+		</SC.InfoContainer>
+	</SC.PlayerCardContainer>
 );

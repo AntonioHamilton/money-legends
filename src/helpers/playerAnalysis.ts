@@ -22,6 +22,64 @@ export const roleAnalysis = (
 	);
 };
 
+const getAverageStats = (matchsArray: PlayerInfo[]) => {
+	let averageGoldPerMinute = 0;
+	let averageKDA = 0;
+	let averageFarmPerMinute = 0;
+	let averageKillParcipation = 0;
+	let averageDamagePerMinute = 0;
+	let averageTeamDamagePercentage = 0;
+	let averageVisionScorePerMinute = 0;
+
+	matchsArray.forEach((match: PlayerInfo) => {
+		const {
+			goldPerMinute,
+			kda,
+			killParticipation,
+			teamDamagePercentage,
+			visionScorePerMinute,
+			damagePerMinute,
+			gameLength,
+		} = match.challenges;
+
+		const gameMinutes = Math.floor(gameLength / 60);
+
+		averageGoldPerMinute += goldPerMinute;
+
+		averageKDA += kda;
+
+		averageFarmPerMinute += match.totalMinionsKilled / gameMinutes;
+
+		averageKillParcipation += killParticipation;
+
+		averageDamagePerMinute += damagePerMinute;
+
+		averageTeamDamagePercentage += teamDamagePercentage;
+
+		averageVisionScorePerMinute += visionScorePerMinute;
+	});
+
+	averageGoldPerMinute = averageGoldPerMinute / matchsArray.length;
+	averageKDA = averageKDA / matchsArray.length;
+	averageFarmPerMinute = averageFarmPerMinute / matchsArray.length;
+	averageKillParcipation = averageKillParcipation / matchsArray.length;
+	averageDamagePerMinute = averageDamagePerMinute / matchsArray.length;
+	averageTeamDamagePercentage =
+		averageTeamDamagePercentage / matchsArray.length;
+	averageVisionScorePerMinute =
+		averageVisionScorePerMinute / matchsArray.length;
+
+	return {
+		averageGoldPerMinute,
+		averageKDA,
+		averageFarmPerMinute,
+		averageKillParcipation,
+		averageDamagePerMinute,
+		averageTeamDamagePercentage,
+		averageVisionScorePerMinute,
+	};
+};
+
 export const roleAnalysisByPuuid = (
 	item: FIXME,
 	match: MatchsServiceProps,
@@ -124,14 +182,14 @@ export const playerStatsAverageClient = (
 	userID: string
 ) => {
 	const statsKeys = Object.keys(proPlayerResultsFiltered[0].percentages.stats);
-	const matchInfo: FIXME = [];
+	const matchsArray: PlayerInfo[] = [];
 
 	if (statsKeys.length <= 0) return {};
 
 	const statsObject: Record<string, FIXME> = {};
 
 	proPlayerResultsFiltered.forEach((value) => {
-		matchInfo.push(value.matchInfo);
+		matchsArray.push(value.matchInfo);
 		statsKeys.forEach((item) => {
 			statsObject[item] =
 				(statsObject[item] || 0) +
@@ -149,10 +207,13 @@ export const playerStatsAverageClient = (
 		(value) => value.percentages.percentage
 	);
 
+	const averageStats = getAverageStats(matchsArray);
+
 	const playerStats = {
 		summonerName: userID,
 		stats: finalStats,
-		matchInfo,
+		matchInfo: matchsArray,
+		averageStats,
 		proPlayerPercentage:
 			percentages.reduce((value: number, current: number) => value + current) /
 			proPlayerResultsFiltered.length,

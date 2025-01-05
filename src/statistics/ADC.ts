@@ -21,8 +21,14 @@ export const ADC_STATS = (
 	idealData: IdealData
 ): StatisticsInfo => {
 	const {
-		challenges: { goldPerMinute, kda, killParticipation, teamDamagePercentage },
-		totalDamageDealtToChampions,
+		challenges: {
+			goldPerMinute,
+			kda,
+			killParticipation,
+			teamDamagePercentage,
+			gameLength,
+			damagePerMinute,
+		},
 		totalMinionsKilled,
 	} = player;
 
@@ -37,11 +43,8 @@ export const ADC_STATS = (
 	const ADCidealTeamDamagePercentage =
 		idealStats.idealTeamDamagePercentage || 0.3;
 
-	const { gameDuration } = info;
-
-	const gameMinutes = Math.floor(gameDuration / 60);
+	const gameMinutes = Math.floor(gameLength / 60);
 	const minionsPerMinute = totalMinionsKilled / gameMinutes;
-	const damagePerMinute = totalDamageDealtToChampions / gameMinutes;
 
 	const goldPercentageStats = (goldPerMinute * 100) / ADCidealGold;
 	const farmPercentageStats = (minionsPerMinute * 100) / ADCidealFarmPerMinute;

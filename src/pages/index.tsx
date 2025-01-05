@@ -46,6 +46,14 @@ export type HomeProps = {
 };
 
 const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
+	const proStats = {
+		TOP,
+		JUNGLE,
+		MIDDLE,
+		BOTTOM,
+		UTILITY,
+	};
+
 	const {
 		changeRole,
 		onChange,
@@ -56,20 +64,16 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 		team,
 		player,
 		error,
-	} = useHome({
-		TOP,
-		JUNGLE,
-		MIDDLE,
-		BOTTOM,
-		UTILITY,
-	});
+	} = useHome(proStats);
 
 	return (
 		<SC.Container>
 			<Typography className="title">WORK HARD GG</Typography>
 			<PlayerSelector team={team} changeRole={changeRole} selectedRole={role} />
 			<SearchBox onChange={onChange} onSubmit={onSubmit} />
-			{player && <PlayerCard player={player} addToTeam={addToTeam} />}
+			{player && (
+				<PlayerCard proStats={proStats} player={player} addToTeam={addToTeam} />
+			)}
 			<MessageModal errorMessage={error} type="negative" />
 		</SC.Container>
 	);

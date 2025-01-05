@@ -25,7 +25,10 @@ export type PlayerInfo = {
 		killParticipation: number;
 		teamDamagePercentage: number;
 		visionScorePerMinute: number;
+		gameLength: number;
+		damagePerMinute: number;
 	};
+	championName: string;
 	summonerName: string;
 	riotIdGameName: string;
 	riotIdTagline: string;

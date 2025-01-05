@@ -39,9 +39,17 @@ export const InfoContainer = styled.div`
 	span {
 		color: ${colors.white};
 	}
+
+	.stats-title {
+		padding: 8px;
+		width: 100%;
+		text-align: center;
+	}
 `;
 
-export const StatsContainer = styled.div`
+export const StatsContainer = styled.div``;
+
+export const StatsPercentageContainer = styled.div`
 	background: ${colors.badge};
 	padding: 4px 16px;
 	font-size: 12px;

@@ -56,13 +56,14 @@ export const JG_STATS = (
 			killParticipation,
 			teamDamagePercentage,
 			visionScorePerMinute,
+			gameLength,
+			damagePerMinute,
 		},
-		totalDamageDealtToChampions,
 		totalMinionsKilled,
 		teamId,
 	} = player;
 
-	const { gameDuration, teams } = info;
+	const { teams } = info;
 	const idealStats = idealData.info;
 
 	const JGidealGold = idealStats.idealGold || 400;
@@ -98,9 +99,8 @@ export const JG_STATS = (
 	const teamBaronsKilled = playerTeam.objectives.baron.kills;
 	const totalBaronsKilled = teamBaronsKilled + enemyTeam.objectives.baron.kills;
 
-	const gameMinutes = Math.floor(gameDuration / 60);
+	const gameMinutes = Math.floor(gameLength / 60);
 	const minionsPerMinute = totalMinionsKilled / gameMinutes;
-	const damagePerMinute = totalDamageDealtToChampions / gameMinutes;
 
 	const visionScorePerMinutePercentageStats =
 		(visionScorePerMinute * 100) / JGidealVisionScorePerMinute;
