@@ -57,13 +57,13 @@ export const ADC_STATS = (
 		(teamDamagePercentage * 100) / ADCidealTeamDamagePercentage;
 
 	const proplayerStats =
-		(goldPercentageStats ||
-			0 + farmPercentageStats ||
-			0 + KDAPercentageStats ||
-			0 + killParticipationPercentageStats ||
-			0 + damagePerMinutePercentageStats ||
-			0 + teamDamagePercentageStats ||
-			0) / 6;
+		(goldPercentageStats +
+			farmPercentageStats +
+			KDAPercentageStats +
+			killParticipationPercentageStats +
+			damagePerMinutePercentageStats +
+			teamDamagePercentageStats) /
+		6;
 
 	return {
 		stats: {

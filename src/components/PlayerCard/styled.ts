@@ -14,7 +14,21 @@ export const PlayerCardContainer = styled.div`
 export const ChampionsContainer = styled.div`
 	margin-top: 10px;
 	display: flex;
+	flex-direction: column;
+
+	.champions-title {
+		color: ${colors.white};
+		padding: 8px;
+		width: 100%;
+		text-align: center;
+	}
+`;
+
+export const ChampionsWrapper = styled.div`
+	display: flex;
 	gap: 4px;
+	flex-wrap: wrap;
+	padding: 12px;
 `;
 
 export const TitleContainer = styled.div`
@@ -63,7 +77,7 @@ export const StatsPercentageContainer = styled.div`
 	}
 
 	.player-percentage {
-		margin-right: 8px;
+		margin-right: 4px;
 		font-weight: 600;
 	}
 

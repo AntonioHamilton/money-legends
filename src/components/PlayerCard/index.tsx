@@ -6,6 +6,7 @@ import { HomeProps } from "@/pages";
 
 type PlayerCardProps = {
 	proStats: HomeProps;
+	role: string;
 	player: {
 		summonerName: string;
 		stats: StatisticsInfo["stats"];
@@ -18,9 +19,34 @@ type PlayerCardProps = {
 const translations = {
 	stats_difference: "Stats difference compared to a pro player",
 	percentages_compared: "Percentages compared to a pro player",
+	last_played_champion: "Last played champions",
 };
 
-const keyTranslation: Record<string, string> = {
+const keyRawStatsTranslation: Record<string, string> = {
+	averageGoldPerMinute: "average gold per minute: ",
+	averageKDA: "average KDA: ",
+	averageFarmPerMinute: "average farm per minute: ",
+	averageKillParcipation: "average kill participation: ",
+	averageDamagePerMinute: "average damage per minute: ",
+	averageTeamDamagePercentage: "average team damage percentage: ",
+	averageVisionScorePerMinute: "average vision score per minute: ",
+};
+
+const chooseRawStatsName = (stat: string) => {
+	return keyRawStatsTranslation[stat];
+};
+
+const translateStatToProStat: Record<string, string> = {
+	averageGoldPerMinute: "idealGold",
+	averageKDA: "idealKDA",
+	averageFarmPerMinute: "idealFarmPerMinute",
+	averageKillParcipation: "idealKillParticipationPercentage",
+	averageDamagePerMinute: "idealDamagePerMinute",
+	averageTeamDamagePercentage: "idealTeamDamagePercentage",
+	averageVisionScorePerMinute: "idealVisionScorePerMinute",
+};
+
+const keyPercentageTranslation: Record<string, string> = {
 	haveMoreAssistsThenKills: "More Assists Then kills: ",
 	visionScorePerMinutePercentageStats: "Vision Percentage: ",
 	goldPercentageStats: "Gold Percentage: ",
@@ -34,80 +60,114 @@ const keyTranslation: Record<string, string> = {
 	baronsPercentage: "Barons Percentage: ",
 };
 
-const chooseStatusName = (player: FIXME, index: number) => {
+const choosePercentageStatusName = (player: FIXME, index: number) => {
 	const stats = Object.keys(player.stats);
 
-	return keyTranslation[stats[index]];
+	return keyPercentageTranslation[stats[index]];
 };
 
 export const PlayerCard = ({
 	proStats,
 	player,
+	role,
 	addToTeam,
-}: PlayerCardProps) => (
-	<SC.PlayerCardContainer>
-		<SC.TitleContainer>
-			<Typography>{player.summonerName}</Typography>
-		</SC.TitleContainer>
-		<SC.ChampionsContainer>
-			{player.matchInfo.map((match) => (
-				<Image
-					key={match.championName}
-					title={match.championName}
-					src={`/assets/champions/${match.championName}.png`}
-					overrideSrc={`/assets/champions/Invoker.png`}
-					alt={match.championName}
-					width={45}
-					height={45}
-					aria-label={match.championName}
-				/>
-			))}
-		</SC.ChampionsContainer>
-		<SC.InfoContainer>
-			<Typography className="stats-title">
-				{translations.stats_difference}
-			</Typography>
-			{Object.keys(player.averageStats).map((stat, index) => {
-				const statValue = player.averageStats[stat];
-				return (
-					<SC.StatsPercentageContainer key={index}>
-						<Typography className="status-name">{stat}:</Typography>
-						<Typography className="player-percentage">
-							{statValue.toFixed(2)}
-						</Typography>
-					</SC.StatsPercentageContainer>
-				);
-			})}
+}: PlayerCardProps) => {
+	const championObj: Record<string, number> = {};
 
-			<Typography className="stats-title">
-				{translations.percentages_compared}
-			</Typography>
-			{Object.keys(player.stats).map((stat, index) => {
-				const playerPercentage = Math.round(
-					player.stats[stat as keyof StatisticsInfo["stats"]] || 0
-				);
-				const playerDiff = playerPercentage - 100;
+	const getChampions = () => {
+		player.matchInfo.forEach((match) => {
+			if (championObj[`${match.championName}`] === 1) {
+				return (championObj[`${match.championName}`] += 1);
+			}
 
-				return (
-					<SC.StatsPercentageContainer key={index}>
-						<Typography className="status-name">
-							{chooseStatusName(player, index)}
-						</Typography>
-						<Typography
-							className={`player-percentage ${playerPercentage < 100 ? "negative" : "positive"}`}
-						>
-							{playerPercentage}% ▶
-						</Typography>
-						<Typography
-							className={`player-difference ${playerDiff < 0 ? "negative" : "positive"}`}
-						>
-							{playerDiff}%
-						</Typography>
-					</SC.StatsPercentageContainer>
-				);
-			})}
+			championObj[`${match.championName}`] = 1;
+		});
 
-			<SC.Button onClick={() => addToTeam()}>Add to team</SC.Button>
-		</SC.InfoContainer>
-	</SC.PlayerCardContainer>
-);
+		return Object.keys(championObj);
+	};
+
+	return (
+		<SC.PlayerCardContainer>
+			<SC.TitleContainer>
+				<Typography>{player.summonerName}</Typography>
+			</SC.TitleContainer>
+
+			<SC.ChampionsContainer>
+				<Typography className="champions-title">
+					{translations.last_played_champion}
+				</Typography>
+				<SC.ChampionsWrapper>
+					{getChampions().map((champion) => (
+						<Image
+							key={champion}
+							title={`${champion} - ${championObj[champion]}`}
+							src={`/assets/champions/${champion}.png`}
+							overrideSrc={`/assets/champions/Invoker.png`}
+							alt={champion}
+							width={45}
+							height={45}
+							aria-label={champion}
+						/>
+					))}
+				</SC.ChampionsWrapper>
+			</SC.ChampionsContainer>
+			<SC.InfoContainer>
+				<Typography className="stats-title">
+					{translations.stats_difference}
+				</Typography>
+				{Object.keys(player.averageStats).map((stat, index) => {
+					const statValue = player.averageStats[stat];
+					return (
+						<SC.StatsPercentageContainer key={index}>
+							<Typography className="status-name">
+								{chooseRawStatsName(stat)}
+							</Typography>
+							<Typography className="player-percentage">
+								{statValue.toFixed(2)} ▶
+							</Typography>
+							<Typography className="player-percentage">
+								{Number(
+									proStats[role as keyof HomeProps].info[
+										translateStatToProStat[
+											stat
+										] as keyof HomeProps["MIDDLE"]["info"]
+									]
+								).toFixed(2)}
+							</Typography>
+						</SC.StatsPercentageContainer>
+					);
+				})}
+
+				<Typography className="stats-title">
+					{translations.percentages_compared}
+				</Typography>
+				{Object.keys(player.stats).map((stat, index) => {
+					const playerPercentage = Math.round(
+						player.stats[stat as keyof StatisticsInfo["stats"]] || 0
+					);
+					const playerDiff = playerPercentage - 100;
+
+					return (
+						<SC.StatsPercentageContainer key={index}>
+							<Typography className="status-name">
+								{choosePercentageStatusName(player, index)}
+							</Typography>
+							<Typography
+								className={`player-percentage ${playerPercentage < 100 ? "negative" : "positive"}`}
+							>
+								{playerPercentage}% ▶
+							</Typography>
+							<Typography
+								className={`player-difference ${playerDiff < 0 ? "negative" : "positive"}`}
+							>
+								{playerDiff}%
+							</Typography>
+						</SC.StatsPercentageContainer>
+					);
+				})}
+
+				<SC.Button onClick={() => addToTeam()}>Add to team</SC.Button>
+			</SC.InfoContainer>
+		</SC.PlayerCardContainer>
+	);
+};

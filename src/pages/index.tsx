@@ -72,7 +72,12 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 			<PlayerSelector team={team} changeRole={changeRole} selectedRole={role} />
 			<SearchBox onChange={onChange} onSubmit={onSubmit} />
 			{player && (
-				<PlayerCard proStats={proStats} player={player} addToTeam={addToTeam} />
+				<PlayerCard
+					role={role === "ANY" ? "MIDDLE" : role}
+					proStats={proStats}
+					player={player}
+					addToTeam={addToTeam}
+				/>
 			)}
 			<MessageModal errorMessage={error} type="negative" />
 		</SC.Container>
