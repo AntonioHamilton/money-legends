@@ -10,14 +10,13 @@ import {
 export const roleAnalysis = (
 	item: FIXME,
 	match: MatchsServiceProps,
-	userID: string,
-	userFlag: string,
+	puuid: string,
 	role: string
 ) => {
 	return (
-		item.riotIdGameName.toLowerCase() === userID.toLowerCase() &&
-		item.riotIdTagline.toLowerCase() === userFlag.toLowerCase() &&
+		item.puuid === puuid &&
 		item.individualPosition === role &&
+		match.info.gameDuration > 300 &&
 		match.info.gameMode === "CLASSIC"
 	);
 };

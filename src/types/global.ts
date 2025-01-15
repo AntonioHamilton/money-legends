@@ -28,6 +28,7 @@ export type PlayerInfo = {
 		gameLength: number;
 		damagePerMinute: number;
 	};
+	puuid: string;
 	championName: string;
 	summonerName: string;
 	riotIdGameName: string;

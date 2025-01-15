@@ -11,10 +11,10 @@ const getPUUID = (url: string, user_id: string, user_flag: string) => {
 		});
 };
 
-const getMatchID = (url: string, puuid: string) => {
+const getMatchID = (url: string, puuid: string, queue: string) => {
 	return axios
 		.get(
-			`${url}/lol/match/v5/matches/by-puuid/${puuid}/ids?api_key=${process.env.API_KEY}`
+			`${url}/lol/match/v5/matches/by-puuid/${puuid}/ids?api_key=${process.env.API_KEY}&queue=${queue}`
 		)
 		.then((response) => response.data)
 		.catch((error) => {
@@ -25,7 +25,8 @@ const getMatchID = (url: string, puuid: string) => {
 export const getMatches = async (
 	url: string,
 	user_id: string,
-	user_flag: string
+	user_flag: string,
+	queue: string
 ) => {
 	const puuid = await getPUUID(url, user_id, user_flag)
 		.then((puuid) => puuid)
@@ -33,7 +34,7 @@ export const getMatches = async (
 			throw err;
 		});
 
-	const matchIDS = await getMatchID(url, puuid)
+	const matchIDS = await getMatchID(url, puuid, queue)
 		.then((matchIDS) => matchIDS)
 		.catch((err) => {
 			throw err;
@@ -48,14 +49,21 @@ export const getMatches = async (
 	);
 
 	return Promise.all(matchesPromises)
-		.then((responses) => responses.map((response) => response.data))
+		.then((responses) => ({
+			matchs: responses.map((response) => response.data),
+			puuid,
+		}))
 		.catch((error) => {
 			throw error;
 		});
 };
 
-export const getMatchWithPuuid = async (url: string, puuid: string) => {
-	const matchIDS = await getMatchID(url, puuid)
+export const getMatchWithPuuid = async (
+	url: string,
+	puuid: string,
+	queue: string
+) => {
+	const matchIDS = await getMatchID(url, puuid, queue)
 		.then((matchIDS) => matchIDS)
 		.catch((err) => {
 			throw err;

@@ -19,6 +19,8 @@ import { roleAnalysis } from "@/helpers/playerAnalysis";
 import { playerStatsAverageClient } from "../helpers/playerAnalysis";
 import { HomeProps } from "@/pages";
 
+const REMAKE_TIME = 300;
+
 const ANY_STATS = (
 	info: MatchInfo,
 	player: PlayerInfo,
@@ -115,7 +117,14 @@ const initialPlayerState: PlayerProps = {
 	proPlayerPercentage: 0,
 };
 
+export const queueTypes = {
+	FLEX: 440,
+	SOLO: 420,
+	ANY: "",
+};
+
 export const useHome = (idealData: HomeProps) => {
+	const [queueType, setQueueType] = useState<keyof typeof queueTypes>("FLEX");
 	const [loading, setLoading] = useState(false);
 	const [searchInput, setSearchInput] = useState("");
 	const [role, setRole] = useState<keyof TeamProps>("ANY");
@@ -160,7 +169,9 @@ export const useHome = (idealData: HomeProps) => {
 		setLoading(true);
 
 		const res = await api
-			.get(`/matches?region=${region}&user_id=${userID}&user_flag=${userFlag}`)
+			.get(
+				`/matches?region=${region}&user_id=${userID}&user_flag=${userFlag}&queue=${queueTypes[queueType]}`
+			)
 			.then((data) => data as FIXME)
 			.catch((err) => {
 				return { err: err.message };
@@ -173,7 +184,8 @@ export const useHome = (idealData: HomeProps) => {
 			return setError(res.err);
 		}
 
-		const matchs = res.data as MatchsServiceProps[];
+		const matchs = res.data.matchs as MatchsServiceProps[];
+		const puuid = res.data.puuid;
 
 		if (matchs.length < 1) {
 			return setError("The player doesn't have any matchs");
@@ -182,10 +194,10 @@ export const useHome = (idealData: HomeProps) => {
 		const proplayerResults = matchs.map((match) => {
 			const playerInMatch = match.info.participants.filter((item) => {
 				if (
-					roleAnalysis(item, match, userID, userFlag, role) ||
+					roleAnalysis(item, match, puuid, role) ||
 					(role === "ANY" &&
-						item.riotIdGameName.toLowerCase() === userID.toLowerCase() &&
-						item.riotIdTagline.toLowerCase() === userFlag.toLowerCase())
+						item.puuid === puuid &&
+						match.info.gameDuration > REMAKE_TIME)
 				) {
 					return item;
 				}

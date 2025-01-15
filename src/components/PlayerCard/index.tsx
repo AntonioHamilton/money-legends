@@ -3,6 +3,7 @@ import { Typography } from "../Typography";
 import * as SC from "./styled";
 import Image from "next/image";
 import { HomeProps } from "@/pages";
+import { useState } from "react";
 
 type PlayerCardProps = {
 	proStats: HomeProps;
@@ -72,19 +73,23 @@ export const PlayerCard = ({
 	role,
 	addToTeam,
 }: PlayerCardProps) => {
-	const championObj: Record<string, number> = {};
+	const [champions] = useState(
+		player.matchInfo.map((match) => {
+			return match.championName;
+		})
+	);
 
-	const getChampions = () => {
-		player.matchInfo.forEach((match) => {
-			if (championObj[`${match.championName}`] === 1) {
-				return (championObj[`${match.championName}`] += 1);
-			}
+	const [championsObj] = useState(
+		(() => {
+			const obj: Record<string, number> = {};
+			champions.forEach((champion) => {
+				if (obj[champion] >= 1) return (obj[champion] += 1);
+				obj[champion] = 1;
+			});
 
-			championObj[`${match.championName}`] = 1;
-		});
-
-		return Object.keys(championObj);
-	};
+			return obj;
+		})()
+	);
 
 	return (
 		<SC.PlayerCardContainer>
@@ -97,10 +102,10 @@ export const PlayerCard = ({
 					{translations.last_played_champion}
 				</Typography>
 				<SC.ChampionsWrapper>
-					{getChampions().map((champion) => (
+					{Object.keys(championsObj).map((champion) => (
 						<Image
 							key={champion}
-							title={`${champion} - ${championObj[champion]}`}
+							title={`${champion} - ${championsObj[champion]}`}
 							src={`/assets/champions/${champion}.png`}
 							overrideSrc={`/assets/champions/Invoker.png`}
 							alt={champion}

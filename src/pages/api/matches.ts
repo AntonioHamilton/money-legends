@@ -3,10 +3,15 @@ import { API_URLS } from "@/config/url";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const basicStats = async (req: NextApiRequest, res: NextApiResponse) => {
-	const { region, user_id, user_flag } = req.query;
+	const { region, user_id, user_flag, queue } = req.query;
 	const url = API_URLS[region as keyof typeof API_URLS];
 
-	return getMatches(url, user_id as string, user_flag as string)
+	return getMatches(
+		url,
+		user_id as string,
+		user_flag as string,
+		queue as string
+	)
 		.then((response) => res.json(response))
 		.catch((error) => {
 			throw error;
