@@ -13,7 +13,8 @@ export const statsSearch = async (
 	req: NextApiRequest,
 	res: NextApiResponse,
 	puuid: string,
-	lane: string
+	lane: string,
+	queue: string
 ) => {
 	const url = API_URLS.ASIA;
 	const protocol = req?.headers?.host?.includes("localhost") ? "http" : "https";
@@ -22,7 +23,8 @@ export const statsSearch = async (
 	try {
 		const matchs = (await getMatchWithPuuid(
 			url,
-			puuid as string
+			puuid as string,
+			queue
 		)) as MatchsServiceProps[];
 
 		if (matchs.length < 1) {

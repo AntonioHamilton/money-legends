@@ -6,7 +6,8 @@ const topStatsSearch = async (req: NextApiRequest, res: NextApiResponse) => {
 		req,
 		res,
 		"VqJK9OIgO6F3cr4cjOqsVklLbyRptIrWwfxK6jSoAXUXbX3nkNfFJUlhMWiW60b9qwXUvQfjXib57g",
-		"TOP"
+		"TOP",
+		"420"
 	);
 };
 

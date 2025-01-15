@@ -6,7 +6,8 @@ const jgStatsSearch = async (req: NextApiRequest, res: NextApiResponse) => {
 		req,
 		res,
 		"JLsGEUb-imxHudkqXeoNSUNv4F8gjLT-fTJwBYnhSkADceuId0X9bZuky7w4PS9yLFD7QtxcPwGhhg",
-		"JUNGLE"
+		"JUNGLE",
+		"420"
 	);
 };
 

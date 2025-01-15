@@ -6,7 +6,8 @@ const supStatsSearch = async (req: NextApiRequest, res: NextApiResponse) => {
 		req,
 		res,
 		"b6Jwril_LRtTgdmY6gUMOEtPBQROVWMaeDwerik_C2TBeDWHkyWGNYQKGiQJFVVIGovtc3GnAZ-O9g",
-		"UTILITY"
+		"UTILITY",
+		"420"
 	);
 };
 

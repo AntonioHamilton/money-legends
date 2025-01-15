@@ -6,7 +6,8 @@ const adcStatsSearch = async (req: NextApiRequest, res: NextApiResponse) => {
 		req,
 		res,
 		"jY7rLHgMYQnfXV-_Iv0QMRVQn13Q81_oTcKwXXYNOxcD4b0dvmOEKeWzqKKpZo7f2hvTm9D0jStuYQ",
-		"BOTTOM"
+		"BOTTOM",
+		"420"
 	);
 };
 

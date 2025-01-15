@@ -6,7 +6,8 @@ const midStatsSearch = async (req: NextApiRequest, res: NextApiResponse) => {
 		req,
 		res,
 		"oFl_Ejq5rTd6BMrVaThl2jilNz9-oeMzRMjit4O15Bl_ovdOkEdqN3rtDFyEeoXBV3q2-ewoQ2FekQ",
-		"MIDDLE"
+		"MIDDLE",
+		"420"
 	);
 };
 
