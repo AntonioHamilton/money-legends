@@ -124,7 +124,7 @@ export const queueTypes = {
 };
 
 export const useHome = (idealData: HomeProps) => {
-	const [queueType, setQueueType] = useState<keyof typeof queueTypes>("FLEX");
+	const [queueType, setQueueType] = useState<keyof typeof queueTypes>("SOLO");
 	const [loading, setLoading] = useState(false);
 	const [searchInput, setSearchInput] = useState("");
 	const [role, setRole] = useState<keyof TeamProps>("ANY");
