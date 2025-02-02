@@ -19,12 +19,37 @@ export const SearchTextField = styled.input`
 `;
 
 export const SearchButton = styled.button`
-	width: 6%;
-	height: 40px;
 	font-size: 30px;
-	font-weight: 700;
+	font-weight: 800;
 	cursor: pointer;
 	color: ${colors.mainFont};
 	border: none;
 	background: none;
+`;
+
+export const OptionsBarContainer = styled.div`
+	display: grid;
+	gap: 12px;
+	grid-template-columns: repeat(3, 1fr);
+	width: 90%;
+	background: ${colors.badge};
+	border-radius: 30px;
+	margin-bottom: 12px;
+`;
+
+export const OptionsWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	padding: 6px;
+
+	&:nth-child(even) {
+		border-right: 1px solid #1c1c1f;
+		border-left: 1px solid #1c1c1f;
+	}
+
+	.region-text {
+		color: white;
+		font-size: 12px;
+		text-align: center;
+	}
 `;

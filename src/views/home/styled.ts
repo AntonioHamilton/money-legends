@@ -23,3 +23,7 @@ export const MatchContainer = styled.div`
 	gap: 8px;
 	margin-top: 16px;
 `;
+
+export const LoadingContainer = styled.div`
+	margin-top: 70px;
+`;

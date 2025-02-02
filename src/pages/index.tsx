@@ -8,6 +8,8 @@ import { MessageModal } from "@components/ErrorModal";
 import { useHome } from "../hooks/useHome";
 import axios from "axios";
 import { IdealData } from "@/types/global";
+import { OrbitProgress } from "react-loading-indicators";
+import { colors } from "@/styles/globalVariables";
 
 export const getServerSideProps = async () => {
 	const idealTOP = await axios(
@@ -59,6 +61,7 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 		onChange,
 		onSubmit,
 		addToTeam,
+		selectCountry,
 		loading,
 		role,
 		team,
@@ -68,9 +71,13 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 
 	return (
 		<SC.Container>
-			<Typography className="title">WORK HARD GG</Typography>
+			<Typography className="title">Money LOL</Typography>
 			<PlayerSelector team={team} changeRole={changeRole} selectedRole={role} />
-			<SearchBox onChange={onChange} onSubmit={onSubmit} />
+			<SearchBox
+				onChange={onChange}
+				onSubmit={onSubmit}
+				selectCountry={selectCountry}
+			/>
 			{player && (
 				<PlayerCard
 					role={role === "ANY" ? "MIDDLE" : role}
@@ -80,6 +87,16 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 				/>
 			)}
 			<MessageModal errorMessage={error} type="negative" />
+			{loading && (
+				<SC.LoadingContainer>
+					<OrbitProgress
+						color={colors.mainFont}
+						size="medium"
+						text=""
+						textColor=""
+					/>
+				</SC.LoadingContainer>
+			)}
 		</SC.Container>
 	);
 };

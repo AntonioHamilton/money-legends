@@ -144,6 +144,14 @@ export const useHome = (idealData: HomeProps) => {
 		setSearchInput(e.target.value);
 	};
 
+	const selectCountry = ({
+		target: { value },
+	}: {
+		target: { value: string };
+	}) => {
+		setRegion(value);
+	};
+
 	const changeRole = (role: keyof TeamProps) => {
 		setRole(role);
 	};
@@ -237,6 +245,7 @@ export const useHome = (idealData: HomeProps) => {
 		onChange,
 		onSubmit,
 		addToTeam,
+		selectCountry,
 		loading,
 		role,
 		team,
