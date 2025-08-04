@@ -39,14 +39,12 @@ export const SUP_STATS = (
 
 	const idealStats = idealData.info;
 
-	const SUPidealGold = idealStats.idealGold || 250;
-	const SUPidealKDA = idealStats.idealKDA || 4.75;
+	const SUPidealGold = idealStats.gold || 250;
+	const SUPidealKDA = idealStats.kda || 4.75;
 	const SUPidealKillParticipationPercentage =
-		idealStats.idealKillParticipationPercentage || 0.7;
-	const SUPidealTeamDamagePercentage =
-		idealStats.idealTeamDamagePercentage || 0.075;
-	const SUPidealVisionScorePerMinute =
-		idealStats.idealVisionScorePerMinute || 2;
+		idealStats.killParticipationPercentage || 0.7;
+	const SUPidealTeamDamagePercentage = idealStats.teamDamagePercentage || 0.075;
+	const SUPidealVisionScorePerMinute = idealStats.visionScorePerMinute || 2;
 
 	const haveMoreAssistsThenKills = assists > kills ? 100 : 0;
 	const visionScorePerMinutePercentageStats =

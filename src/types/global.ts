@@ -5,16 +5,16 @@ export type IdealData = {
 	info: {
 		lane: string;
 		playerReference: string;
-		idealGold: number;
-		idealKDA: number;
-		idealFarmPerMinute: number;
-		idealKillParticipationPercentage: number;
-		idealDamagePerMinute: number;
-		idealTeamDamagePercentage: number;
-		idealVisionScorePerMinute: number;
-		idealDragonKilled: number;
-		idealBaronKilled: number;
-		idealVoidGrubsKilled: number;
+		gold: number;
+		kda: number;
+		farmPerMinute: number;
+		killParticipationPercentage: number;
+		damagePerMinute: number;
+		teamDamagePercentage: number;
+		visionScorePerMinute: number;
+		dragonKilled: number;
+		baronKilled: number;
+		voidGrubsKilled: number;
 	};
 };
 

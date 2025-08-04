@@ -5,7 +5,7 @@ export const PlayerCardContainer = styled.div`
 	margin-top: 16px;
 	display: flex;
 	width: 60%;
-	background: ${colors.card};
+	background: ${colors.border};
 	flex-direction: column;
 	align-items: center;
 	border-radius: 8px;
@@ -17,7 +17,7 @@ export const ChampionsContainer = styled.div`
 	flex-direction: column;
 
 	.champions-title {
-		color: ${colors.white};
+		color: ${colors.textPrimary};
 		padding: 8px;
 		width: 100%;
 		text-align: center;
@@ -34,13 +34,13 @@ export const ChampionsWrapper = styled.div`
 export const TitleContainer = styled.div`
 	padding: 8px;
 	width: 100%;
-	background-color: ${colors.textFields};
+	background-color: ${colors.textPrimary};
 	border-top-right-radius: 8px;
 	border-top-left-radius: 8px;
 	text-align: center;
 
 	span {
-		color: ${colors.white};
+		color: ${colors.textPrimary};
 	}
 `;
 
@@ -51,7 +51,7 @@ export const InfoContainer = styled.div`
 	align-items: center;
 
 	span {
-		color: ${colors.white};
+		color: ${colors.textPrimary};
 	}
 
 	.stats-title {
@@ -64,7 +64,7 @@ export const InfoContainer = styled.div`
 export const StatsContainer = styled.div``;
 
 export const StatsPercentageContainer = styled.div`
-	background: ${colors.badge};
+	background: ${colors.accentBlue};
 	padding: 4px 16px;
 	font-size: 12px;
 	border-radius: 50px;
@@ -88,7 +88,7 @@ export const StatsPercentageContainer = styled.div`
 		}
 
 		&.negative {
-			color: ${colors.red700};
+			color: ${colors.red500};
 		}
 	}
 `;
@@ -96,7 +96,7 @@ export const StatsPercentageContainer = styled.div`
 export const Button = styled.button`
 	padding: 8px;
 	border-radius: 4px;
-	background: ${colors.blue500};
+	background: ${colors.accentBlue};
 	margin: 16px 16px 12px 16px;
 	border: none;
 	cursor: pointer;

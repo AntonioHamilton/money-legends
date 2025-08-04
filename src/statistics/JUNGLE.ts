@@ -66,16 +66,14 @@ export const JG_STATS = (
 	const { teams } = info;
 	const idealStats = idealData.info;
 
-	const JGidealGold = idealStats.idealGold || 400;
-	const JGidealFarmPerMinute = idealStats.idealFarmPerMinute || 5.5;
-	const JGidealKDA = idealStats.idealKDA || 4;
+	const JGidealGold = idealStats.gold || 400;
+	const JGidealFarmPerMinute = idealStats.farmPerMinute || 5.5;
+	const JGidealKDA = idealStats.kda || 4;
 	const JGidealKillParticipationPercentage =
-		idealStats.idealKillParticipationPercentage || 0.725;
-	const JGidealDamagePerMinute = idealStats.idealDamagePerMinute || 275;
-	const JGidealTeamDamagePercentage =
-		idealStats.idealTeamDamagePercentage || 0.175;
-	const JGidealVisionScorePerMinute =
-		idealStats.idealVisionScorePerMinute || 1.35;
+		idealStats.killParticipationPercentage || 0.725;
+	const JGidealDamagePerMinute = idealStats.damagePerMinute || 275;
+	const JGidealTeamDamagePercentage = idealStats.teamDamagePercentage || 0.175;
+	const JGidealVisionScorePerMinute = idealStats.visionScorePerMinute || 1.35;
 
 	let playerTeam = initialStateTeam;
 	let enemyTeam = initialStateTeam;

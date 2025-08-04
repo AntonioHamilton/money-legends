@@ -64,16 +64,16 @@ export const statsSearch = async (
 				`${baseUrl}/api/lane-stats?lane=${lane}`,
 				{
 					playerReference: laneStats.puuid,
-					idealGold: laneStats.stats.goldPerMinute,
-					idealKDA: laneStats.stats.kda,
-					idealFarmPerMinute: laneStats.stats.minionsPerMinute,
-					idealKillParticipationPercentage: laneStats.stats.killParticipation,
-					idealDamagePerMinute: laneStats.stats.damagePerMinute,
-					idealTeamDamagePercentage: laneStats.stats.teamDamagePercentage,
-					idealVisionScorePerMinute: laneStats.stats.visionScorePerMinute,
-					idealDragonKilled: laneStats.stats.voidGrubsPercentage,
-					idealBaronKilled: laneStats.stats.dragonsPercentage,
-					idealVoidGrubsKilled: laneStats.stats.baronsPercentage,
+					gold: laneStats.stats.goldPerMinute,
+					kda: laneStats.stats.kda,
+					farmPerMinute: laneStats.stats.minionsPerMinute,
+					killParticipationPercentage: laneStats.stats.killParticipation,
+					damagePerMinute: laneStats.stats.damagePerMinute,
+					teamDamagePercentage: laneStats.stats.teamDamagePercentage,
+					visionScorePerMinute: laneStats.stats.visionScorePerMinute,
+					dragonKilled: laneStats.stats.voidGrubsPercentage,
+					baronKilled: laneStats.stats.dragonsPercentage,
+					voidGrubsKilled: laneStats.stats.baronsPercentage,
 				}
 			);
 			return res.status(response.status).json(response.data);

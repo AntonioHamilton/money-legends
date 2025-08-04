@@ -35,15 +35,14 @@ export const MID_STATS = (
 
 	const idealStats = idealData.info;
 
-	const MIDidealGold = idealStats.idealGold || 450;
-	const MIDidealFarmPerMinute = idealStats.idealFarmPerMinute || 8;
-	const MIDidealKDA = idealStats.idealKDA || 4.0;
+	const MIDidealGold = idealStats.gold || 450;
+	const MIDidealFarmPerMinute = idealStats.farmPerMinute || 8;
+	const MIDidealKDA = idealStats.kda || 4.0;
 	const MIDidealKillParticipationPercentage =
-		idealStats.idealKillParticipationPercentage || 0.65;
-	const MIDidealDamagePerMinute = idealStats.idealDamagePerMinute || 600;
-	const MIDidealTeamDamagePercentage =
-		idealStats.idealTeamDamagePercentage || 0.3;
-	const MIDidealVisionScorePerMinute = idealStats.idealDamagePerMinute || 0.8;
+		idealStats.killParticipationPercentage || 0.65;
+	const MIDidealDamagePerMinute = idealStats.damagePerMinute || 600;
+	const MIDidealTeamDamagePercentage = idealStats.teamDamagePercentage || 0.3;
+	const MIDidealVisionScorePerMinute = idealStats.damagePerMinute || 0.8;
 
 	const gameMinutes = Math.floor(gameLength / 60);
 	const minionsPerMinute = totalMinionsKilled / gameMinutes;

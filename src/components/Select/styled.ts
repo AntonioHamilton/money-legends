@@ -22,6 +22,6 @@ export const SelectContainer = styled.select`
 
 	option {
 		padding: 10px;
-		background-color: ${colors.badge};
+		background-color: ${colors.border};
 	}
 `;

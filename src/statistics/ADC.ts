@@ -5,7 +5,7 @@ import {
 	StatisticsInfo,
 } from "@/types/global";
 
-//Median ChatGPT info for Pro Players in LCK / LEC / LCS / Worlds (best leagues / competitions)
+// Median ChatGPT info for Pro Players in LCK / LEC / LCS / Worlds (best leagues / competitions)
 // gameDuration (is in the match object)
 // goldPerMinute (inside challenges)
 // laneMinionsFirst10Minutes (is in the participant object)
@@ -34,14 +34,13 @@ export const ADC_STATS = (
 
 	const idealStats = idealData.info;
 
-	const ADCidealGold = idealStats.idealGold || 475;
-	const ADCidealFarmPerMinute = idealStats.idealFarmPerMinute || 9.25;
-	const ADCidealKDA = idealStats.idealKDA || 5;
+	const ADCidealGold = idealStats.gold || 475;
+	const ADCidealFarmPerMinute = idealStats.farmPerMinute || 9.25;
+	const ADCidealKDA = idealStats.kda || 5;
 	const ADCidealKillParticipationPercentage =
-		idealStats.idealKillParticipationPercentage || 0.6;
-	const ADCidealDamagePerMinute = idealStats.idealDamagePerMinute || 600;
-	const ADCidealTeamDamagePercentage =
-		idealStats.idealTeamDamagePercentage || 0.3;
+		idealStats.killParticipationPercentage || 0.6;
+	const ADCidealDamagePerMinute = idealStats.damagePerMinute || 600;
+	const ADCidealTeamDamagePercentage = idealStats.teamDamagePercentage || 0.3;
 
 	const gameMinutes = Math.floor(gameLength / 60);
 	const minionsPerMinute = totalMinionsKilled / gameMinutes;

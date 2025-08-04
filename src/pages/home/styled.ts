@@ -7,10 +7,11 @@ export const Container = styled.div`
 	align-items: center;
 	padding: 16px 0px;
 	min-height: 100vh;
-	background-color: ${colors.mainBackground};
+	background-color: ${colors.backgroundPrimary};
 
 	.title {
-		color: ${colors.mainFont};
+		color: ${colors.textPrimary};
+		font-family: "Londrina Sketch";
 		font-size: 50px;
 		font-weight: 700;
 		margin-bottom: 24px;

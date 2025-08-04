@@ -15,9 +15,11 @@ import {
 	StatisticsInfo,
 } from "@/types/global";
 import { api } from "@config/axios";
-import { roleAnalysis } from "@/helpers/playerAnalysis";
-import { playerStatsAverageClient } from "../helpers/playerAnalysis";
-import { HomeProps } from "@/pages";
+import {
+	roleAnalysis,
+	playerStatsAverageClient,
+} from "@/helpers/playerAnalysis";
+import { HomeProps } from "@/pages/home";
 
 const REMAKE_TIME = 300;
 

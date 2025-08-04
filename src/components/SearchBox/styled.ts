@@ -5,7 +5,7 @@ export const SearchTextFieldContainer = styled.div`
 	display: flex;
 	align-items: center;
 	width: 90%;
-	background-color: #31313c;
+	background-color: ${colors.formBorder};
 	padding: 8px 16px;
 	border-radius: 30px;
 `;
@@ -19,10 +19,11 @@ export const SearchTextField = styled.input`
 `;
 
 export const SearchButton = styled.button`
+	font-family: "Londrina Sketch";
 	font-size: 30px;
 	font-weight: 800;
 	cursor: pointer;
-	color: ${colors.mainFont};
+	color: ${colors.textPrimary};
 	border: none;
 	background: none;
 `;
@@ -32,7 +33,7 @@ export const OptionsBarContainer = styled.div`
 	gap: 12px;
 	grid-template-columns: repeat(3, 1fr);
 	width: 90%;
-	background: ${colors.badge};
+	background: ${colors.formBorder};
 	border-radius: 30px;
 	margin-bottom: 12px;
 `;

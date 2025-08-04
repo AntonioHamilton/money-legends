@@ -2,7 +2,7 @@ import { FIXME, PlayerInfo, StatisticsInfo } from "@/types/global";
 import { Typography } from "../Typography";
 import * as SC from "./styled";
 import Image from "next/image";
-import { HomeProps } from "@/pages";
+import { HomeProps } from "@/pages/home";
 import { useState } from "react";
 
 type PlayerCardProps = {
@@ -38,13 +38,13 @@ const chooseRawStatsName = (stat: string) => {
 };
 
 const translateStatToProStat: Record<string, string> = {
-	averageGoldPerMinute: "idealGold",
-	averageKDA: "idealKDA",
-	averageFarmPerMinute: "idealFarmPerMinute",
-	averageKillParcipation: "idealKillParticipationPercentage",
-	averageDamagePerMinute: "idealDamagePerMinute",
-	averageTeamDamagePercentage: "idealTeamDamagePercentage",
-	averageVisionScorePerMinute: "idealVisionScorePerMinute",
+	averageGoldPerMinute: "gold",
+	averageKDA: "kda",
+	averageFarmPerMinute: "farmPerMinute",
+	averageKillParcipation: "killParticipationPercentage",
+	averageDamagePerMinute: "damagePerMinute",
+	averageTeamDamagePercentage: "teamDamagePercentage",
+	averageVisionScorePerMinute: "visionScorePerMinute",
 };
 
 const keyPercentageTranslation: Record<string, string> = {
