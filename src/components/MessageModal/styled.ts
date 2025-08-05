@@ -3,7 +3,7 @@ import { colors } from "@/styles/globalVariables";
 
 type MessageContainerProps = {
 	type?: string;
-	visible?: string;
+	visible?: boolean;
 };
 
 export const MessageContainer = styled.div<MessageContainerProps>`
@@ -11,7 +11,7 @@ export const MessageContainer = styled.div<MessageContainerProps>`
 	position: absolute;
 	bottom: 10px;
 	background: ${({ type }) =>
-		type === "positive" ? colors.green500 : colors.red500};
+		type === "success" ? colors.green500 : colors.red500};
 	padding: 16px;
 	border-radius: 4px;
 	pointer-events: none; /* Evita interação durante o fade */

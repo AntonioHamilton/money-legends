@@ -10,8 +10,8 @@ export const colors = {
 	highlight: "#F9F8F8", // branco levemente acinzentado (para detalhes)
 	textPrimary: "#F9F8F8", // alto contraste no fundo escuro
 	textSecondary: "#A9A9A9", // cinza claro para textos secundários
-	green400: "#00C49A", // sucesso mais leve
-	green500: "#00AE8C", // sucesso mais forte
+	green400: "#00c452ff", // sucesso mais leve
+	green500: "#00ae5dff", // sucesso mais forte
 	red400: "#D3455D", // alerta leve
 	red500: "#E84057", // alerta intenso
 	formBackground: "#0D0D0D", // fundo de formulário escuro
@@ -22,5 +22,5 @@ export const colors = {
 	formTextSecondary: "#A0A0A0", // texto auxiliar
 	formAccent: "#13F2F2", // cor de destaque nos formulários
 	formAccentHover: "#19ffe8ff", // hover mais escuro e saturado
-	formAccentDisabled: "#7f7f7fff", // hover mais escuro e saturado
+	formAccentDisabled: "#7f7f7fff",
 };

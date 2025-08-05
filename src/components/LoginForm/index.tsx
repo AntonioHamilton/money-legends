@@ -61,6 +61,7 @@ export const LoginForm = () => {
 					<FormGroup>
 						<Label htmlFor="email">Email</Label>
 						<Input
+							autoComplete="email"
 							type="email"
 							id="email"
 							name="email"
@@ -75,6 +76,7 @@ export const LoginForm = () => {
 					<FormGroup>
 						<Label htmlFor="password">Password</Label>
 						<Input
+							autoComplete="current-password"
 							type="password"
 							id="password"
 							name="password"
@@ -91,6 +93,7 @@ export const LoginForm = () => {
 							Login
 						</Button>
 						<StyledLink href="/register">Cadastrar</StyledLink>
+						<StyledLink href="/reset-password">Esqueceu a senha?</StyledLink>
 					</Actions>
 				</Form>
 			</Card>
