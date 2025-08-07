@@ -3,7 +3,7 @@ import { colors } from "@/styles/globalVariables";
 
 type MessageContainerProps = {
 	type?: string;
-	visible?: boolean;
+	visible?: string;
 };
 
 export const MessageContainer = styled.div<MessageContainerProps>`

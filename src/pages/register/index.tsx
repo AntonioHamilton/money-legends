@@ -1,5 +1,5 @@
 import { RegisterForm } from "@components/RegisterForm";
-import { Container } from "./styled";
+import { Container } from "@/styles/register.styled";
 
 const RegisterPage = () => {
 	return (

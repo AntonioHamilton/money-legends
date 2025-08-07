@@ -1,4 +1,4 @@
-import { Container } from "./styled";
+import { Container } from "@/styles/reset-password.styled";
 import { ResetPasswordForm } from "@components/ResetPasswordForm";
 
 const RegisterPage = () => {

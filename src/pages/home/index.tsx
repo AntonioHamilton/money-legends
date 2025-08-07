@@ -1,5 +1,5 @@
 import { PlayerCard } from "@components/PlayerCard";
-import * as SC from "./styled";
+import * as SC from "@/styles/home.styled";
 import { SearchBox } from "@components/SearchBox";
 import { Typography } from "@components/Typography";
 import { PlayerSelector } from "@components/PlayerSelector";
@@ -71,7 +71,7 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 
 	return (
 		<SC.Container>
-			<Typography className="title">MONEY LOL</Typography>
+			<Typography className="title">MONEY LEGENDS</Typography>
 			<PlayerSelector team={team} changeRole={changeRole} selectedRole={role} />
 			<SearchBox
 				onChange={onChange}

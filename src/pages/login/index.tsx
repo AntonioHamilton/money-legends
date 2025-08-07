@@ -1,5 +1,5 @@
 import { LoginForm } from "@components/LoginForm";
-import { Container } from "./styled";
+import { Container } from "@/styles/login.styled";
 
 const LoginPage = () => {
 	return (

@@ -4,6 +4,8 @@ import { encryptPassword } from "@/lib/encrypter";
 interface IUser {
 	email: string;
 	password: string;
+	passwordResetToken: string;
+	passwordResetExpires: Date;
 }
 
 interface IModelUser extends Document, IUser {
@@ -14,6 +16,8 @@ interface IModelUser extends Document, IUser {
 const UserSchema: Schema<IModelUser> = new Schema({
 	email: { type: String, required: true, unique: true },
 	password: { type: String, required: true },
+	passwordResetToken: { type: String, required: false },
+	passwordResetExpires: { type: Date, required: false },
 });
 
 UserSchema.pre("save", function (next) {

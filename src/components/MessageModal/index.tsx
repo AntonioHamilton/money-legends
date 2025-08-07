@@ -14,9 +14,10 @@ export const MessageModal = ({
 }: CommonProps<MessageModalProps>) => {
 	const message = errorMessage || successMessage;
 	const messageType = errorMessage ? "error" : "success";
+	const visible = errorMessage || successMessage ? "visible" : "";
 
 	return (
-		<MessageContainer type={type || messageType} visible={!!message}>
+		<MessageContainer type={type || messageType} visible={visible}>
 			{message}
 		</MessageContainer>
 	);
