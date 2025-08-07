@@ -14,8 +14,8 @@ export const sendEmail = async (email: string, token: string) => {
 
 	resend.emails
 		.send({
-			from: "antoniohamilton.s.freitas@gmail.com",
-			to: "cataflanlop@gmail.com",
+			from: "onboarding@resend.dev",
+			to: "projectmoneylegends@gmail.com",
 			subject: "Reset Password - Money Legends",
 			html: personalizedHTML,
 		})

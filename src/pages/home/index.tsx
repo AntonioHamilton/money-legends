@@ -10,6 +10,7 @@ import axios from "axios";
 import { IdealData } from "@/types/global";
 import { OrbitProgress } from "react-loading-indicators";
 import { colors } from "@/styles/globalVariables";
+import ValidateAuthToken from "@components/ValidateAuthToken";
 
 export const getServerSideProps = async () => {
 	const idealTOP = await axios(
@@ -70,34 +71,41 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 	} = useHome(proStats);
 
 	return (
-		<SC.Container>
-			<Typography className="title">MONEY LEGENDS</Typography>
-			<PlayerSelector team={team} changeRole={changeRole} selectedRole={role} />
-			<SearchBox
-				onChange={onChange}
-				onSubmit={onSubmit}
-				selectCountry={selectCountry}
-			/>
-			{player && (
-				<PlayerCard
-					role={role === "ANY" ? "MIDDLE" : role}
-					proStats={proStats}
-					player={player}
-					addToTeam={addToTeam}
+		<>
+			<ValidateAuthToken />
+			<SC.Container>
+				<Typography className="title">MONEY LEGENDS</Typography>
+				<PlayerSelector
+					team={team}
+					changeRole={changeRole}
+					selectedRole={role}
 				/>
-			)}
-			<MessageModal errorMessage={error} type="negative" />
-			{loading && (
-				<SC.LoadingContainer>
-					<OrbitProgress
-						color={colors.textPrimary}
-						size="medium"
-						text=""
-						textColor=""
+				<SearchBox
+					onChange={onChange}
+					onSubmit={onSubmit}
+					selectCountry={selectCountry}
+				/>
+				{player && (
+					<PlayerCard
+						role={role === "ANY" ? "MIDDLE" : role}
+						proStats={proStats}
+						player={player}
+						addToTeam={addToTeam}
 					/>
-				</SC.LoadingContainer>
-			)}
-		</SC.Container>
+				)}
+				<MessageModal errorMessage={error} type="negative" />
+				{loading && (
+					<SC.LoadingContainer>
+						<OrbitProgress
+							color={colors.textPrimary}
+							size="medium"
+							text=""
+							textColor=""
+						/>
+					</SC.LoadingContainer>
+				)}
+			</SC.Container>
+		</>
 	);
 };
 

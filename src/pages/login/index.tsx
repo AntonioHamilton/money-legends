@@ -1,11 +1,15 @@
 import { LoginForm } from "@components/LoginForm";
 import { Container } from "@/styles/login.styled";
+import ValidateAuthToken from "@components/ValidateAuthToken";
 
 const LoginPage = () => {
 	return (
-		<Container>
-			<LoginForm />
-		</Container>
+		<>
+			<ValidateAuthToken />
+			<Container>
+				<LoginForm />
+			</Container>
+		</>
 	);
 };
 

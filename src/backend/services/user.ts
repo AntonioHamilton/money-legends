@@ -5,7 +5,7 @@ import { connectToDatabase } from "../mongodb/config";
 import User from "../mongodb/models/user";
 import { authenticate } from "@/lib/encrypter";
 import { loginValidation, registerValidation } from "@/utils/userValidation";
-import { sendEmail } from "@/utils/sendEmail";
+import { sendEmail } from "@/lib/sendEmail";
 
 export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
@@ -172,5 +172,39 @@ export const loginUser = async (req: NextApiRequest, res: NextApiResponse) => {
 			return res.status(500).json({ success: false, error: error.errors[0] });
 		}
 		return res.status(500).json({ success: false, error: error.message });
+	}
+};
+
+export const validateToken = async (
+	req: NextApiRequest,
+	res: NextApiResponse
+) => {
+	try {
+		const { token } = req.body;
+
+		if (!token) {
+			return res
+				.status(400)
+				.json({ success: false, message: "Token is required" });
+		}
+
+		const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
+			id: string;
+		};
+
+		await connectToDatabase();
+		const user = await User.findById(decoded.id);
+
+		if (!user) {
+			return res
+				.status(401)
+				.json({ success: false, message: "Invalid token: User not found" });
+		}
+
+		return res.status(200).json({ success: true, message: "Token is valid" });
+	} catch (error) {
+		return res
+			.status(401)
+			.json({ success: false, message: "Invalid or expired token" });
 	}
 };
