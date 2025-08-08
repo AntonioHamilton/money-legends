@@ -9,6 +9,7 @@ import {
 } from "./styled";
 import { Select } from "@components/Select";
 import { Typography } from "@components/Typography";
+import { queueTypes } from "@/hooks/useHome";
 
 const regionOptions = [
 	{
@@ -17,16 +18,29 @@ const regionOptions = [
 	},
 ];
 
+const rankedOptions: { value: keyof typeof queueTypes; text: string }[] = [
+	{
+		value: "SOLO",
+		text: "Ranked Solo / Duo",
+	},
+	{
+		value: "FLEX",
+		text: "Ranked Flex",
+	},
+];
+
 export type SearchProps = {
 	onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 	onSubmit?: () => void;
 	selectCountry?: (prop: ChangeEvent<HTMLSelectElement>) => void;
+	selectType?: (prop: any) => void;
 };
 
 export const SearchBox = ({
 	onChange,
 	onSubmit,
 	selectCountry,
+	selectType,
 }: CommonProps<SearchProps>) => (
 	<>
 		<OptionsBarContainer>
@@ -36,8 +50,7 @@ export const SearchBox = ({
 			</OptionsWrapper>
 			<OptionsWrapper>
 				<Typography className="region-text">Ranked Type</Typography>
-				<Typography>Ranked Solo / Duo</Typography>
-				<Typography>Ranked Flex</Typography>
+				<Select options={rankedOptions} onChange={selectType} />
 			</OptionsWrapper>
 		</OptionsBarContainer>
 

@@ -32,16 +32,15 @@ export const RegisterForm = () => {
 			await registerValidation(register);
 			const res = await api.post("/user/register", register);
 
-			if (res.data.success)
-				setSuccessMessage("Sua conta foir criada com sucesso!");
+			if (res.data.success) setSuccessMessage("Your account has been created!");
 		} catch (err: any) {
-			if (err.status === 422) setErrorMessage("Usuário já existe!");
+			if (err.status === 422) setErrorMessage("User doesn't exist!");
 			else if (err.status === 400)
-				setErrorMessage("E-mail e senha são obrigatórios!");
+				setErrorMessage("Email and Password are required!");
 			else if (err?.errors?.[0]) {
 				setErrorMessage(err.errors[0]);
 			} else {
-				setErrorMessage("Ocorreu um erro, tente novamente mais tarde!");
+				setErrorMessage("Something went wrong, try again later!");
 			}
 		}
 	};
@@ -49,7 +48,7 @@ export const RegisterForm = () => {
 	return (
 		<>
 			<Card>
-				<Title>Cadastro</Title>
+				<Title>Register</Title>
 				<Form onSubmit={handleRegister}>
 					<FormGroup>
 						<Label htmlFor="email">Email</Label>
@@ -58,7 +57,7 @@ export const RegisterForm = () => {
 							type="email"
 							id="email"
 							name="email"
-							placeholder="seuemail@exemplo.com"
+							placeholder="email@example.com"
 							value={register.email}
 							onChange={(e) => {
 								setRegister({ ...register, email: e.target.value });
@@ -86,7 +85,7 @@ export const RegisterForm = () => {
 							type="submit"
 							disabled={!register.email || !register.password}
 						>
-							Cadastrar usuário
+							Register user
 						</Button>
 						<StyledLink href="/login">Login</StyledLink>
 					</Actions>

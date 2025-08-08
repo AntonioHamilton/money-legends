@@ -16,7 +16,11 @@ const ValidateAuthToken = () => {
 				try {
 					await axios.post("/api/user/validate-token", { token });
 
-					if (router.pathname !== "/home") {
+					if (
+						router.pathname !== "/home" &&
+						router.pathname !== "/profile" &&
+						router.pathname !== "/saved-teams"
+					) {
 						router.push("/home");
 					}
 				} catch (error) {

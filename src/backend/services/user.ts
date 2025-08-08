@@ -78,7 +78,7 @@ export const requestPasswordReset = async (
 
 			await user.save({ validateBeforeSave: false });
 
-			const response = sendEmail(email, resetToken);
+			sendEmail(email, resetToken);
 		}
 
 		return res.status(200).json({

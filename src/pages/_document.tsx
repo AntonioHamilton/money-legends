@@ -1,3 +1,5 @@
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 import StyledComponentsRegistry from "@/lib/registry";
 import { Html, Head, Main, NextScript } from "next/document";
 
@@ -20,6 +22,7 @@ export default function Document() {
 			</Head>
 			<body>
 				<StyledComponentsRegistry>
+					<SpeedInsights />
 					<Main />
 					<NextScript />
 				</StyledComponentsRegistry>

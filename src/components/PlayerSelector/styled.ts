@@ -1,23 +1,13 @@
 import { colors } from "@/styles/globalVariables";
 import styled from "styled-components";
 
-export const Container = styled.div`
-	margin-bottom: 24px;
-`;
+export const Container = styled.div``;
 
 export const LaneContainer = styled.div`
 	display: flex;
-	gap: 32px;
+	gap: 80px;
 	height: 120px;
 	margin-bottom: 8px;
-
-	div:nth-child(odd) {
-		align-self: flex-start;
-	}
-
-	div:nth-child(even) {
-		align-self: flex-end;
-	}
 `;
 
 export const Selector = styled.div`

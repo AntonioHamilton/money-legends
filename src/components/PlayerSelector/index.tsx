@@ -108,18 +108,5 @@ export const PlayerSelector = ({
 				<Typography className="lane">Support</Typography>
 			</Selector>
 		</LaneContainer>
-		<Selector>
-			<Typography className="summoner-name">{team.ANY.summonerName}</Typography>
-			<Typography className="summoner-name">
-				{Math.round(team.ANY.proPlayerPercentage)}%
-			</Typography>
-			<Button
-				onClick={() => changeRole("ANY")}
-				className={selectedRole === "ANY" ? "selected" : ""}
-			>
-				<Image src="/assets/any.jpg" alt="any-image" width={45} height={45} />
-			</Button>
-			<Typography className="lane">ANY POSITION</Typography>
-		</Selector>
 	</Container>
 );

@@ -8,6 +8,7 @@ export const SearchTextFieldContainer = styled.div`
 	background-color: ${colors.formBorder};
 	padding: 8px 16px;
 	border-radius: 30px;
+	justify-content: space-between;
 `;
 
 export const SearchTextField = styled.input`
@@ -31,7 +32,7 @@ export const SearchButton = styled.button`
 export const OptionsBarContainer = styled.div`
 	display: grid;
 	gap: 12px;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(2, 1fr);
 	width: 90%;
 	background: ${colors.formBorder};
 	border-radius: 30px;

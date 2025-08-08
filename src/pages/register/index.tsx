@@ -1,9 +1,10 @@
 import { RegisterForm } from "@components/RegisterForm";
-import { Container } from "@/styles/register.styled";
+import { Container, Title } from "@/styles/register.styled";
 
 const RegisterPage = () => {
 	return (
 		<Container>
+			<Title>Money Legends</Title>
 			<RegisterForm />
 		</Container>
 	);

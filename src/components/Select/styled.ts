@@ -15,6 +15,7 @@ export const SelectContainer = styled.select`
 	background-repeat: no-repeat;
 	background-position: right 10px center;
 	cursor: pointer;
+	text-align: center;
 
 	&:focus {
 		outline: none;

@@ -2,11 +2,13 @@ export const colors = {
 	backgroundPrimary: "#0F0F0E", // fundo escuro neutro
 	border: "#1A1A1A", // leve contraste com fundo
 	shadowBlack: "#000000", // sombra profunda
+	statsBorder: "#272727",
 	primary: "#13F2F2", // ciano vibrante (cor de destaque)
 	danger: "#D3414E", // tom de vermelho compatível com ciano
 	success: "#04BFAD", // verde-água (combina com ciano)
 	accentPurple: "#663399", // tom púrpura moderno e harmônico
 	accentBlue: "#00C9FF", // azul neon coerente com o ciano
+	buttonColor: "#0094bc",
 	highlight: "#F9F8F8", // branco levemente acinzentado (para detalhes)
 	textPrimary: "#F9F8F8", // alto contraste no fundo escuro
 	textSecondary: "#A9A9A9", // cinza claro para textos secundários

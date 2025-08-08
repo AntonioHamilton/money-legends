@@ -12,9 +12,12 @@ export const PlayerCardContainer = styled.div`
 `;
 
 export const ChampionsContainer = styled.div`
-	margin-top: 10px;
+	font-family: "Roboto";
+	margin-top: 12px;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	width: 100%;
 
 	.champions-title {
 		color: ${colors.textPrimary};
@@ -25,6 +28,7 @@ export const ChampionsContainer = styled.div`
 `;
 
 export const ChampionsWrapper = styled.div`
+	font-family: "Roboto";
 	display: flex;
 	gap: 4px;
 	flex-wrap: wrap;
@@ -32,19 +36,22 @@ export const ChampionsWrapper = styled.div`
 `;
 
 export const TitleContainer = styled.div`
+	font-family: "Roboto";
 	padding: 8px;
 	width: 100%;
-	background-color: ${colors.textPrimary};
+	background-color: ${colors.statsBorder};
 	border-top-right-radius: 8px;
 	border-top-left-radius: 8px;
 	text-align: center;
 
 	span {
 		color: ${colors.textPrimary};
+		font-size: 24px;
 	}
 `;
 
 export const InfoContainer = styled.div`
+	font-family: "Roboto";
 	padding: 8px;
 	display: flex;
 	flex-direction: column;
@@ -64,7 +71,8 @@ export const InfoContainer = styled.div`
 export const StatsContainer = styled.div``;
 
 export const StatsPercentageContainer = styled.div`
-	background: ${colors.accentBlue};
+	font-family: "Roboto";
+	background: ${colors.statsBorder};
 	padding: 4px 16px;
 	font-size: 12px;
 	border-radius: 50px;
@@ -94,10 +102,17 @@ export const StatsPercentageContainer = styled.div`
 `;
 
 export const Button = styled.button`
+	font-family: "Roboto";
+	font-size: 16px;
 	padding: 8px;
 	border-radius: 4px;
-	background: ${colors.accentBlue};
+	background-color: ${colors.buttonColor};
 	margin: 16px 16px 12px 16px;
 	border: none;
 	cursor: pointer;
+	transition: background-color 0.2s ease-in-out;
+
+	&:hover {
+		background-color: ${colors.accentBlue};
+	}
 `;

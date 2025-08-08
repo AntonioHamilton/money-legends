@@ -65,8 +65,7 @@ export const Actions = styled.div`
 `;
 
 export const Button = styled.button`
-	background-color: ${colors.formAccent};
-	color: ${colors.inputBackground};
+	background-color: ${colors.buttonColor};
 	border: none;
 	padding: 0.75rem 1.5rem;
 	border-radius: 4px;
@@ -78,7 +77,7 @@ export const Button = styled.button`
 	font-family: "Roboto";
 
 	&:hover {
-		background-color: ${colors.formAccentHover};
+		background-color: ${colors.accentBlue};
 	}
 
 	&:disabled {

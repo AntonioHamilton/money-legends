@@ -120,8 +120,8 @@ const initialPlayerState: PlayerProps = {
 };
 
 export const queueTypes = {
-	FLEX: 440,
-	SOLO: 420,
+	FLEX: "440",
+	SOLO: "420",
 	ANY: "",
 };
 
@@ -129,7 +129,7 @@ export const useHome = (idealData: HomeProps) => {
 	const [queueType, setQueueType] = useState<keyof typeof queueTypes>("SOLO");
 	const [loading, setLoading] = useState(false);
 	const [searchInput, setSearchInput] = useState("");
-	const [role, setRole] = useState<keyof TeamProps>("ANY");
+	const [role, setRole] = useState<keyof TeamProps>("TOP");
 	const [error, setError] = useState<string>("");
 	const [region, setRegion] = useState("AMERICAS");
 	const [player, setPlayer] = useState<FIXME>();
@@ -152,6 +152,14 @@ export const useHome = (idealData: HomeProps) => {
 		target: { value: string };
 	}) => {
 		setRegion(value);
+	};
+
+	const selectType = ({
+		target: { value },
+	}: {
+		target: { value: keyof typeof queueTypes };
+	}) => {
+		setQueueType(value);
 	};
 
 	const changeRole = (role: keyof TeamProps) => {
@@ -248,6 +256,7 @@ export const useHome = (idealData: HomeProps) => {
 		onSubmit,
 		addToTeam,
 		selectCountry,
+		selectType,
 		loading,
 		role,
 		team,

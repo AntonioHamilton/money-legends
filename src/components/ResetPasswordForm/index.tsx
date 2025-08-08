@@ -31,14 +31,14 @@ export const ResetPasswordForm = () => {
 		try {
 			await api.post("/user/reset-password", { email: info.email });
 			setSuccessMessage(
-				"As instruções para redefinição de senha foram enviadas para o seu e-mail."
+				"The instructions for reset your password have been sent to your email!"
 			);
 			setStep(2);
 		} catch (err: any) {
 			if (err?.response?.status === 404) {
-				setErrorMessage("Usuário não encontrado!");
+				setErrorMessage("User not found!");
 			} else {
-				setErrorMessage("Ocorreu um erro, tente novamente mais tarde!");
+				setErrorMessage("Something went wrong, try again later!");
 			}
 		}
 	};
@@ -53,13 +53,13 @@ export const ResetPasswordForm = () => {
 				token: info.token,
 				password: info.newPassword,
 			});
-			setSuccessMessage("Sua senha foi modificada!");
+			setSuccessMessage("Your password has been changed!");
 			setStep(2);
 		} catch (err: any) {
 			if (err?.response?.status === 404) {
-				setErrorMessage("Usuário não encontrado!");
+				setErrorMessage("User not found!");
 			} else {
-				setErrorMessage("Ocorreu um erro, tente novamente mais tarde!");
+				setErrorMessage("Something went wrong, try again later!");
 			}
 		}
 	};
@@ -67,7 +67,7 @@ export const ResetPasswordForm = () => {
 	return (
 		<>
 			<Card>
-				<Title>Redefinir Senha</Title>
+				<Title>Reset Password</Title>
 				{step === 1 ? (
 					<Form onSubmit={handleSendEmail}>
 						<FormGroup>
@@ -77,7 +77,7 @@ export const ResetPasswordForm = () => {
 								type="email"
 								id="email"
 								name="email"
-								placeholder="seuemail@exemplo.com"
+								placeholder="email@example.com"
 								value={info.email}
 								onChange={(e) => {
 									setInfo({ ...info, email: e.target.value });
@@ -88,9 +88,9 @@ export const ResetPasswordForm = () => {
 						</FormGroup>
 						<Actions>
 							<Button type="submit" disabled={!info.email}>
-								Enviar email
+								Send email
 							</Button>
-							<StyledLink href="/login">Voltar para o Login</StyledLink>
+							<StyledLink href="/login">Back to login</StyledLink>
 						</Actions>
 					</Form>
 				) : (
@@ -102,7 +102,7 @@ export const ResetPasswordForm = () => {
 								type="text"
 								id="token"
 								name="token"
-								placeholder="token recebido por email"
+								placeholder="token received by email"
 								value={info.token}
 								onChange={(e) => {
 									setInfo({ ...info, token: e.target.value });
@@ -112,7 +112,7 @@ export const ResetPasswordForm = () => {
 							/>
 						</FormGroup>
 						<FormGroup>
-							<Label htmlFor="newPassword">Nova Senha</Label>
+							<Label htmlFor="newPassword">New password</Label>
 							<Input
 								autoComplete="on"
 								type="password"
@@ -129,9 +129,9 @@ export const ResetPasswordForm = () => {
 						</FormGroup>
 						<Actions>
 							<Button type="submit" disabled={!info.token || !info.newPassword}>
-								Redefinir Senha
+								Reset password
 							</Button>
-							<StyledLink href="/login">Voltar para o Login</StyledLink>
+							<StyledLink href="/login">Back to login</StyledLink>
 						</Actions>
 					</Form>
 				)}

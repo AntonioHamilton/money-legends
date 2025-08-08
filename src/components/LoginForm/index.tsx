@@ -38,17 +38,17 @@ export const LoginForm = () => {
 				Cookies.set("auth-token", token, { expires: 7, path: "/" });
 				router.push("/");
 			} else {
-				setErrorMessage("Falha no login");
+				setErrorMessage("Login failed");
 			}
 		} catch (err: any) {
 			if (err?.response?.status === 404) {
-				setErrorMessage("Usuário não encontrado!");
+				setErrorMessage("User not found!");
 			} else if (err?.response?.status === 401) {
-				setErrorMessage("Senha ou e-mail incorretos!");
+				setErrorMessage("Password or email incorrects!");
 			} else if (err?.errors?.[0]) {
 				setErrorMessage(err.errors[0]);
 			} else {
-				setErrorMessage("Ocorreu um erro, tente novamente mais tarde!");
+				setErrorMessage("Something went wrong, try again later!");
 			}
 		}
 	};
@@ -65,7 +65,7 @@ export const LoginForm = () => {
 							type="email"
 							id="email"
 							name="email"
-							placeholder="seuemail@exemplo.com"
+							placeholder="email@example.com"
 							value={login.email}
 							onChange={(e) => {
 								setLogin({ ...login, email: e.target.value });
@@ -92,8 +92,8 @@ export const LoginForm = () => {
 						<Button type="submit" disabled={!login.email || !login.password}>
 							Login
 						</Button>
-						<StyledLink href="/register">Cadastrar</StyledLink>
-						<StyledLink href="/reset-password">Esqueceu a senha?</StyledLink>
+						<StyledLink href="/register">Register</StyledLink>
+						<StyledLink href="/reset-password">Reset Password</StyledLink>
 					</Actions>
 				</Form>
 			</Card>

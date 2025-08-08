@@ -11,6 +11,7 @@ import { IdealData } from "@/types/global";
 import { OrbitProgress } from "react-loading-indicators";
 import { colors } from "@/styles/globalVariables";
 import ValidateAuthToken from "@components/ValidateAuthToken";
+import { FloatingMenu } from "../../components/FloatingMenu/index";
 
 export const getServerSideProps = async () => {
 	const idealTOP = await axios(
@@ -63,6 +64,7 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 		onSubmit,
 		addToTeam,
 		selectCountry,
+		selectType,
 		loading,
 		role,
 		team,
@@ -72,18 +74,31 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 
 	return (
 		<>
+			<FloatingMenu />
 			<ValidateAuthToken />
 			<SC.Container>
-				<Typography className="title">MONEY LEGENDS</Typography>
+				<Typography className="title">Build Your Team</Typography>
 				<PlayerSelector
 					team={team}
 					changeRole={changeRole}
 					selectedRole={role}
 				/>
+				<SC.Button
+					disabled={
+						!team.BOTTOM.summonerName ||
+						!team.JUNGLE.summonerName ||
+						!team.MIDDLE.summonerName ||
+						!team.TOP.summonerName ||
+						!team.UTILITY.summonerName
+					}
+				>
+					Save Team
+				</SC.Button>
 				<SearchBox
 					onChange={onChange}
 					onSubmit={onSubmit}
 					selectCountry={selectCountry}
+					selectType={selectType}
 				/>
 				{player && (
 					<PlayerCard
