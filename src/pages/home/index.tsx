@@ -12,6 +12,7 @@ import { OrbitProgress } from "react-loading-indicators";
 import { colors } from "@/styles/globalVariables";
 import ValidateAuthToken from "@components/ValidateAuthToken";
 import { FloatingMenu } from "../../components/FloatingMenu/index";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const getServerSideProps = async () => {
 	const idealTOP = await axios(
@@ -74,6 +75,7 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 
 	return (
 		<>
+			<SpeedInsights />
 			<FloatingMenu />
 			<ValidateAuthToken />
 			<SC.Container>

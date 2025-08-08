@@ -2,6 +2,7 @@ import { teams } from "@/mocks/teamMock";
 import { FloatingMenu } from "@components/FloatingMenu";
 import { SavedTeamsList } from "@components/SavedTeamsList";
 import ValidateAuthToken from "@components/ValidateAuthToken";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const SavedTeams = () => {
 	const handleEdit = () => {
@@ -14,6 +15,7 @@ const SavedTeams = () => {
 
 	return (
 		<>
+			<SpeedInsights />
 			<FloatingMenu />
 			<ValidateAuthToken />
 			<SavedTeamsList
