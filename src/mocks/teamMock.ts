@@ -1,6 +1,6 @@
 import { SavedTeam } from "@/types/SavedTeam";
 
-export const teams: SavedTeam[] = [
+export const teamsMock: SavedTeam[] = [
 	{
 		id: "1",
 		name: "Team Aurora",

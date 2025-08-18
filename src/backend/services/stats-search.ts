@@ -12,6 +12,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 export const statsSearch = async (
 	req: NextApiRequest,
 	res: NextApiResponse,
+	laneId: string,
 	puuid: string,
 	lane: string,
 	queue: string
@@ -61,8 +62,9 @@ export const statsSearch = async (
 
 		if (laneStats.puuid) {
 			const response = await axios.put(
-				`${baseUrl}/api/lane-stats?lane=${lane}`,
+				`${baseUrl}/api/lane-stats?laneId=${laneId}`,
 				{
+					lane,
 					playerReference: laneStats.puuid,
 					gold: laneStats.stats.goldPerMinute,
 					kda: laneStats.stats.kda,

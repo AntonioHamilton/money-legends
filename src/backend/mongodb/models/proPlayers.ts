@@ -1,8 +1,9 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const ProPlayersSchema = new mongoose.Schema({
-	summonerName: { type: String, required: true, unique: true },
+	lane: { type: String, required: true, unique: true },
 	playerName: { type: String, required: true },
+	stats: { type: Schema.Types.ObjectId, ref: "LaneStats", required: true },
 });
 
 export default mongoose.models.ProPlayers ||

@@ -1,9 +1,9 @@
 export interface SavedPlayer {
-	name: string;
+	playerReference: string;
 }
 
 export interface SavedTeam {
-	id: string;
+	_id: string;
 	name: string;
 	synergy: number;
 	players: {

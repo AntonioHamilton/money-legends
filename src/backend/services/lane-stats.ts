@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { connectToDatabase } from "../mongodb/config";
-import laneStats from "../mongodb/models/laneStats";
+import LaneStats from "../mongodb/models/laneStats";
+import { Types } from "mongoose";
 
 export const createLaneStats = async (
 	req: NextApiRequest,
@@ -24,7 +25,7 @@ export const createLaneStats = async (
 			voidGrubsKilled,
 		} = req.body;
 
-		const laneInfo = await laneStats.create({
+		const laneInfo = await LaneStats.create({
 			lane,
 			playerReference,
 			gold,
@@ -52,21 +53,22 @@ export const updateLaneStats = async (
 	try {
 		await connectToDatabase();
 
-		const { lane } = req.query;
+		const { laneId } = req.query;
 
-		if (!lane) {
+		if (!laneId) {
 			return res
 				.status(400)
-				.json({ success: false, message: "query: lane is required" });
+				.json({ success: false, message: "query: laneId is required" });
 		}
 
-		if (typeof lane !== "string") {
+		if (typeof laneId !== "string") {
 			return res
 				.status(400)
-				.json({ success: false, message: "lane must be a string" });
+				.json({ success: false, message: "laneId must be a string" });
 		}
 
 		const {
+			lane,
 			playerReference,
 			gold,
 			kda,
@@ -80,9 +82,10 @@ export const updateLaneStats = async (
 			voidGrubsKilled,
 		} = req.body;
 
-		const updatedLaneStats = await laneStats.findOneAndUpdate(
-			{ lane },
+		const updatedLaneStats = await LaneStats.findOneAndUpdate(
+			{ _id: new Types.ObjectId(laneId) },
 			{
+				lane,
 				playerReference,
 				gold,
 				kda,
@@ -114,28 +117,26 @@ export const getLaneStats = async (
 	req: NextApiRequest,
 	res: NextApiResponse
 ) => {
-	const { lane } = req.query;
+	const { laneId } = req.query;
 
-	if (!lane) {
+	if (!laneId) {
 		return res
 			.status(400)
-			.json({ success: false, message: "query: lane is required" });
+			.json({ success: false, message: "query: laneId is required" });
 	}
 
-	if (typeof lane !== "string") {
+	if (typeof laneId !== "string") {
 		return res
 			.status(400)
-			.json({ success: false, message: "lane must be a string" });
+			.json({ success: false, message: "laneId must be a string" });
 	}
 
 	try {
 		await connectToDatabase();
 
-		const statsInfo = await laneStats
-			.findOne({
-				lane: lane.toUpperCase(),
-			})
-			.select(["-__v", "-_id"]);
+		const statsInfo = await LaneStats.findOne({
+			lane: new Types.ObjectId(laneId),
+		}).select(["-__v", "-_id"]);
 
 		if (!statsInfo) {
 			return res

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const LaneStatsSchema = new mongoose.Schema({
-	lane: { type: String, required: true, unique: true },
+	lane: { type: String, required: true },
 	playerReference: { type: String, required: true },
 	gold: { type: Number, required: false, default: 0 },
 	kda: { type: Number, required: false, default: 0 },

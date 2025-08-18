@@ -83,3 +83,18 @@ export const LogoutButton = styled.button`
 		text-decoration: underline;
 	}
 `;
+
+export const DeleteButton = styled.button`
+	background: none;
+	border: none;
+	padding: 0;
+	font-family: "Roboto";
+	color: ${colors.formAccent};
+	text-decoration: none;
+	font-size: 0.9rem;
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: underline;
+	}
+`;

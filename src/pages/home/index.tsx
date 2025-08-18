@@ -13,31 +13,44 @@ import { colors } from "@/styles/globalVariables";
 import ValidateAuthToken from "@components/ValidateAuthToken";
 import { FloatingMenu } from "../../components/FloatingMenu/index";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import SaveTeamModal from "@components/SaveTeamModal";
 
 export const getServerSideProps = async () => {
 	const idealTOP = await axios(
-		`${process.env.NEXT_PUBLIC_API_URL}/api/lane-stats?lane=TOP`
+		`${process.env.NEXT_PUBLIC_API_URL}/api/pro-player?lane=TOP`
 	);
 	const idealJUNGLE = await axios(
-		`${process.env.NEXT_PUBLIC_API_URL}/api/lane-stats?lane=JUNGLE`
+		`${process.env.NEXT_PUBLIC_API_URL}/api/pro-player?lane=JUNGLE`
 	);
 	const idealMIDDLE = await axios(
-		`${process.env.NEXT_PUBLIC_API_URL}/api/lane-stats?lane=MIDDLE`
+		`${process.env.NEXT_PUBLIC_API_URL}/api/pro-player?lane=MIDDLE`
 	);
 	const idealBOTTOM = await axios(
-		`${process.env.NEXT_PUBLIC_API_URL}/api/lane-stats?lane=BOTTOM`
+		`${process.env.NEXT_PUBLIC_API_URL}/api/pro-player?lane=BOTTOM`
 	);
 	const idealUTILITY = await axios(
-		`${process.env.NEXT_PUBLIC_API_URL}/api/lane-stats?lane=UTILITY`
+		`${process.env.NEXT_PUBLIC_API_URL}/api/pro-player?lane=UTILITY`
 	);
 
 	return {
 		props: {
-			TOP: idealTOP.data,
-			JUNGLE: idealJUNGLE.data,
-			MIDDLE: idealMIDDLE.data,
-			BOTTOM: idealBOTTOM.data,
-			UTILITY: idealUTILITY.data,
+			TOP: { success: idealTOP.data.success, info: idealTOP.data.info.stats },
+			JUNGLE: {
+				success: idealJUNGLE.data.success,
+				info: idealJUNGLE.data.info.stats,
+			},
+			MIDDLE: {
+				success: idealMIDDLE.data.success,
+				info: idealMIDDLE.data.info.stats,
+			},
+			BOTTOM: {
+				success: idealBOTTOM.data.success,
+				info: idealBOTTOM.data.info.stats,
+			},
+			UTILITY: {
+				success: idealUTILITY.data.success,
+				info: idealUTILITY.data.info.stats,
+			},
 		},
 	};
 };
@@ -66,6 +79,11 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 		addToTeam,
 		selectCountry,
 		selectType,
+		saveTeam,
+		setModalIsOpen,
+		modalIsOpen,
+
+		successMessage,
 		loading,
 		role,
 		team,
@@ -93,6 +111,7 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 						!team.TOP.summonerName ||
 						!team.UTILITY.summonerName
 					}
+					onClick={() => setModalIsOpen(true)}
 				>
 					Save Team
 				</SC.Button>
@@ -104,13 +123,17 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 				/>
 				{player && (
 					<PlayerCard
-						role={role === "ANY" ? "MIDDLE" : role}
+						role={role}
 						proStats={proStats}
 						player={player}
 						addToTeam={addToTeam}
 					/>
 				)}
-				<MessageModal errorMessage={error} type="negative" />
+				<MessageModal
+					errorMessage={error}
+					successMessage={successMessage}
+					type={error ? "error" : "success"}
+				/>
 				{loading && (
 					<SC.LoadingContainer>
 						<OrbitProgress
@@ -122,6 +145,11 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 					</SC.LoadingContainer>
 				)}
 			</SC.Container>
+			<SaveTeamModal
+				isOpen={modalIsOpen}
+				onClose={() => setModalIsOpen(false)}
+				saveTeam={saveTeam}
+			/>
 		</>
 	);
 };

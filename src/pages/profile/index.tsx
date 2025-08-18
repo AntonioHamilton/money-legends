@@ -11,7 +11,7 @@ const Profile = () => {
 			<FloatingMenu />
 			<ValidateAuthToken />
 			<ProfileContainer>
-				<ProfileCard email="teste" />
+				<ProfileCard />
 			</ProfileContainer>
 		</>
 	);

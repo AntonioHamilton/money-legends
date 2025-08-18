@@ -15,11 +15,14 @@ export const Selector = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	width: 100px;
+	height: 140px;
 
 	.summoner-name {
 		color: white;
 		padding: 5px;
 		font-size: 12px;
+		text-align: center;
 	}
 
 	.lane {

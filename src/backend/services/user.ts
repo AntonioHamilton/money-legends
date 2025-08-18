@@ -6,6 +6,78 @@ import User from "../mongodb/models/user";
 import { authenticate } from "@/lib/encrypter";
 import { loginValidation, registerValidation } from "@/utils/userValidation";
 import { sendEmail } from "@/lib/sendEmail";
+import Teams from "../mongodb/models/teams";
+
+export const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
+	const { "auth-token": token } = req.headers;
+	try {
+		if (!token) {
+			return res
+				.status(400)
+				.json({ success: false, message: "Token is required" });
+		}
+
+		const decoded = jwt.verify(
+			token as string,
+			process.env.JWT_SECRET as string
+		) as {
+			id: string;
+		};
+
+		const user = await User.findById(decoded.id);
+
+		if (!user) {
+			return res
+				.status(401)
+				.json({ success: false, message: "Invalid token: User not found" });
+		}
+
+		return res
+			.status(200)
+			.json({ success: true, data: { _id: user._id, email: user.email } });
+	} catch (error) {
+		return res
+			.status(401)
+			.json({ success: false, message: "Invalid or expired token" });
+	}
+};
+
+export const deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
+	const { "auth-token": token } = req.headers;
+
+	try {
+		if (!token) {
+			return res
+				.status(400)
+				.json({ success: false, message: "Token is required" });
+		}
+
+		const decoded = jwt.verify(
+			token as string,
+			process.env.JWT_SECRET as string
+		) as {
+			id: string;
+		};
+
+		const user = await User.findById(decoded.id);
+
+		if (!user) {
+			return res
+				.status(401)
+				.json({ success: false, message: "Invalid token: User not found" });
+		}
+
+		await Teams.deleteMany({ created_by: user._id });
+
+		await User.deleteOne({ _id: user._id });
+
+		return res.status(200).json({ success: true });
+	} catch {
+		return res
+			.status(401)
+			.json({ success: false, message: "Invalid or expired token" });
+	}
+};
 
 export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {

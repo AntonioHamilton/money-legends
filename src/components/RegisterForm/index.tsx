@@ -34,7 +34,7 @@ export const RegisterForm = () => {
 
 			if (res.data.success) setSuccessMessage("Your account has been created!");
 		} catch (err: any) {
-			if (err.status === 422) setErrorMessage("User doesn't exist!");
+			if (err.status === 422) setErrorMessage("User already exist!");
 			else if (err.status === 400)
 				setErrorMessage("Email and Password are required!");
 			else if (err?.errors?.[0]) {
