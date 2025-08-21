@@ -192,14 +192,15 @@ export const useHome = (idealData: HomeProps) => {
 		newTeam[role as keyof TeamProps] = player;
 		setTeam(newTeam as TeamProps);
 		setPlayer(null);
+
 		if (
-			team.BOTTOM.summonerName &&
-			team.JUNGLE.summonerName &&
-			team.MIDDLE.summonerName &&
-			team.TOP.summonerName &&
-			team.UTILITY.summonerName
+			newTeam.BOTTOM.summonerName &&
+			newTeam.JUNGLE.summonerName &&
+			newTeam.MIDDLE.summonerName &&
+			newTeam.TOP.summonerName &&
+			newTeam.UTILITY.summonerName
 		) {
-			setSynergy(synergyModel(newTeam));
+			setSynergy(Math.round(synergyModel(newTeam)));
 		}
 	};
 
