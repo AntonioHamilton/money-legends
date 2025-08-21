@@ -120,6 +120,65 @@ export const createTeam = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 };
 
+export const updateTeam = async (req: NextApiRequest, res: NextApiResponse) => {
+	const { "auth-token": token } = req.headers;
+	const { teamId } = req.query;
+	const { name } = req.body;
+
+	if (!teamId) {
+		return res.status(404).json({
+			success: false,
+			message: "TeamId is required!",
+		});
+	}
+
+	if (!token) {
+		return res
+			.status(400)
+			.json({ success: false, message: "Token is required" });
+	}
+
+	try {
+		const objectIdTeam = new Types.ObjectId(teamId as string);
+		const decoded = jwt.verify(
+			token as string,
+			process.env.JWT_SECRET as string
+		) as {
+			id: string;
+		};
+
+		const verifyUser = await User.findById(decoded.id);
+
+		if (!verifyUser) {
+			return res.status(404).json({
+				success: false,
+				message: "User not found!",
+			});
+		}
+
+		await Teams.findOneAndUpdate(
+			{
+				_id: objectIdTeam,
+			},
+			{
+				name,
+				updated_by: verifyUser._id,
+			}
+		).lean();
+
+		return res.status(200).json({
+			success: true,
+			message: "Team updated successfully!",
+		});
+	} catch (error: any) {
+		console.error("Error updating team:", error.message);
+		return res.status(500).json({
+			success: false,
+			message: "Internal server error",
+		});
+	}
+};
+
 export const deleteTeam = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { "auth-token": token } = req.headers;
 	const { teamId } = req.query;
@@ -137,9 +196,9 @@ export const deleteTeam = async (req: NextApiRequest, res: NextApiResponse) => {
 			.json({ success: false, message: "Token is required" });
 	}
 
-	const objectIdTeam = new Types.ObjectId(teamId as string);
-
 	try {
+		const objectIdTeam = new Types.ObjectId(teamId as string);
+
 		const decoded = jwt.verify(
 			token as string,
 			process.env.JWT_SECRET as string

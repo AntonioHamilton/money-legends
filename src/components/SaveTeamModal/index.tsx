@@ -26,10 +26,10 @@ const SaveTeamModal = ({ isOpen, onClose, saveTeam }: SaveTeamModalProps) => {
 	return (
 		<S.Overlay>
 			<S.Modal>
-				<S.Title>Salvar Time</S.Title>
+				<S.Title>Save Team</S.Title>
 				<S.Input
 					type="text"
-					placeholder="Digite o nome do time"
+					placeholder="Type your team name here..."
 					value={teamName}
 					onChange={(e: ChangeEvent<HTMLInputElement>) =>
 						setTeamName(e.target.value)

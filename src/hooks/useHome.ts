@@ -71,6 +71,7 @@ export const queueTypes = {
 
 export const useHome = (idealData: HomeProps) => {
 	const [queueType, setQueueType] = useState<keyof typeof queueTypes>("SOLO");
+	const [synergy, setSynergy] = useState<number>(0);
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [searchInput, setSearchInput] = useState("");
@@ -96,7 +97,6 @@ export const useHome = (idealData: HomeProps) => {
 	const saveTeam = async (teamName: string) => {
 		setError("");
 		setSuccessMessage("");
-		const synergy = synergyModel(team);
 
 		try {
 			const topStatsId = await api
@@ -192,6 +192,15 @@ export const useHome = (idealData: HomeProps) => {
 		newTeam[role as keyof TeamProps] = player;
 		setTeam(newTeam as TeamProps);
 		setPlayer(null);
+		if (
+			team.BOTTOM.summonerName &&
+			team.JUNGLE.summonerName &&
+			team.MIDDLE.summonerName &&
+			team.TOP.summonerName &&
+			team.UTILITY.summonerName
+		) {
+			setSynergy(synergyModel(newTeam));
+		}
 	};
 
 	const onSubmit = async () => {
@@ -276,6 +285,7 @@ export const useHome = (idealData: HomeProps) => {
 		saveTeam,
 		setModalIsOpen,
 		modalIsOpen,
+		synergy,
 		successMessage,
 		loading,
 		role,

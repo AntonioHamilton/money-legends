@@ -14,6 +14,7 @@ import ValidateAuthToken from "@components/ValidateAuthToken";
 import { FloatingMenu } from "../../components/FloatingMenu/index";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import SaveTeamModal from "@components/SaveTeamModal";
+import { SynergyValue } from "@components/SavedTeamsList/styled";
 
 export const getServerSideProps = async () => {
 	const idealTOP = await axios(
@@ -82,7 +83,7 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 		saveTeam,
 		setModalIsOpen,
 		modalIsOpen,
-
+		synergy,
 		successMessage,
 		loading,
 		role,
@@ -103,6 +104,8 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 					changeRole={changeRole}
 					selectedRole={role}
 				/>
+				<Typography className="synergy-title">Team Synergy</Typography>
+				<SynergyValue>{synergy}</SynergyValue>
 				<SC.Button
 					disabled={
 						!team.BOTTOM.summonerName ||

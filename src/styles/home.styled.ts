@@ -17,6 +17,13 @@ export const Container = styled.div`
 		margin-bottom: 24px;
 		margin-top: 80px;
 	}
+
+	.synergy-title {
+		color: ${colors.textPrimary};
+		font-family: "Roboto";
+		font-size: 20px;
+		margin-top: 16px;
+	}
 `;
 
 export const MatchContainer = styled.div`
