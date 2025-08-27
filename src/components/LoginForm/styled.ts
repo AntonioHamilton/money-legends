@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { colors } from "@/styles/globalVariables";
+import { OrbitProgress } from "react-loading-indicators";
+
+export const Loader = styled(OrbitProgress)`
+	height: 12px;
+`;
 
 export const Card = styled.div`
 	background-color: ${colors.formBackground};

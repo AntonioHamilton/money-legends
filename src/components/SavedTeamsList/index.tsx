@@ -17,16 +17,20 @@ import {
 	SynergyValue,
 	ChevronIcon,
 	Title,
+	AccordionInput,
+	Button,
 } from "./styled";
 import { SavedTeam } from "@/types/SavedTeam";
 
 interface TeamListProps {
 	teams: SavedTeam[];
-	onEdit: (teamId: string) => void;
+	onEdit: (name: string, id: string) => Promise<void>;
 	onDelete: (teamId: string) => void;
 }
 
 export const SavedTeamsList = ({ teams, onEdit, onDelete }: TeamListProps) => {
+	const [edit, setEdit] = useState<string | null>(null);
+	const [editedName, setEditedName] = useState<string>("");
 	const [openTeamId, setOpenTeamId] = useState<string | null>(null);
 
 	const handleToggle = (teamId: string) => {
@@ -43,12 +47,32 @@ export const SavedTeamsList = ({ teams, onEdit, onDelete }: TeamListProps) => {
 			<Title>Saved Teams</Title>
 			{teams.map((team) => (
 				<AccordionItem key={team._id}>
-					<AccordionHeader onClick={() => handleToggle(team._id)}>
-						<AccordionTitle>{team.name}</AccordionTitle>
+					<AccordionHeader>
+						{edit !== team._id ? (
+							<AccordionTitle>{team.name}</AccordionTitle>
+						) : (
+							<div>
+								<AccordionInput
+									value={editedName}
+									onChange={(e) => setEditedName(e.target.value)}
+								/>
+								<Button
+									onClick={() => {
+										onEdit(editedName, team._id);
+										setEdit(null);
+									}}
+								>
+									Save
+								</Button>
+							</div>
+						)}
 						<AccordionActions>
 							<IconButton
 								aria-label={`Edit team ${team.name}`}
-								onClick={(e) => handleActionClick(e, () => onEdit(team._id))}
+								onClick={() => {
+									setEdit(team._id);
+									setEditedName(team.name);
+								}}
 							>
 								<FaPencilAlt />
 							</IconButton>
@@ -58,7 +82,10 @@ export const SavedTeamsList = ({ teams, onEdit, onDelete }: TeamListProps) => {
 							>
 								<FaTrash />
 							</IconButton>
-							<ChevronIcon isOpen={openTeamId === team._id}>
+							<ChevronIcon
+								onClick={() => handleToggle(team._id)}
+								isOpen={openTeamId === team._id}
+							>
 								<FaChevronDown />
 							</ChevronIcon>
 						</AccordionActions>

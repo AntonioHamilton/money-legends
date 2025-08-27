@@ -15,8 +15,11 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { MessageModal } from "@components/MessageModal";
 import { loginValidation } from "@/utils/userValidation";
+import { colors } from "@/styles/globalVariables";
+import { OrbitProgress } from "react-loading-indicators";
 
 export const LoginForm = () => {
+	const [loading, setLoading] = useState(false);
 	const [login, setLogin] = useState({
 		email: "",
 		password: "",
@@ -26,6 +29,7 @@ export const LoginForm = () => {
 	const router = useRouter();
 
 	const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+		setLoading(true);
 		e.preventDefault();
 		setErrorMessage("");
 
@@ -51,6 +55,7 @@ export const LoginForm = () => {
 				setErrorMessage("Something went wrong, try again later!");
 			}
 		}
+		setLoading(false);
 	};
 
 	return (
@@ -89,9 +94,18 @@ export const LoginForm = () => {
 						/>
 					</FormGroup>
 					<Actions>
-						<Button type="submit" disabled={!login.email || !login.password}>
-							Login
-						</Button>
+						{loading ? (
+							<OrbitProgress
+								color={colors.textPrimary}
+								size="small"
+								text=""
+								textColor=""
+							/>
+						) : (
+							<Button type="submit" disabled={!login.email || !login.password}>
+								Login
+							</Button>
+						)}
 						<StyledLink href="/register">Register</StyledLink>
 						<StyledLink href="/reset-password">Reset Password</StyledLink>
 					</Actions>

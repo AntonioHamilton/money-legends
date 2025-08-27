@@ -30,6 +30,8 @@ export const FloatingMenu = () => {
 						src="/assets/any.jpg"
 						alt="Profile"
 						$active={router.pathname === "/profile"}
+						width={50}
+						height={50}
 					/>
 				</Link>
 			</SC.ItemsContainer>

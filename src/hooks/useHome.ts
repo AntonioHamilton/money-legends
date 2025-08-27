@@ -185,6 +185,7 @@ export const useHome = (idealData: HomeProps) => {
 
 	const changeRole = (role: keyof TeamProps) => {
 		setRole(role);
+		setPlayer(null);
 	};
 
 	const addToTeam = () => {

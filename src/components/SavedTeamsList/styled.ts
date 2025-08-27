@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { colors } from "@/styles/globalVariables";
+import { Input } from "../LoginForm/styled";
 
 export const Title = styled.h1`
 	font-family: "Londrina Sketch";
@@ -34,12 +35,7 @@ export const AccordionHeader = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	padding: 1rem 1.5rem;
-	cursor: pointer;
 	background-color: #1a1a18;
-
-	&:hover {
-		background-color: #2a2a28;
-	}
 `;
 
 export const AccordionTitle = styled.h3`
@@ -48,6 +44,8 @@ export const AccordionTitle = styled.h3`
 	font-size: 1.2rem;
 	font-weight: 600;
 `;
+
+export const AccordionInput = styled(Input)``;
 
 export const AccordionActions = styled.div`
 	display: flex;
@@ -145,4 +143,27 @@ export const ChevronIcon = styled.div<{ isOpen: boolean }>`
 	color: ${colors.textSecondary};
 	transition: transform 0.3s ease-in-out;
 	transform: ${({ isOpen }) => (isOpen ? "rotate(180deg)" : "rotate(0deg)")};
+	cursor: pointer;
+	&:hover {
+		color: ${colors.textPrimary};
+	}
+`;
+
+export const Button = styled.button`
+	background-color: ${colors.buttonColor};
+	font-family: "Roboto", sans-serif;
+	border: none;
+	padding: 0.5rem 1rem;
+	margin-left: 8px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 1rem;
+	font-weight: 600;
+	transition:
+		background-color 0.2s,
+		color 0.2s;
+
+	&:hover {
+		background-color: ${colors.formAccentHover};
+	}
 `;

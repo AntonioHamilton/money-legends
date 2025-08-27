@@ -166,9 +166,33 @@ export const updateTeam = async (req: NextApiRequest, res: NextApiResponse) => {
 			}
 		).lean();
 
+		const userTeams = await Teams.find({ created_by: verifyUser._id }).lean();
+
+		const allTeams = await Promise.all(
+			userTeams.map(async (team) => {
+				const players = await Promise.all(
+					Object.values(team.players).map(async (player) => {
+						return LaneStats.findById(player).lean();
+					})
+				);
+
+				return {
+					...team,
+					players: {
+						top: players[0],
+						jungle: players[1],
+						middle: players[2],
+						bottom: players[3],
+						utility: players[4],
+					},
+				};
+			})
+		);
+
 		return res.status(200).json({
 			success: true,
 			message: "Team updated successfully!",
+			teams: allTeams,
 		});
 	} catch (error: any) {
 		console.error("Error updating team:", error.message);
@@ -229,9 +253,33 @@ export const deleteTeam = async (req: NextApiRequest, res: NextApiResponse) => {
 
 		await Teams.deleteOne(objectIdTeam);
 
+		const userTeams = await Teams.find({ created_by: verifyUser._id }).lean();
+
+		const allTeams = await Promise.all(
+			userTeams.map(async (team) => {
+				const players = await Promise.all(
+					Object.values(team.players).map(async (player) => {
+						return LaneStats.findById(player).lean();
+					})
+				);
+
+				return {
+					...team,
+					players: {
+						top: players[0],
+						jungle: players[1],
+						middle: players[2],
+						bottom: players[3],
+						utility: players[4],
+					},
+				};
+			})
+		);
+
 		return res.status(200).json({
 			success: true,
 			message: "Team deleted successfully!",
+			teams: allTeams,
 		});
 	} catch (error: any) {
 		console.error("Error deleting team:", error.message);

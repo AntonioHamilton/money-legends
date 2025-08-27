@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { colors } from "@/styles/globalVariables";
+import Image from "next/image";
 
 export const MenuContainer = styled.nav`
 	position: fixed;
@@ -46,9 +47,7 @@ export const MenuItem = styled.div<{ $active?: boolean; $font?: string }>`
 	}
 `;
 
-export const ProfilePic = styled.img<{ $active?: boolean }>`
-	width: 50px;
-	height: 50px;
+export const ProfilePic = styled(Image)<{ $active?: boolean }>`
 	border-radius: 50%;
 	border: 2px solid
 		${({ $active }) => ($active ? colors.primary : "transparent")};
