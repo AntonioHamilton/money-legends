@@ -1,6 +1,5 @@
-import * as ort from "onnxruntime-node";
-
 // 1. Caminho para o modelo ONNX
+import { InferenceSession, Tensor } from "onnxruntime-node";
 import path from "path";
 
 const ONNX_PATH = path.join(process.cwd(), "public", "rf_ia_model.onnx");
@@ -22,12 +21,12 @@ export const runIAModel = async (teamMatrix: number[][]) => {
 	const flatInput = Float32Array.from(teamMatrix.flat());
 
 	try {
-		const session = await ort.InferenceSession.create(ONNX_PATH);
+		const session = await InferenceSession.create(ONNX_PATH);
 
 		const inputName = session.inputNames[0];
 
 		const feeds: any = {};
-		feeds[inputName] = new ort.Tensor("float32", flatInput, INPUT_SHAPE);
+		feeds[inputName] = new Tensor("float32", flatInput, INPUT_SHAPE);
 
 		const results = await session.run(feeds);
 		const outputName = session.outputNames[0];
