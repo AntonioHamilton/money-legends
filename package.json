@@ -25,6 +25,7 @@
 		"mongodb": "^6.12.0",
 		"mongoose": "^8.8.4",
 		"next": "^15.0.3",
+		"onnxruntime-node": "^1.22.0-rev",
 		"react": "^18",
 		"react-dom": "^18",
 		"react-icons": "^5.5.0",

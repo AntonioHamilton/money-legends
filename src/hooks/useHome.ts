@@ -20,7 +20,6 @@ import {
 	playerStatsAverageClient,
 } from "@/helpers/playerAnalysis";
 import { HomeProps } from "@/pages/home";
-import { synergyModel } from "@/utils/sinergyModel";
 import { laneStatsParser } from "@/utils/laneStatsParser";
 import Cookies from "js-cookie";
 
@@ -188,7 +187,7 @@ export const useHome = (idealData: HomeProps) => {
 		setPlayer(null);
 	};
 
-	const addToTeam = () => {
+	const addToTeam = async () => {
 		const newTeam = { ...team };
 		newTeam[role as keyof TeamProps] = player;
 		setTeam(newTeam as TeamProps);
@@ -201,7 +200,12 @@ export const useHome = (idealData: HomeProps) => {
 			newTeam.TOP.summonerName &&
 			newTeam.UTILITY.summonerName
 		) {
-			setSynergy(Math.round(synergyModel(newTeam)));
+			const res = await api.post("ia-model", {
+				newTeam,
+			});
+
+			const score = res.data.result;
+			setSynergy(Math.round(score));
 		}
 	};
 

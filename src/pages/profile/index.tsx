@@ -6,14 +6,13 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const Profile = () => {
 	return (
-		<>
+		<ValidateAuthToken>
 			<SpeedInsights />
 			<FloatingMenu />
-			<ValidateAuthToken />
 			<ProfileContainer>
 				<ProfileCard />
 			</ProfileContainer>
-		</>
+		</ValidateAuthToken>
 	);
 };
 

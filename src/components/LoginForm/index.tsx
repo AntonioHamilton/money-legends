@@ -40,7 +40,7 @@ export const LoginForm = () => {
 
 			if (token) {
 				Cookies.set("auth-token", token, { expires: 7, path: "/" });
-				router.push("/");
+				router.push("/home");
 			} else {
 				setErrorMessage("Login failed");
 			}

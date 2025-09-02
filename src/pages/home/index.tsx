@@ -93,10 +93,9 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 	} = useHome(proStats);
 
 	return (
-		<>
+		<ValidateAuthToken>
 			<SpeedInsights />
 			<FloatingMenu />
-			<ValidateAuthToken />
 			<SC.Container>
 				<Typography className="title">Build Your Team</Typography>
 				<PlayerSelector
@@ -153,7 +152,7 @@ const Home = ({ TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY }: HomeProps) => {
 				onClose={() => setModalIsOpen(false)}
 				saveTeam={saveTeam}
 			/>
-		</>
+		</ValidateAuthToken>
 	);
 };
 

@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { getCookie } from "@/utils/getCookie";
 
-const ValidateAuthToken = () => {
+const ValidateAuthToken = ({ children }: { children: ReactNode }) => {
 	const router = useRouter();
 
 	useEffect(() => {
@@ -15,14 +15,6 @@ const ValidateAuthToken = () => {
 			const validateToken = async () => {
 				try {
 					await axios.post("/api/user/validate-token", { token });
-
-					if (
-						router.pathname !== "/home" &&
-						router.pathname !== "/profile" &&
-						router.pathname !== "/saved-teams"
-					) {
-						router.push("/home");
-					}
 				} catch (error) {
 					if (router.pathname !== "/login") {
 						router.push("/login");
@@ -32,10 +24,14 @@ const ValidateAuthToken = () => {
 			};
 
 			validateToken();
+		} else {
+			if (router.pathname !== "/login") {
+				router.push("/login");
+			}
 		}
 	}, [router]);
 
-	return null;
+	return <>{children}</>;
 };
 
 export default ValidateAuthToken;

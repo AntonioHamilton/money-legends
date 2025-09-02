@@ -58,10 +58,9 @@ const SavedTeams = () => {
 	}, []);
 
 	return (
-		<>
+		<ValidateAuthToken>
 			<SpeedInsights />
 			<FloatingMenu />
-			<ValidateAuthToken />
 			{!loading ? (
 				<SavedTeamsList
 					teams={teams}
@@ -78,7 +77,7 @@ const SavedTeams = () => {
 					/>
 				</LoadingContainer>
 			)}
-		</>
+		</ValidateAuthToken>
 	);
 };
 

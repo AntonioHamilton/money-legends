@@ -13,8 +13,10 @@ import {
 import { registerValidation } from "@/utils/userValidation";
 import { api } from "@config/axios";
 import { MessageModal } from "@components/MessageModal";
+import { useRouter } from "next/router";
 
 export const RegisterForm = () => {
+	const router = useRouter();
 	const [register, setRegister] = useState({
 		email: "",
 		password: "",
@@ -33,6 +35,9 @@ export const RegisterForm = () => {
 			const res = await api.post("/user/register", register);
 
 			if (res.data.success) setSuccessMessage("Your account has been created!");
+			setTimeout(() => {
+				router.push("/login");
+			}, 1000);
 		} catch (err: any) {
 			if (err.status === 422) setErrorMessage("User already exist!");
 			else if (err.status === 400)
