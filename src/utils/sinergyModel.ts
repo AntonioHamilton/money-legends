@@ -1,16 +1,18 @@
-// 1. Caminho para o modelo ONNX
-import { InferenceSession, Tensor } from "onnxruntime-node";
-import path from "path";
+import { InferenceSession, Tensor } from "onnxruntime-web";
 
-const ONNX_PATH = path.join(process.cwd(), "public", "rf_ia_model.onnx");
+// 1. Caminho para o modelo ONNX
+// O modelo deve ser acessível publicamente pelo cliente.
+const ONNX_MODEL_PATH = "/rf_ia_model.onnx";
 
 // 2. Formato esperado (1, 35)
 const INPUT_SHAPE = [1, 35];
 
-// --- Exemplo de dados de entrada ---
-// 5 jogadores × 7 métricas = 35 features
-
 // 5. Rodar inferência
+/**
+ * Executa a inferência de um modelo de IA ONNX no navegador.
+ * @param teamMatrix Uma matriz 5x7 de estatísticas de jogadores.
+ * @returns A pontuação de sinergia ou 0 em caso de erro.
+ */
 export const runIAModel = async (teamMatrix: number[][]) => {
 	if (teamMatrix.length !== 5 || teamMatrix[0].length !== 7) {
 		throw new Error(
@@ -18,11 +20,14 @@ export const runIAModel = async (teamMatrix: number[][]) => {
 		);
 	}
 
+	// Aplane a matriz em um array unidimensional e converta para Float32Array.
 	const flatInput = Float32Array.from(teamMatrix.flat());
 
 	try {
-		const session = await InferenceSession.create(ONNX_PATH);
+		// A inferência agora é criada diretamente a partir do caminho público.
+		const session = await InferenceSession.create(ONNX_MODEL_PATH);
 
+		// O nome da entrada é acessado através da propriedade 'inputNames' do array.
 		const inputName = session.inputNames[0];
 
 		const feeds: any = {};
@@ -35,6 +40,7 @@ export const runIAModel = async (teamMatrix: number[][]) => {
 
 		return synergyScore;
 	} catch (err) {
+		console.error("Erro ao rodar o modelo ONNX:", err);
 		return 0;
 	}
 };

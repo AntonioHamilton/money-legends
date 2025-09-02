@@ -45,7 +45,6 @@ export const OptionsWrapper = styled.div`
 	padding: 6px;
 
 	&:nth-child(even) {
-		border-right: 1px solid #1c1c1f;
 		border-left: 1px solid #1c1c1f;
 	}
 

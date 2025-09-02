@@ -65,8 +65,6 @@ export const createTeam = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { team, name, synergy } = req.body;
 	const { "auth-token": token } = req.headers;
 
-	console.log({ team, name, synergy, token });
-
 	try {
 		const decoded = jwt.verify(
 			token as string,

@@ -22,6 +22,7 @@ import {
 import { HomeProps } from "@/pages/home";
 import { laneStatsParser } from "@/utils/laneStatsParser";
 import Cookies from "js-cookie";
+import { runIAModel } from "@/utils/sinergyModel";
 
 const REMAKE_TIME = 300;
 
@@ -188,6 +189,7 @@ export const useHome = (idealData: HomeProps) => {
 	};
 
 	const addToTeam = async () => {
+		setError("");
 		const newTeam = { ...team };
 		newTeam[role as keyof TeamProps] = player;
 		setTeam(newTeam as TeamProps);
@@ -200,12 +202,25 @@ export const useHome = (idealData: HomeProps) => {
 			newTeam.TOP.summonerName &&
 			newTeam.UTILITY.summonerName
 		) {
-			const res = await api.post("ia-model", {
-				newTeam,
-			});
+			try {
+				const matrix = Object.keys(newTeam).map((role: string) => {
+					return [
+						newTeam[role as keyof TeamProps].stats.averageGoldPerMinute,
+						newTeam[role as keyof TeamProps].stats.averageKDA,
+						newTeam[role as keyof TeamProps].stats.averageFarmPerMinute,
+						newTeam[role as keyof TeamProps].stats.averageKillParcipation,
+						newTeam[role as keyof TeamProps].stats.averageDamagePerMinute,
+						newTeam[role as keyof TeamProps].stats.averageTeamDamagePercentage,
+						newTeam[role as keyof TeamProps].stats.averageVisionScorePerMinute,
+					];
+				});
+				const score = await runIAModel(matrix as number[][]);
 
-			const score = res.data.result;
-			setSynergy(Math.round(score));
+				setSynergy(Math.round(score));
+			} catch (err) {
+				setSynergy(0);
+				return setError("Error calculating team synergy");
+			}
 		}
 	};
 
